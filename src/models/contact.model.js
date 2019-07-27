@@ -14,4 +14,9 @@ const ContactSchema = new Schema({
         type:Number,default:null
     }
 });
+ContactSchema.statics = {
+    createNew(item){
+        return this.create(item);
+    }
+}
 export default mongoose.model("contact",ContactSchema);
