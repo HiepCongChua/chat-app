@@ -33,4 +33,12 @@ const UserSchema = new Schema({
         type:Number,default:null
     }
 });
+UserSchema.statics = {
+    createNew(item){
+        return this.create(item);
+    },
+    findByEmail(email){
+        return this.findOne({'local.email':email}).exec();
+    }
+}
 export default mongoose.model("user",UserSchema);

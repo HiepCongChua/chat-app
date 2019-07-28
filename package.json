@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"Error: no test specified\" && exit 1",
-    "test": "env-cmd ./config_env/dev.env babel-node src/index.js"
+    "start": "env-cmd ./config_env/dev.env  nodemon --exec babel-node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,13 +17,18 @@
   },
   "homepage": "https://github.com/HiepCongChua/chat-app#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.1.1",
     "ejs": "^2.5.7",
     "express": "^4.17.1",
     "express-ejs-extend": "0.0.1",
+    "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
-    "mongoose": "^4.13.9"
+    "mongoose": "^4.13.9",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
