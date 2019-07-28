@@ -1,5 +1,5 @@
 const getHome = (req, res, next) => {
-    return res.render('main/master')
+    return res.render('main/home/home')
 };
 export default {
     getHome

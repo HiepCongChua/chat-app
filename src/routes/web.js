@@ -1,8 +1,7 @@
 import express from 'express';
 import auth from './../controllers/authController';
-import home from './../controllers/homeContrller';
+import home from './../controllers/homeController';
 const router = express.Router();
-
 const initRouters = (app)=>{
     router.get('/',home.getHome);
     router.get('/login-register',auth.getLoginRegister);
