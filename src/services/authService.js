@@ -1,8 +1,9 @@
 import UserModel from "../models/userModel";
 import uuidv4 from "uuid/v4";
 import bcrypt from "bcryptjs";
-import { transErrorsMessage , transSuccess } from "../../lang/vi";
-const register = ({ gender, email, password }) => {
+import {sendMail} from '../config/sendGrid'
+import { transErrorsMessage , transSuccess ,transMail } from "../../lang/vi";
+const register = ({ gender, email, password },protocol,host) => {
   return new Promise(async (resolve, reject) => {
     const userByEmail = await UserModel.findByEmail(email);
     if (userByEmail) {//Trong trường hợp phát sinh lỗi sẽ trả về một Promise reject chứa string để thông báo lỗi
@@ -25,7 +26,30 @@ const register = ({ gender, email, password }) => {
       }
     };
     const user = await UserModel.createNew(userItem);
-    resolve(transSuccess.userCreated(user.local.email));//Trong trường hợp thành công sẽ trả về một string bao gồm mail của người tạo tài khoản
+    const linkVerify = `${protocol}://${host}/verify/${user.local.verifyToken}`
+    // Send mail to active account
+    sendMail(email,transMail.subject,transMail.template(linkVerify))
+    .then(success=>{
+      resolve(transSuccess.userCreated(user.local.email));//Trong trường hợp thành công sẽ trả về một string bao gồm mail của người tạo tài khoản
+    })
+    .catch(async(err)=>{
+      console.log(err);
+      await UserModel.removeById(user._id);
+      reject(transMail.send_failed);
+    })
+    ;
+
   });
 };
-export { register };
+const verifyAccount = (token)=>{
+  return new Promise(async(res,rej)=>{
+    const userByToken = await UserModel.findByTokenAndActiveTime(token);
+    if(!userByToken)
+    {
+      return rej(transErrorsMessage.LINK_ERROR);
+    }
+    await UserModel.verify(token);
+    res(transSuccess.ACCOUNT_ACTIVE);
+  })
+};
+export { register , verifyAccount };

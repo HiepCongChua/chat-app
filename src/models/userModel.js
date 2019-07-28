@@ -31,6 +31,10 @@ const UserSchema = new Schema({
     },
     deletedAt:{
         type:Number,default:null
+    },
+    activeTime:{
+        type:Number,
+        default:Date.now()+3600000
     }
 });
 UserSchema.statics = {
@@ -39,6 +43,29 @@ UserSchema.statics = {
     },
     findByEmail(email){
         return this.findOne({'local.email':email}).exec();
+    },
+    removeById(id){
+        return this.findByIdAndRemove(id).exec();
+    },
+    findByTokenAndActiveTime(token){
+        return this.findOne({"local.verifyToken":token,activeTime:{$gte:Date.now()}}).exec();
+    },
+    verify(token)
+    {
+        return this.findOneAndUpdate(
+            {
+                "local.verifyToken":token,
+                activeTime:{$gte:Date.now()}
+            },
+            {
+                "local.isActive":true,
+                 activeTime:null,
+                "local.verifyToken":null
+            },
+            {
+                new:false
+            },
+        ).exec();
     }
 }
 export default mongoose.model("user",UserSchema);

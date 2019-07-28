@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator/check";
-import { register } from "../services/authService";
+import { register , verifyAccount as verifyAccountService } from "../services/authService";
 const getLoginRegister = (req, res, next) => {
   return res.render("auth/master", {
     errors: req.flash("errors"),
@@ -19,19 +19,38 @@ const postRegister = async (req, res, next) => {
       return res.redirect("/login-register");
     }
   try {
-    //Trong trường hợp đăng kí thành công hàm register ở authService trả về một Promise.resolve chưa String
-    //Tiếp theo đẩy nó vào mảng sucessArr.
-    const createdUserSuccess = await register(req.body);
-    successArr.push(createdUserSuccess);
+    //Sau khi kiểm tra thông tin user gửi lên hợp lệ thì gửi data cho phía service xử lý
+    //service sẽ kết nối với db để tạo record
+    const createdUserSuccess = await register(req.body,req.protocol,req.get('host'));//ham register trả về một promise value là một string
+    successArr.push(createdUserSuccess);//trong trường hợp promise resolve 
     req.flash('success',successArr);
     return res.redirect("/login-register");
   } catch (error) {
-    errorArr.push(error);
+    errorArr.push(error);//trong trường hợp register trả về reject
+    req.flash("errors", errorArr);
+    return res.redirect("/login-register");
+  }
+};
+const verifyAccount = async (req,res,next)=>{
+  const errorArr = [];
+  const successArr = [];
+  try {
+    //gửi data cho service xử lý
+    //service sẽ trả về một promise nếu resolove sẽ thực thi tiếp nếu reject sẽ nhảy vào catch
+    const verifySuccess = await verifyAccountService(req.params.token);
+    console.log(verifySuccess);
+    successArr.push(verifySuccess);
+    req.flash('success',successArr);
+    return res.redirect('/login-register')
+  } catch (error) {
+    console.log(error);
+    errorArr.push(error);//trong trường hợp register trả về reject
     req.flash("errors", errorArr);
     return res.redirect("/login-register");
   }
 };
 export default {
   getLoginRegister,
-  postRegister
+  postRegister,
+  verifyAccount
 };
