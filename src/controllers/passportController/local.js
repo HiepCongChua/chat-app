@@ -57,7 +57,8 @@ const initPassportLocal = () => {
     done(null, user._id);
   });
   passport.deserializeUser(async (id, done) => {
-    //Khi chạy vào passport.session() sẽ lấy thông tin người dùng (id trong session vừa config ở serializeUser) để truyền vào trong callback
+    //Khi request chạy vào middleware passport.session() sẽ lấy thông tin người dùng (id trong session vừa config ở serializeUser) để truyền vào trong callback
+    //hàm này sử dụng thông tin để tìm kiếm user => gán user cho req
     try {
       const user = await UserModel.findUserById(id);
       if (user) {
