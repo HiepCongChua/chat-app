@@ -72,6 +72,9 @@ UserSchema.statics = {
     findUserById(id)
     {
         return this.findById(id);
+    },
+    findUserByFacebookUid(id){
+        return this.findOne({'facebook.uid':id}).exec();
     }
 };
 UserSchema.methods = {
