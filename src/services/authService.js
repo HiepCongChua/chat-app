@@ -28,14 +28,14 @@ const register = ({ gender, email, password },protocol,host) => {
     const user = await UserModel.createNew(userItem);
     const linkVerify = `${protocol}://${host}/verify/${user.local.verifyToken}`
     // Send mail to active account
-    sendMail(email,transMail.subject,transMail.template(linkVerify))
+    sendMail(email,transMail.SUBJECT,transMail.template(linkVerify))
     .then(success=>{
       resolve(transSuccess.userCreated(user.local.email));//Trong trường hợp thành công sẽ trả về một string bao gồm mail của người tạo tài khoản
     })
     .catch(async(err)=>{
       console.log(err);
       await UserModel.removeById(user._id);
-      reject(transMail.send_failed);
+      reject(transMail.SEND_FAILED);
     })
     ;
 
