@@ -79,8 +79,7 @@ function configNotification() {
   $(document).click(function() {
     $('#notifications').fadeOut('fast', 'linear');
   });
-}
-
+};
 function gridPhotos(layoutNumber) {
   let countRows = Math.ceil($('#imagesModal').find('div.all-images>img').length / layoutNumber);
   let layoutStr = new Array(countRows).fill(layoutNumber).join("");
@@ -102,7 +101,6 @@ function gridPhotos(layoutNumber) {
     }
   });
 }
-
 function showButtonGroupChat() {
   $('#select-type-chat').bind('change', function() {
     if ($(this).val() === 'group-chat') {
@@ -113,7 +111,6 @@ function showButtonGroupChat() {
     }
   });
 }
-
 function addFriendsToGroup() {
   $('ul#group-chat-friends').find('div.add-user').bind('click', function() {
     let uid = $(this).data('uid');
@@ -130,7 +127,6 @@ function addFriendsToGroup() {
     });
   });
 }
-
 function cancelCreateGroup() {
   $('#cancel-group-chat').bind('click', function() {
     $('#groupChatModal .list-user-added').hide();
@@ -141,7 +137,13 @@ function cancelCreateGroup() {
     }
   });
 }
-
+function flashMasterNotify(){
+  const notify = $('.master-success-message').text();
+  if(notify.length)
+  {
+    alertify.notify(notify,"success",7);
+  }
+};
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -171,4 +173,7 @@ $(document).ready(function() {
 
   // Action hủy việc tạo nhóm trò chuyện
   cancelCreateGroup();
+
+  //
+  flashMasterNotify();
 });
