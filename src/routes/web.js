@@ -1,6 +1,7 @@
-import express from "express";
+ import express from "express";
 import auth from "./../controllers/authController";
 import home from "./../controllers/homeController";
+import {updateAvatar} from './../controllers/userController';
 import { register } from "./../validation/authValidation";
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
@@ -51,6 +52,7 @@ const initRouters = app => {
       failureRedirect: "/login-register"
     })
   );
+  router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar)
   return app.use("/", router);
 };
 export default initRouters;

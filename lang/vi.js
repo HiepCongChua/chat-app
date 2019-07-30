@@ -12,7 +12,9 @@ export const transErrorsMessage = {
   TOKEN_UNDEFINED: "Token không hợp lệ !",
   LINK_ERROR: "Token không hợp lệ hoặc liên kết đã bị vô hiệu hóa",
   LOGIN_FAILED: "Tài khoản không tồn tại !",
-  SERVER_ERROR:'Rất tiếc đã có lỗi vui lòng thử lại sau hoặc liên hệ với bộ phận hỗ trợ ): '
+  SERVER_ERROR:'Rất tiếc đã có lỗi vui lòng thử lại sau hoặc liên hệ với bộ phận hỗ trợ ):',
+  AVATAR_TYPE:'Định dạng file không hợp lệ chỉ chấp nhận jpg, png hoặc jpeg !',
+  AVATAR_LIMIT_SIZE_MESSAGE:'Kích thước file vượt quá 1MB, vui lòng thử lại !',
 };
 export const transSuccess = {
   userCreated: userEmail => {
@@ -23,6 +25,7 @@ export const transSuccess = {
   },
   ACCOUNT_ACTIVE: "Kích hoạt tài khoản thành công !",
   ACCOUNT_LOGIN: "Đăng nhập thành công !",
+  AVATAR_UPDATED:"Cập nhật avatar thành công !",
   loginSuccess:(username)=>{
     return `Xin chào ${username}, chúc bạn một ngày mới tốt lành`
   },
