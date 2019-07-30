@@ -8,16 +8,18 @@ function updateUserInfo() {//Hàm lấy giá trị của từng field
     const limit = 1048576;
     if ($.inArray(fileData.type, math) === -1) {
       alertify.notify(
-        "Định dạng file không hợp lệ chỉ chấp nhận jpg, png, jpeg !"
+        "Định dạng file không hợp lệ chỉ chấp nhận jpg, png hoặc jpeg !",
+        "error",
+        5
       );
       $(this).val(null);
       return false;
     }
     if (fileData.size > limit) {
-      alertify.notify("Kích cỡ file vượt quá giới hạn 1MB", "error");
+      alertify.notify("Kích thước file vượt quá 1MB, vui lòng thử lại !", "error",5);
       $(this).val(null);
       return false;
-    }
+    };
     if (typeof FileReader != "undefined") {
       const imagePreview = $("#image-edit-profile");
       imagePreview.empty();
@@ -72,16 +74,27 @@ $(document).ready(function() {
         processData:false,
         data:userAvatar,
         success:function(res){
-
+          console.log(res);
+          $('.user-modal-alert-success').find("span").text(res.message);//Sau khi nhận được lỗi thì tìm thẻ span trong div user-modal-alert-error và
+          //  chèn text (lấy giá trị của text ở response text và server gửi về)
+          $('.user-modal-alert-success').css("display","block");
+           $('#navbar-avatar').attr('src',res.imageSrc);//Đổi avatar nhỏ
+          originAvatarSrc = res.imageSrc; //Đổi đường dẫn avatar lớn
+          $("#input-btn-cancel-update-user").click();//Sau khi phát sinh lỗi thì tự độ refresh lại trang bằng cách invoked nút cancle
         },
-        error:function(err){
-
+        error:function(err){   
+          console.log(err);
+          $('.user-modal-alert-error').find("span").text(err.responseText);//Sau khi nhận được lỗi thì tìm thẻ span trong div user-modal-alert-error và
+          //  chèn text (lấy giá trị của text ở response text và server gửi về)
+          $('.user-modal-alert-error').css("display","block");
+          $("#input-btn-cancel-update-user").click();//Sau khi phát sinh lỗi thì tự độ refresh lại trang bằng cách invoked nút cancle
         }
     })
   });
   $("#input-btn-cancel-update-user").bind("click", function() {
     userAvatar = null;
     userInfo = {};
+    $('#input-change-avatar').val(null);
     $("#user-modal-avatar").attr("src", originAvatarSrc);//Khi nhấn nút remove thì đặt lại  url ban đầu của avatar
   });
 });

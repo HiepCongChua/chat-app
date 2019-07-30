@@ -78,6 +78,9 @@ UserSchema.statics = {
     },
     findUserByGoogleUid(id){
         return this.findOne({'facebook.uid':id}).exec();
+    },
+    updateUser(id,item){
+        return this.findByIdAndUpdate(id,item).exec();
     }
 };
 UserSchema.methods = {
