@@ -16,7 +16,6 @@ const initPassportFacebook = () => {
       async (req, accessToken, refreshToken, profile, done) => {
         try {
           const user = await UserModel.findUserByFacebookUid(profile.id);
-          console.log(profile);
           if (user) {
             return done(
               null,

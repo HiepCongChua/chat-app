@@ -39,7 +39,6 @@ const verifyAccount = async (req,res,next)=>{
     //gửi data cho service xử lý
     //service sẽ trả về một promise nếu resolove sẽ thực thi tiếp nếu reject sẽ nhảy vào catch
     const verifySuccess = await verifyAccountService(req.params.token);
-    console.log(verifySuccess);
     successArr.push(verifySuccess);
     req.flash('success',successArr);
     return res.redirect('/login-register')
