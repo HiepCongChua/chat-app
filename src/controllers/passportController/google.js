@@ -15,7 +15,6 @@ const initPassportGoogle = () => {
       async (req, accessToken,refreshToken,profile,done) => {
         try {
           const user = await UserModel.findUserByGoogleUid(profile.id);
-          console.log(profile);
           if (user) {
             return done(
               null,
