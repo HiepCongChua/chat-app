@@ -3,7 +3,7 @@ import {validationResult} from 'express-validator/check';
 import { multerConfigCondition } from "./../config/app";
 import { transErrorsMessage, transSuccess } from "../../lang/vi";
 import uuidv4 from "uuid/v4";
-import { updateUser } from "./../services/userService";
+import { updateUser,updatePassword } from "./../services/userService";
 import fsExtra from 'fs-extra';
 const storageAvatar = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -46,7 +46,6 @@ const updateAvatar = (req, res) => {
         message: transSuccess.USER_UPDATE_INFO,
         imageSrc: `/images/users/${req.file.filename}`
       };
-      console.log(result);
       return res.status(200).send(result);
     } catch (error) {
       console.log(error);
@@ -56,7 +55,6 @@ const updateAvatar = (req, res) => {
 };
 const updateInfo = async (req, res) => {
   try {
-    console.log(req.body);
     const errorArr = [];
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -71,12 +69,33 @@ const updateInfo = async (req, res) => {
     const result = {
       message: transSuccess.USER_UPDATE_INFO,
     };
-    console.log(result);
     return res.status(200).send(result);
   } catch (error) {
     console.log(error);
     return res.status(500).send(error);
   };
 };
-export { updateAvatar, updateInfo };
+const updatePasswordUser = async (req,res)=>{
+  const errorArr = [];
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      const errors = Object.values(validationErrors.mapped());
+      errors.forEach(item => {
+        errorArr.push(item.msg);
+      });
+      req.flash("errors", errorArr);
+      return res.status(500).send(errorArr);
+    };
+  try {
+    const updateUserItem = req.body;
+    await updatePassword(req.user._id,updateUserItem);
+    const result = {
+      message:transSuccess.UPDATE_PASSWORD_SUCCESS,
+    } 
+    return res.status(200).send(result);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+export { updateAvatar, updateInfo , updatePasswordUser };
 
