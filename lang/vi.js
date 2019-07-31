@@ -3,7 +3,11 @@ export const transValidation = {
   GENDER_INCORRECT: "Giới tính không hợp lệ.",
   PASSWORD_INCORRECT:
     "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, chữ số và kí đặt biệt.",
-  PASSWORD_CONFIRM_INCORRECT: "Nhập lại mật khẩu không chính xác."
+  PASSWORD_CONFIRM_INCORRECT: "Nhập lại mật khẩu không chính xác.",
+  UPDATE_USERNAME:"Username giới hạn trong khoảng 3-17 kí tự và không chứa kí tự đặc biệt.",
+  UPDATE_GENDER:"Dữ liệu giới tính có vấn đề, bạn không xác định giới tính của mình ?",
+  UPDATE_PHONE:"Số điện thoại bắt đầu bằng số 0, giới hạn trong khoảng 10-12 kí tự",
+  UPDATE_ADDRESS:"Địa chỉ giới hạn trong khoảng 5-30 kí tự",
 };
 export const transErrorsMessage = {
   ACCOUNT_IN_USER: "Email này đã được sử dụng vui lòng sử dụng email khác !",
@@ -18,7 +22,7 @@ export const transErrorsMessage = {
 };
 export const transSuccess = {
   userCreated: userEmail => {
-    return `
+    return `  
     Tài khoản của Email <strong>${userEmail}</strong> đã được tạo, vui lòng kiểm tra email hoặc tìm trong mục spam để kích hoạt tài khoản ^^.
     Liên kết sẽ bị vô hiệu hóa trong vòng 1 giờ kể từ thời điểm này.
     `;
@@ -26,6 +30,11 @@ export const transSuccess = {
   ACCOUNT_ACTIVE: "Kích hoạt tài khoản thành công !",
   ACCOUNT_LOGIN: "Đăng nhập thành công !",
   AVATAR_UPDATED:"Cập nhật avatar thành công !",
+  USER_UPDATE_INFO:"Cập nhật thông tin thành công !",
+  UPDATE_USERNAME:"Username giới hạn trong khoảng 3-17 kí tự và không chứa kí tự đặc biệt.",
+  UPDATE_GENDER:"Dữ liệu giới tính có vấn đề, bạn không xác định giới tính của mình ?",
+  UPDATE_PHONE:"Số điện thoại bắt đầu bằng số 0, giới hạn trong khoảng 10-12 kí tự",
+  UPDATE_ADDRESS:"Địa chỉ giới hạn trong khoảng 5-30 kí tự",
   loginSuccess:(username)=>{
     return `Xin chào ${username}, chúc bạn một ngày mới tốt lành`
   },
