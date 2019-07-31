@@ -4,7 +4,7 @@ export const transValidation = {
   PASSWORD_INCORRECT:
     "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, chữ số và kí đặt biệt.",
   PASSWORD_CONFIRM_INCORRECT: "Nhập lại mật khẩu không chính xác.",
-  UPDATE_USERNAME:"Username giới hạn trong khoảng 3-17 kí tự và không chứa kí tự đặc biệt.",
+  UPDATE_USERNAME:"Username giới hạn trong khoảng 3-17 kí tự và không chứa kí tự đặc biệt (aA@123456)",
   UPDATE_GENDER:"Dữ liệu giới tính có vấn đề, bạn không xác định giới tính của mình ?",
   UPDATE_PHONE:"Số điện thoại bắt đầu bằng số 0, giới hạn trong khoảng 10-12 kí tự",
   UPDATE_ADDRESS:"Địa chỉ giới hạn trong khoảng 5-30 kí tự",
@@ -19,6 +19,9 @@ export const transErrorsMessage = {
   SERVER_ERROR:'Rất tiếc đã có lỗi vui lòng thử lại sau hoặc liên hệ với bộ phận hỗ trợ ):',
   AVATAR_TYPE:'Định dạng file không hợp lệ chỉ chấp nhận jpg, png hoặc jpeg !',
   AVATAR_LIMIT_SIZE_MESSAGE:'Kích thước file vượt quá 1MB, vui lòng thử lại !',
+  ACCOUNT_UNDEFINED:"Tài khoản này không tồn tại !",
+  PASSWORD_INCORRECT:"Mật khẩu tài khoản không chính xác !",
+  CONFIRM_PASSWORD_INCORRECT:"Xác nhận mật khẩu không chính xác."
 };
 export const transSuccess = {
   userCreated: userEmail => {
@@ -38,7 +41,8 @@ export const transSuccess = {
   loginSuccess:(username)=>{
     return `Xin chào ${username}, chúc bạn một ngày mới tốt lành`
   },
-  ACCOUNT_LOGOUT:'Đăng xuất thành công !'
+  ACCOUNT_LOGOUT:'Đăng xuất thành công !',
+  UPDATE_PASSWORD_SUCCESS:"Cập nhật mật khẩu thành công."
 };
 export const transMail = {
   SUBJECT: "Chat-app xác nhận kích hoạt tài khoản",

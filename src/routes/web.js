@@ -1,9 +1,9 @@
  import express from "express";
 import auth from "./../controllers/authController";
 import home from "./../controllers/homeController";
-import {updateAvatar,updateInfo} from './../controllers/userController';
+import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
-import {udpateInfoValidation} from './../validation/userValidation'
+import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation'
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
@@ -55,6 +55,7 @@ const initRouters = app => {
   );
   router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar);
   router.put("/user/update-info",udpateInfoValidation,auth.checkLoggedIn,updateInfo);
+  router.put("/user/update-password",auth.checkLoggedIn,updatePasswordValidation,updatePasswordUser)
   return app.use("/", router);
 };
 export default initRouters;
