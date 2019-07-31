@@ -1,8 +1,9 @@
  import express from "express";
 import auth from "./../controllers/authController";
 import home from "./../controllers/homeController";
-import {updateAvatar} from './../controllers/userController';
-import { register } from "./../validation/authValidation";
+import {updateAvatar,updateInfo} from './../controllers/userController';
+import {registerValidation} from "./../validation/authValidation";
+import {udpateInfoValidation} from './../validation/userValidation'
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
@@ -14,7 +15,7 @@ const router = express.Router();
 const initRouters = app => {
   router.get("/", auth.checkLoggedIn, home.getHome);
   router.get("/login-register", auth.checkLoggedOut, auth.getLoginRegister);
-  router.post("/register", auth.checkLoggedOut, register, auth.postRegister);
+  router.post("/register", auth.checkLoggedOut, registerValidation , auth.postRegister);
   router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
   router.post(
     "/login",
@@ -52,7 +53,9 @@ const initRouters = app => {
       failureRedirect: "/login-register"
     })
   );
-  router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar)
+  router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar);
+  router.put("/user/update-info",udpateInfoValidation,auth.checkLoggedIn,updateInfo);
   return app.use("/", router);
 };
 export default initRouters;
+
