@@ -8,7 +8,10 @@ const connectDB = ()=>{
     const DB_NAME = process.env.DB_NAME;
     // const DB_USERNAME = "";
     // const DB_PASSWORD = "";
-    const URI = `${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-    return mongoose.connect(URI,{useMongoClient:true})
+    // const URI = `${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+    const URI = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PW}@cluster0-kv3pr.mongodb.net/${process.env.DATABASE_NAME}`
+
+    // return mongoose.connect(URI,{useMongoClient:true})
+    return mongoose.connect(URI,{ useCreateIndex: true, useNewUrlParser: true });
 };  
 export default connectDB;
