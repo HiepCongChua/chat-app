@@ -8,8 +8,10 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#seting-profile">Cài đặt chung</a></li>
+                    <% if(!(user.google.uid||user.facebook.uid)){ %>
                     <li><a data-toggle="tab" id="link-to-password-profile" href="#password-profile">Quản lý mật khẩu</a>
                     </li>
+                    <%}%>
                 </ul>
                 <div class="tab-content">
                     <div id="seting-profile" class="tab-pane fade in active">
@@ -21,10 +23,10 @@
                                         <div id="image-edit-profile">
                                             <img 
                                             src="<% if(user.avatar===null){ %>
-                                                https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                                               <%} else{%>  
-                                                 images/users/<%= user.avatar %>  
-                                               <%}%>"
+                    https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+                    <%} else{%>
+                    images/users/<%= user.avatar %>
+                    <%}%>"
                                             id="user-modal-avatar" 
                                             class="avatar img-circle"
                                              alt="avatar"
@@ -48,49 +50,49 @@
                                     </div>
 
                                     <% if(user.local.email){ %>
-                                        <h3>Local account.</h3>
-                                    <%}%>
+                    <h3>Local account.</h3>
+                    <%}%>
                                     <%if(user.facebook.email){%>
-                                      <h3>Facebook account.</h3>
-                                    <%}%>
+                    <h3>Facebook account.</h3>
+                    <%}%>
                                     <%if(user.google.email){%>
-                                      <h3>Google account.</h3>
-                                    <%}%>
+                    <h3>Google account.</h3>
+                    <%}%>
                                     
                                     <br>
                                     <div class="form-group">
                                         <label class="col-lg-3 control-label">Email:</label>
                                         <div class="col-lg-8">
                                                 <% if(user.local.email){ %>
-                                                    <div class=" form-control" disabled><%= user.local.email %></div>
-                                        <%}%>
+                    <div class=" form-control" disabled><%= user.local.email %></div>
+                    <%}%>
                                                 <%if(user.facebook.email){%>
-                                        <div class="form-control" disabled><%= user.facebook.email %></div>
-                                        <%}%>
+                    <div class="form-control" disabled><%= user.facebook.email %></div>
+                    <%}%>
                                                 <%if(user.google.email){%>
-                                        <div class="form-control" disabled><%= user.google.email %></div>
-                                        <%}%> 
+                    <div class="form-control" disabled><%= user.google.email %></div>
+                    <%}%> 
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Username:</label>
                                         <div class="col-md-8">
                                             <input class="form-control" type="text" name="username" id="input-change-username"  value="<%= user.username %>">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Giới tính:</label>
-                                    <div class="col-lg-8">
-                                        <label class="radio-inline col-lg-2">Nam
-                                            <input type="radio" id="input-change-gender-male" name="gender" value="male"
-                                                <% if(user.gender==='male'){%> checked <%}%>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Giới tính:</label>
+            <div class="col-lg-8">
+                <label class="radio-inline col-lg-2">Nam
+                    <input type="radio" id="input-change-gender-male" name="gender" value="male"
+                        <% if(user.gender==='male'){%> checked <%}%>
                                                 required>
                                                 <span class="checkmark"></span>
                                             </label>
                                             <label class="radio-inline col-lg-2">Nữ
                                                 <input type="radio" id="input-change-gender-female" name="gender" value="female" 
                                                 <% if(user.gender==='female'){%> checked
-                                                <%}%>
+                        <%}%>
                                                 required>
                                                 <span class="checkmark"></span>
                                             </label>
@@ -100,72 +102,72 @@
                                         <label class="col-lg-3 control-label">Địa chỉ:</label>
                                         <div class="col-lg-8">
                                             <input class="form-control" id="input-change-address"  type="text" name="address" value="<%= user.address %>">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label">Số điện thoại:</label>
-                                    <div class="col-lg-8">
-                                        <input class="form-control" id="input-change-phone" type="text" name="phone"
-                                            value="<%= user.phone  %>">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label"></label>
-                                    <div class="col-md-8">
-                                        <input type="button" id="input-btn-update-user"
-                                            class="btn btn-primary custom-background-btn-primary" name="submit"
-                                            value="Lưu lại">
-                                        <span></span>
-                                        <input type="button" id="input-btn-cancel-update-user"
-                                            class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
-                                    </div>
-                                </div>
-                        </div>
-                        </form>
-                    </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Số điện thoại:</label>
+            <div class="col-lg-8">
+                <input class="form-control" id="input-change-phone" type="text" name="phone" value="<%= user.phone  %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+                <input type="button" id="input-btn-update-user" class="btn btn-primary custom-background-btn-primary"
+                    name="submit" value="Lưu lại">
+                <span></span>
+                <input type="button" id="input-btn-cancel-update-user"
+                    class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+</div>
+<div id="password-profile" class="tab-pane fade">
+    <div class="col-md-9 personal-info">
+        </br>
+        <div class="alert alert-danger alert-dismissable user-modal-password-alert-error">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <span>Cập nhật mật khẩu không thành công !</span><br>
+        </div>
+
+        <div class="alert alert-success alert-dismissable user-modal-password-alert-success">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <span>Cập nhật mật khẩu thành công ^^</span><br>
+        </div>
+
+        <h3>Thay đổi mật khẩu</h3>
+        <br>
+        <form class="form-horizontal" method="post" role="form" action="">
+            <div class="form-group">
+                <label class="col-md-4 control-label">Mật khẩu cũ</label>
+                <div class="col-md-8">
+                    <input id="input-change-current-password" class="form-control" type="password"
+                        name="current_password" placeholder="Enter your curent password...">
                 </div>
-                <div id="password-profile" class="tab-pane fade">
-                    <div class="col-md-9 personal-info">
-                        </br>
-                        <div class="alert alert-danger alert-dismissable user-modal-password-alert-error">
-                            <a class="panel-close close" data-dismiss="alert">×</a>
-                            <span>Cập nhật mật khẩu không thành công !</span><br>
-                        </div>
-
-                        <div class="alert alert-success alert-dismissable user-modal-password-alert-success">
-                            <a class="panel-close close" data-dismiss="alert">×</a>
-                            <span>Cập nhật mật khẩu thành công ^^</span><br>
-                        </div>
-
-                        <h3>Thay đổi mật khẩu</h3>
-                        <br>
-                        <form class="form-horizontal" method="post" role="form" action="">
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Mật khẩu cũ</label>
-                                <div class="col-md-8">
-                                    <input id="input-change-current-password" class="form-control" type="password"
-                                        name="current_password" placeholder="Enter your curent password...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Mật khẩu mới</label>
-                                <div class="col-md-8">
-                                    <input id="input-change-new-password" class="form-control" type="password"
-                                        name="new_password" placeholder="Enter new password...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Nhập lại mật khẩu mới</label>
-                                <div class="col-md-8">
-                                    <input id="input-change-confirm-new-password" class="form-control" type="password"
-                                        name="confirm_new_password" placeholder="Enter confirm new password...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label"></label>
-                                <div class="col-md-8">
-                                    <input type="button" id="input-btn-update-user-password"
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Mật khẩu mới</label>
+                <div class="col-md-8">
+                    <input id="input-change-new-password" class="form-control" type="password" name="new_password"
+                        placeholder="Enter new password...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Nhập lại mật khẩu mới</label>
+                <div class="col-md-8">
+                    <input id="input-change-confirm-new-password" class="form-control" type="password"
+                        name="confirm_new_password" placeholder="Enter confirm new password...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-8">
+                    <% if(!(user.google.uid||user.facebook.uid)){ %>
+                      <input type="button" id="input-btn-update-user-password"
                                         class="btn btn-primary custom-background-btn-primary" value="Lưu lại">
+                    <%}%>
                                     <span></span>
                                     <input type="button" id="input-btn-cancel-update-user-password"
                                         class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
@@ -176,7 +178,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 </div>
