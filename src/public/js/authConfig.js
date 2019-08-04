@@ -37,4 +37,4 @@ function showRegisterForm() {
       $('#loginModal').modal('show');
       showRegisterForm();
     }, 230);
-  }
+  };

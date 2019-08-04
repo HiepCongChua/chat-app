@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 const connectDB = ()=>{
+    mongoose.set('useFindAndModify', false);
     mongoose.Promise = bluebird;
     const DB_CONNECTION = process.env.DB_CONNECTION;
     const DB_HOST = process.env.DB_HOST;

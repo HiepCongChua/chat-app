@@ -45,12 +45,25 @@
                                 <h3>Thông báo</h3>
                                 <div class="noti_content">
                                     <span data-uid="${ user.id }">
-                                        <img  class="avatar-small" src="images/users/<%= user.avatar %>" alt=""> 
+                                        <img  class="avatar-small" 
+                                        src="<% if(user.avatar===null){ %>
+                                            https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+                                           <%} else{%>  
+                                             images/users/<%= user.avatar %>  
+                                           <%}%>
+                                        "
+                                        alt=""> 
                                         <strong>Trung Quân</strong> đã chấp nhận lời mời kết bạn của bạn!
                                     </span><br><br><br>
 
                                     <span data-uid="${ user.id }">
-                                        <img class="avatar-small" src="images/users/<%= user.avatar %>" alt=""> 
+                                        <img class="avatar-small" src="<% if(user.avatar===null){ %>
+                                            https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+                                           <%} else{%>  
+                                             images/users/<%= user.avatar %>  
+                                           <%}%>
+                                             "
+                                         alt=""> 
                                         <strong>Trung Quân</strong> đã gửi cho bạn một lời mời kết bạn!
                                     </span><br><br><br>
                                 </div>
@@ -61,7 +74,14 @@
                 </li>
                 <li class="dropdown" id="dropdown-navbar-user" data-uid="user._id">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img class="avatar-small" id="navbar-avatar" src="images/users/<%= user.avatar %>" alt="">
+                        <img class="avatar-small" id="navbar-avatar" 
+                        src="<% if(user.avatar===null){ %>
+                            https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+                           <%} else{%>  
+                             images/users/<%= user.avatar %>  
+                           <%}%>
+                        "
+                        alt="">
                         <span id="navbar-username"><%= user.username%></span>
                         <span class="caret"></span>
                     </a>
