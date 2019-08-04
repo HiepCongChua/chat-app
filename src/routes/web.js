@@ -1,9 +1,11 @@
  import express from "express";
 import auth from "./../controllers/authController";
 import home from "./../controllers/homeController";
+import contact from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
-import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation'
+import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
+import {findUsersContact as findUsersContactValid} from './../validation/contactValidation'
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
@@ -17,6 +19,7 @@ const initRouters = app => {
   router.get("/login-register", auth.checkLoggedOut, auth.getLoginRegister);
   router.post("/register", auth.checkLoggedOut, registerValidation , auth.postRegister);
   router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
+
   router.post(
     "/login",
     passport.authenticate("local", {
@@ -55,7 +58,9 @@ const initRouters = app => {
   );
   router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar);
   router.put("/user/update-info",udpateInfoValidation,auth.checkLoggedIn,updateInfo);
-  router.put("/user/update-password",auth.checkLoggedIn,updatePasswordValidation,updatePasswordUser)
+  router.put("/user/update-password",auth.checkLoggedIn,updatePasswordValidation,updatePasswordUser);
+  router.get('/contact/find-users/:keyword',auth.checkLoggedIn,contact.findUsersContact);
+  router.post('/contact/add-new',auth.checkLoggedIn,contact.addNew);  
   return app.use("/", router);
 };
 export default initRouters;

@@ -1,6 +1,3 @@
-/**
- * Created by https://trungquandev.com's author on 25/02/2018.
- */
 function nineScrollLeft() {
   $('.left').niceScroll({
     smoothscroll: true,
@@ -9,7 +6,7 @@ function nineScrollLeft() {
     cursorwidth: '7px',
     scrollspeed: 50
   });
-}
+};
 
 function nineScrollRight() {
   $('.right .chat').niceScroll({
