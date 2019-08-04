@@ -8,7 +8,7 @@ function callFindUsers (e){
    };
     $.get(`/contact/find-users/${keyword}`,function(data){
           $('#find-user ul').html(data);
-          addContat()//đây là hàm ở file addContact.js được chèn bên trên file findUsersContact
+          addContact()//đây là hàm ở file addContact.js được chèn bên trên file findUsersContact
     });
 };
 $(document).ready(function(){

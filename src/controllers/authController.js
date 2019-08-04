@@ -18,7 +18,7 @@ const postRegister = async (req, res, next) => {
       });
       req.flash("errors", errorArr);
       return res.redirect("/login-register");
-    }
+    };
   try {
     //Sau khi kiểm tra thông tin user gửi lên hợp lệ thì gửi data cho phía service xử lý
     //service sẽ kết nối với db để tạo record

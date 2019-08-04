@@ -16,8 +16,8 @@ initPassportGoogle();
 const router = express.Router();
 const initRouters = app => {
   router.get("/", auth.checkLoggedIn, home.getHome);
-  router.get("/login-register", auth.checkLoggedOut, auth.getLoginRegister);
-  router.post("/register", auth.checkLoggedOut, registerValidation , auth.postRegister);
+  router.get("/login-register",auth.checkLoggedOut,auth.getLoginRegister);
+  router.post("/register",auth.checkLoggedOut,registerValidation,auth.postRegister);
   router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
 
   router.post(

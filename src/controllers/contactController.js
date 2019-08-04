@@ -14,7 +14,7 @@ const findUsersContact = async (req,res,next)=>{
   try {
       const currentUserId = req.user._id;//Lấy id của user hiện tại 
       const keyword = req.params.keyword;
-      const users = await findUsersContactService(currentUserId,keyword);//Tìm contact nhưng loại trì user đang search
+      const users = await findUsersContactService(currentUserId,keyword);//Tìm contact nhưng loại trì user đang hiện tại
       return res.render('main/contact/sections/_findUsersContact',{users});
   } catch (error) {
       console.log(error.message);
@@ -23,6 +23,7 @@ const findUsersContact = async (req,res,next)=>{
 };
 const addNew = async (req,res,next)=>{//Đây là hàm có nhiệm vụ add contact (tức là đứng từ người dùng A gửi lời mời kết bạn đến người dùng B)
     try {
+        console.log(req.body);
         const currentUserId = req.user._id;
         const contactId = req.body.uid;
         const newContact = await addNewService(currentUserId,contactId);//Hàm này ở phía service(truyền cho nó 2 tham số là id của người dùng hiện tại và id của người dùng muốn gửi lời mời kết bạn)
