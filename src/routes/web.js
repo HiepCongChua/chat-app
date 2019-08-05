@@ -59,8 +59,9 @@ const initRouters = app => {
   router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar);
   router.put("/user/update-info",udpateInfoValidation,auth.checkLoggedIn,updateInfo);
   router.put("/user/update-password",auth.checkLoggedIn,updatePasswordValidation,updatePasswordUser);
-  router.get('/contact/find-users/:keyword',auth.checkLoggedIn,contact.findUsersContact);
-  router.post('/contact/add-new',auth.checkLoggedIn,contact.addNew);  
+  router.get('/contact/find-users/:keyword',auth.checkLoggedIn,findUsersContactValid,contact.findUsersContact);
+  router.post('/contact/add-new',auth.checkLoggedIn,contact.addNew); //Router gửi một yêu cầu kết bạn
+  router.delete('/contact/remove-request-contact',auth.checkLoggedIn,contact.removeNew);//Routẻ hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời)
   return app.use("/", router);
 };
 export default initRouters;

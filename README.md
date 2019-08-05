@@ -22,3 +22,4 @@ API_KEY_SENDGRID
 CLIENT_ID_FB
 CLIENT_SECRET_FB
 CALLBACK_URL_FB
+#Khi muốn lưu session trên Cloud thì update mongoose lên phiên bản cao nhất

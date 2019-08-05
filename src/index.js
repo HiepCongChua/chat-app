@@ -23,7 +23,6 @@ app.use(passport.initialize());
 app.use(passport.session());//passport sẽ làm việc với session gọi dữ liệu trong session ra
 //init all routes
 initRouters(app);
-
 const hostname = "localhost";
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, hostname, () => {

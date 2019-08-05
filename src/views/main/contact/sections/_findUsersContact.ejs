@@ -3,7 +3,13 @@
     <div class="contactPanel">
 
         <div class="user-avatar">
-            <img src="images/users/<%= user.avatar %>" alt="">
+            <img src="
+            <% if(user.avatar===null){ %>
+            https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+            <% }else{ %>
+             images/users/<%= user.avatar %>  
+            <%}%>" 
+            alt="">
         </div>
 
         <div class="user-name">

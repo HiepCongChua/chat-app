@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
-    username:String,
+    username:{type:String,index: true },
     gender:{type:String,default:'male'},
     phone : {type:String ,default:null},
     address:{type:String,default:null},
@@ -38,6 +38,7 @@ const UserSchema = new Schema({
         default:Date.now()+3600000
     }
 });
+UserSchema.index({username:'text'})
 UserSchema.statics = {
     createNew(item){
         return this.create(item);
@@ -89,13 +90,14 @@ UserSchema.statics = {
            $and:[
                {"_id":{$nin:deprecateUserIds}},//ID của bản ghi không nằm trong số những id trong mảng này
                {"local.isActive":true},//Trạng thái đã active
-               {$or:[//Thỏa mãn một trong 2 điều kiện.
-                 {"username":{"$regex":new RegExp(keyword,'i')}},//new RegExp(keyword,'i') tức là không phân biệt chữ hoa thường
-                 {"local.email":{"$regex":new RegExp(keyword,'i')}},
-                 {"facebook.email":{"$regex":new RegExp(keyword,'i')}},
-                 {"google.email":{"$regex":new RegExp(keyword,'i')}}
-               ]
-               }
+            //    {$or:[//Thỏa mãn một trong 2 điều kiện.
+            //      {"username":{"$regex":new RegExp(keyword,'i')}},//new RegExp(keyword,'i') tức là không phân biệt chữ hoa thường
+            //      {"local.email":{"$regex":new RegExp(keyword,'i')}},
+            //      {"facebook.email":{"$regex":new RegExp(keyword,'i')}},
+            //      {"google.email":{"$regex":new RegExp(keyword,'i')}}
+            //    ]
+            //    }
+                {$text:{$search:keyword,$caseSensitive:true}}
            ]
         },
         {_id:1,username:1,address:1,avatar:1}).exec();

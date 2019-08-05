@@ -21,7 +21,8 @@ export const transErrorsMessage = {
   AVATAR_LIMIT_SIZE_MESSAGE:'Kích thước file vượt quá 1MB, vui lòng thử lại !',
   ACCOUNT_UNDEFINED:"Tài khoản này không tồn tại !",
   PASSWORD_INCORRECT:"Mật khẩu tài khoản không chính xác !",
-  CONFIRM_PASSWORD_INCORRECT:"Xác nhận mật khẩu không chính xác."
+  CONFIRM_PASSWORD_INCORRECT:"Xác nhận mật khẩu không chính xác.",
+  KEYWORD_SEARCH:"Từ khóa không được phép chứa giá trị đặc biệt !"
 };
 export const transSuccess = {
   userCreated: userEmail => {
