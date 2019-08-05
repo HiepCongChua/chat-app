@@ -1,7 +1,6 @@
 function removeRequestContact(){
     $('.user-remove-request-contact').bind('click',function(){
     let targetId = $(this).data('uid');
-    console.log(targetId);
      $.ajax({
          url:'contact/remove-request-contact',
          type:'DELETE',

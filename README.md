@@ -23,3 +23,5 @@ CLIENT_ID_FB
 CLIENT_SECRET_FB
 CALLBACK_URL_FB
 #Khi muốn lưu session trên Cloud thì update mongoose lên phiên bản cao nhất
+#Sử dụng thư viện passport.socket.io để lấy dữ liệu trong session để truyền cho socket
+#Sử dụng cookie-parser để gán dữl liệu cookie vào một biến (req.cookie)
