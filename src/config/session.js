@@ -19,7 +19,8 @@ const store = new MongoStore({
 const configSession=(app)=>
 {
 app.use(session({
-    secret:'my secret',
+    key:'express.sid',
+    secret:'my_secret',
     resave:true,
     saveUninitialized:false,
     store : store,
@@ -27,4 +28,7 @@ app.use(session({
     cookie:{maxAge:1000*60*60*24}
 }));
 }
-export default configSession;
+export {
+  configSession,
+  store
+};

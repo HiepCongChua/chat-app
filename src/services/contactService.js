@@ -24,7 +24,6 @@ const addNew = (currentUserId, contactId) => {
       currentUserId,
       contactId
     );
-    console.log(contactExists);
     if (contactExists) {
       return reject(false);
     }
@@ -43,7 +42,6 @@ const removeNew = (currentUserId, contactId) => {
       currentUserId,
       contactId
     ); 
-    console.log("This is res",res);
      return resolve(true);
     } catch (error) {
       console.log(error)
