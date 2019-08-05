@@ -4,7 +4,7 @@ const addNewContact = (io)=>{
          console.log("this is data",data);
          console.log("this is user",socket.request.user);
      });
-  })
+  });
 };
 export   {
     addNewContact

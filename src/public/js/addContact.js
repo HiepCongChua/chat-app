@@ -13,7 +13,6 @@ function addContact(){
             socket.emit("add-new-contact",{//Khi addContact thì bắn một sự kiện lên server
                 contactId:targetId
             })
-
         }
     });  
     });

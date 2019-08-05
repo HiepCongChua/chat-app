@@ -13,20 +13,19 @@ const MongoStore = connectMongo(session);
 //Session lưu trên local
 const URI = `${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
 const store = new MongoStore({
-  url : URI,
-  autoReconnect:true
+  url: URI,
+  autoReconnect: true
 });
-const configSession=(app)=>
-{
-app.use(session({
-    key:'express.sid',
-    secret:'my_secret',
-    resave:true,
-    saveUninitialized:false,
-    store : store,
-    name : 'chat-app',
-    cookie:{maxAge:1000*60*60*24}
-}));
+const configSession = (app) => {
+  app.use(session({
+    key: 'express.sid',
+    secret: 'session_secret',
+    resave: true,
+    saveUninitialized: false,
+    store: store,
+    name: 'chat-app',
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+  }));
 }
 export {
   configSession,
