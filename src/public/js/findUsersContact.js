@@ -6,9 +6,10 @@ function callFindUsers (e){
        alertify.notify("Lỗi từ khóa chỉ cho phép kí tự chữ cái và số, cho phép khoảng trống.","success",5);
        return false;
    };
-    $.get(`/contact/find-users/${keyword}`,function(data){
+    $.get(`/contact/find-users/${keyword}`,{keyword},function(data){
           $('#find-user ul').html(data);
           addContact()//đây là hàm ở file addContact.js được chèn bên trên file findUsersContact
+          removeRequestContact();
     });
 };
 $(document).ready(function(){

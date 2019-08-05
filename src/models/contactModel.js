@@ -48,7 +48,15 @@ ContactSchema.statics = {//Tạo một contact mới
                 {"contactId":userId}
             ]}
            ]
-       })    
+       }).exec();
+    },
+    removeRequestContact(userId,contactId){
+      this.remove({
+          $and:[
+              {userId},
+              {contactId}
+          ]
+      }).exec()
     }
 }
 export default mongoose.model("contact",ContactSchema);
