@@ -1,6 +1,7 @@
 import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
+import {model as Notification,types} from './../models/notificationModel';
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc
   return new Promise(async (resolve, reject) => {
@@ -26,26 +27,36 @@ const addNew = (currentUserId, contactId) => {
     );
     if (contactExists) {
       return reject(false);
-    }
+    };
+    //create contact
     const newContactItem = {
       userId: currentUserId,
       contactId
     };
     const newContact = await ContactModel.createNew(newContactItem);
+    //create notification
+    let notificationItem = {
+      senderId: currentUserId,
+      receiverId: contactId,
+      type:types.ADD_CONTACT
+    };
+    await Notification.createNew(notificationItem);
     resolve(newContact);
   });
 };
 const removeNew = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     try {
-    const res = await ContactModel.removeRequestContact(
-      currentUserId,
-      contactId
-    ); 
-     return resolve(true);
+     await ContactModel.removeRequestContact(
+        currentUserId,
+        contactId
+      );
+      //remove notification
+      await Notification.removeRequestContactNotification(currentUserId,contactId,types.ADD_CONTACT);
+      return resolve(true);
     } catch (error) {
       console.log(error)
-     return reject(false)
+      return reject(false)
     };
   });
 };
