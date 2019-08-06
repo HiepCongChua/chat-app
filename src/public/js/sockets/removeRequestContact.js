@@ -11,8 +11,19 @@ function removeRequestContact(){
             $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display","inline-block");
             $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).hide(); 
             decreaseNumberNotifiContact('count-request-contact-sent'); 
+            //Socket emit remove contact
+            socket.emit("remove-request-contact", {
+                //Khi addContact thì bắn một sự kiện lên server
+                contactId: targetId
+            });
              }
          }
      });
     });
 }
+socket.on("response-remove-request-contact", user => {//Mỗi khi A gửi yêu cầu rồi lại hủy thì ẩn yêu cầu đi
+    $('.noti_content').find(`span[data-uid = ${user.id}]`).remove();
+    decreaseNumberNotifiContact('count-request-contact-received');
+    decreaseNumberNotification('noti_contact_counter');
+    decreaseNumberNotification('noti_counter');
+});

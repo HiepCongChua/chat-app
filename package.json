@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd ./config_env/dev.env  nodemon --inspect --exec babel-node src/index.js"
+    "start": "env-cmd ./config_env/dev.env  nodemon --exec babel-node src/index.js"
   },
   "repository": {
     "type": "git",
