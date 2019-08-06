@@ -1,0 +1,45 @@
+function addContact() {
+    $(".user-add-new-contact").bind("click", function () {
+        let targetId = $(this).data("uid");
+        $.post("/contact/add-new", { uid: targetId }, function (data) {
+            if (data.success) {
+                // /Xủ lý 2 nút button
+                $("#find-user")
+                    .find(`div.user-add-new-contact[data-uid = ${targetId}]`)
+                    .hide();
+                $("#find-user")
+                    .find(`div.user-remove-request-contact[data-uid = ${targetId}]`)
+                    .css("display", "inline-block");
+
+                //Khi nhấn thêm mới thì đồng thời tăng giá trị trên màn hình.
+                increaseNumberNotifiContact("count-request-contact-sent");
+                socket.emit("add-new-contact", {
+                    //Khi addContact thì bắn một sự kiện lên server
+                    contactId: targetId
+                });
+            }
+        });
+    });
+};
+socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu cầu thêm liên lạc mới thì ô thông báo tự động đẩy ra div
+    let img = ''
+    if (!user.avatar) {
+        img = `<img class="avatar-small" src="
+        https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+         "
+         `
+    }
+    else {
+        img = `<img class="avatar-small" src="${user.avatar}" alt="">` 
+    }
+    const notifi = `
+  <span data-uid="${user.id}">
+  ${img}
+  <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
+</span><br><br><br>
+  `;
+    $('.noti_content').prepend(notifi);//Đẩy từ trên xuống dưới
+    increaseNumberNotifiContact('count-request-contact-received');
+    increaseNumberNotification('noti_contact_counter');
+    increaseNumberNotification('noti_counter');
+});

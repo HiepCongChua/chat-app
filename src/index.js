@@ -34,9 +34,9 @@ app.use(passport.session());//passport sẽ làm việc với session gọi dữ
 // Cấu hình io để lấy dữ liệu trong session ra (kết hợp sử dụng passport-socket)
 initRouters(app);
 io.use(passportSocketIo.authorize({
-  cookieParser: cookieParser,
-  key: 'express.sid',
-  secret: 'session_secret',
+  cookieParser,
+  key: process.env.SECRET_SESSION,
+  secret: process.env.KEY_SESSION,
   store: storeSession,
   success: (data, accept) => {
     if(!data.user.logged_in){
@@ -54,7 +54,7 @@ io.use(passportSocketIo.authorize({
 }));
 //Init all sockets
 initSockets(io);
-const hostname = "localhost";
+const hostname = "127.0.0.1";
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, hostname, () => {
   console.log("Sever is running....");
