@@ -1,11 +1,22 @@
  import express from "express";
-import auth from "./../controllers/authController";
-import home from "./../controllers/homeController";
-import contact from './../controllers/contactController';
+import { 
+  getLoginRegister,
+  postRegister,
+  verifyAccount,
+  getLogout,
+  checkLoggedIn,
+  checkLoggedOut} from "./../controllers/authController";
+import {getHome} from "./../controllers/homeController";
+import {
+  findUsersContact,
+  addNew,
+  removeNew
+} from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
-import {findUsersContact as findUsersContactValid} from './../validation/contactValidation'
+import {findUsersContact as findUsersContactValid} from './../validation/contactValidation';
+import {readMore} from './../controllers/notificationController';
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
@@ -15,10 +26,10 @@ initPassportFacebook();
 initPassportGoogle();
 const router = express.Router();
 const initRouters = app => {
-  router.get("/", auth.checkLoggedIn, home.getHome);
-  router.get("/login-register",auth.checkLoggedOut,auth.getLoginRegister);
-  router.post("/register",auth.checkLoggedOut,registerValidation,auth.postRegister);
-  router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
+  router.get("/",checkLoggedIn, getHome);
+  router.get("/login-register",checkLoggedOut,getLoginRegister);
+  router.post("/register",checkLoggedOut,registerValidation,postRegister);
+  router.get("/verify/:token", checkLoggedOut, verifyAccount);
 
   router.post(
     "/login",
@@ -29,15 +40,15 @@ const initRouters = app => {
       failureFlash: true
     })
   );
-  router.get("/logout", auth.checkLoggedIn, auth.getLogout);
+  router.get("/logout", checkLoggedIn, getLogout);
   router.get(
     "/auth/facebook",
-    auth.checkLoggedOut,
+    checkLoggedOut,
     passport.authenticate("facebook", { scope: ["email"] })
   );
   router.get(
     "/auth/facebook/callback",
-    auth.checkLoggedOut,
+    checkLoggedOut,
     passport.authenticate("facebook", {
       successRedirect: "/",
       failureRedirect: "/login-register"
@@ -45,23 +56,24 @@ const initRouters = app => {
   );
   router.get(
     "/auth/google",
-    auth.checkLoggedOut,
+    checkLoggedOut,
     passport.authenticate("google", { scope: ["email", "profile"] })
   );
   router.get(
     "/auth/google/callback",
-    auth.checkLoggedOut,
+    checkLoggedOut,
     passport.authenticate("google", {
       successRedirect: "/",
       failureRedirect: "/login-register"
     })
   );
-  router.put("/user/update-avatar",auth.checkLoggedIn,updateAvatar);
-  router.put("/user/update-info",udpateInfoValidation,auth.checkLoggedIn,updateInfo);
-  router.put("/user/update-password",auth.checkLoggedIn,updatePasswordValidation,updatePasswordUser);
-  router.get('/contact/find-users/:keyword',auth.checkLoggedIn,findUsersContactValid,contact.findUsersContact);
-  router.post('/contact/add-new',auth.checkLoggedIn,contact.addNew); //Router gửi một yêu cầu kết bạn
-  router.delete('/contact/remove-request-contact',auth.checkLoggedIn,contact.removeNew);//Routẻ hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời)
+  router.put("/user/update-avatar", checkLoggedIn,updateAvatar);
+  router.put("/user/update-info",udpateInfoValidation, checkLoggedIn,updateInfo);
+  router.put("/user/update-password", checkLoggedIn,updatePasswordValidation,updatePasswordUser);
+  router.get('/contact/find-users/:keyword', checkLoggedIn,findUsersContactValid,  findUsersContact);
+  router.post('/contact/add-new', checkLoggedIn,  addNew); //Router gửi một yêu cầu kết bạn
+  router.delete('/contact/remove-request-contact', checkLoggedIn,  removeNew);//Router hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời);
+  router.get('/notification/read-more', checkLoggedIn,readMore);
   return app.use("/", router);
 };
 export default initRouters;
