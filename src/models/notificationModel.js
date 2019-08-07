@@ -27,12 +27,20 @@ NotificationSchema.statics = {
   getByUserIdAndLimit(userId, limit) {//Fetch các thông báo từ sever cho client (giới hạn số lượng thông báo trong mỗi fetch)
     return this.find({
       "receiverId": userId//user đứng từ receiver để load  
-    }).sort({ "createdAt": -1 }).limit().exec();
+    }).sort({ "createdAt": -1 }).limit(limit).exec();
+  },
+  notifcationsUnread(id){//Đếm số lượng thông báo chưa đọc
+     return this.count({
+       $and:[
+         {receiverId:id},
+         {isRead:false}
+       ]
+     }).exec();
   }
 };
 const NOTIFICATION_TYPES = {
   ADD_CONTACT: 'add_contact'
-}
+};
 const NOTIFICATION_CONTENTS = {
   getContent: (notificationType, isRead, userId, username, userAvatar) => {
     if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
@@ -48,21 +56,18 @@ const NOTIFICATION_CONTENTS = {
       }
       if (!isRead) {
         return `
-   <span class="notif-readed-false" data-uid="${userId}">
-  ${img}
-  <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
-</span><br><br><br>
-  `;
+            <div class="notif-readed-false" data-uid="${userId}">
+            ${img}
+            <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
+            </div>
+               `;
       }
       return `
-      <span data-uid="${userId}">
-     ${img}
-     <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
-   </span><br><br><br>
-     `;
-
-
-
+            <div data-uid="${userId}">
+            ${img}
+            <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
+            </div>
+            `;
     }
   }
 }
