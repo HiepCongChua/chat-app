@@ -1,6 +1,7 @@
 
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
+const  LIMIT_NUMBER_TAKEN = 2;
 const NotificationSchema = new Schema({
   senderId: String,
   receiverId: String,
@@ -27,7 +28,7 @@ NotificationSchema.statics = {
   getByUserIdAndLimit(userId, limit) {//Fetch các thông báo từ sever cho client (giới hạn số lượng thông báo trong mỗi fetch)
     return this.find({
       "receiverId": userId//user đứng từ receiver để load  
-    }).sort({ "createdAt": -1 }).limit(limit).exec();
+    }).sort({ "createdAt": -1 }).limit(LIMIT_NUMBER_TAKEN).exec();
   },
   notifcationsUnread(id){//Đếm số lượng thông báo chưa đọc
      return this.count({
@@ -36,6 +37,11 @@ NotificationSchema.statics = {
          {isRead:false}
        ]
      }).exec();
+  },
+  readMore(userId,skip,limit){//nhiệm vụ giống với phân trang
+    return this.find({
+      "receiverId": userId//user đứng từ receiver để load  
+    }).sort({ "createdAt": -1 }).skip(skip).limit(LIMIT_NUMBER_TAKEN).exec();
   }
 };
 const NOTIFICATION_TYPES = {

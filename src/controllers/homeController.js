@@ -10,7 +10,7 @@ const getHome = async (req, res, next) => {
         countNotifUnread//số lượng thông báo 
     });
 };
-export default {
+export  {
     getHome
 };
 

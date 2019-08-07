@@ -46,8 +46,8 @@ const removeNew = async (req, res, next) => {//Hàm hủy lời mời kết bạ
         return res.status(500).send(error);
     };
 }
-export default {
-    findUsersContact,
+export  {
+    findUsersContact, 
     addNew,
     removeNew
 }

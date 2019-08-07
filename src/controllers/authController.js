@@ -68,7 +68,7 @@ const checkLoggedOut = (req,res,next)=>{
   };
   next();
 };
-export default {
+export  {
   getLoginRegister,
   postRegister,
   verifyAccount,
