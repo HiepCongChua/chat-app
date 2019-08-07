@@ -24,21 +24,19 @@ function addContact() {
 socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu cầu thêm liên lạc mới thì ô thông báo tự động đẩy ra div
     let img = ''
     if (!user.avatar) {
-        img = `<img class="avatar-small" src="
-        https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-         "
-         `
+        img = `<img class="avatar-small" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"`
     }
     else {
         img = `<img class="avatar-small" src="${user.avatar}" alt="">` 
     }
     const notifi = `
-  <span data-uid="${user.id}">
+  <div class="notif-readed-false" data-uid="${user.id}">
   ${img}
   <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
-</span><br><br><br>
-  `;
-    $('.noti_content').prepend(notifi);//Đẩy từ trên xuống dưới
+</div>
+    `;
+    $('.noti_content').prepend(notifi);//Khi nhận được sự kiện add thì tự động đẩy từ trên xuống dưới(thằng mới nhất sẽ lên trên cùng)
+    $('ul.list-notifications').prepend(`<li>${notifi}</li>`);//đẩy vào modal
     increaseNumberNotifiContact('count-request-contact-received');
     increaseNumberNotification('noti_contact_counter');
     increaseNumberNotification('noti_counter');

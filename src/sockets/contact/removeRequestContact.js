@@ -17,8 +17,8 @@ const removeRequestContact = (io)=>{//Trước hết giả sử người A (user
      socket.on('disconnect',()=>{ //Trong trường hợp người dùng F5 hoặc đóng tab thì xóa socketId đại diện cho tab vừa đóng trong mảng đi
        clients =  removeSocketIdFromArray(clients,currentUserId,socket);
      });
-  });
+  }); 
 };
-export   {
+export {
     removeRequestContact
 }

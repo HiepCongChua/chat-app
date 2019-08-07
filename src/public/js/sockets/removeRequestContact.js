@@ -20,9 +20,10 @@ function removeRequestContact(){
          }
      });
     });
-}
+};
 socket.on("response-remove-request-contact", user => {//Mỗi khi A gửi yêu cầu rồi lại hủy thì ẩn yêu cầu đi
-    $('.noti_content').find(`span[data-uid = ${user.id}]`).remove();
+    $('.noti_content').find(`div[data-uid = ${user.id}]`).remove();
+    $('ul.list-notifications').find(`li>div[data-uid=${user.id}]`).parent().remove();//đẩy vào modal
     decreaseNumberNotifiContact('count-request-contact-received');
     decreaseNumberNotification('noti_contact_counter');
     decreaseNumberNotification('noti_counter');
