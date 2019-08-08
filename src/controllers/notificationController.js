@@ -1,5 +1,6 @@
 import {
-    readMore as readMoreService
+    readMore as readMoreService,
+    markAllAsRead as markAllAsReadService
 } from './../services/notificationService'
 const readMore = async (req, res, next) => {
     try {
@@ -10,6 +11,15 @@ const readMore = async (req, res, next) => {
         return res.status(500).send(error);
     }
 };
+const markAllAsRead = async (req,res,next)=>{
+   try {
+       const mark = await markAllAsReadService(req.user._id,targetUsers);
+       console.log(mark);
+   } catch (error) {
+       
+   }
+}
 export {
-    readMore
+    readMore,
+     markAllAsRead
 } 
