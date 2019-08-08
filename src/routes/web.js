@@ -16,7 +16,7 @@ import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userC
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
 import {findUsersContact as findUsersContactValid} from './../validation/contactValidation';
-import {readMore} from './../controllers/notificationController';
+import {readMore,markAllAsRead} from './../controllers/notificationController';
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
@@ -74,6 +74,7 @@ const initRouters = app => {
   router.post('/contact/add-new', checkLoggedIn,  addNew); //Router gửi một yêu cầu kết bạn
   router.delete('/contact/remove-request-contact', checkLoggedIn,  removeNew);//Router hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời);
   router.get('/notification/read-more', checkLoggedIn,readMore);
+  router.put('/notification/mark-all-as-read',checkLoggedIn,markAllAsRead)
   return app.use("/", router);
 };
 export default initRouters;

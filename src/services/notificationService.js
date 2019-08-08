@@ -41,9 +41,20 @@ const readMore = (currentUserId, skip) => {//Hàm load thêm thông báo trong m
             return rejects(error);
         };
     });
+};
+const markAllAsRead = (currentUserId, targetUserId) => {
+    return new Promise(async (resoleve, rejects) => {
+        try {
+            const notifications = await Notification.markAllAsRead(currentUserId, targetUserId);
+            resoleve(notifications);
+        } catch (error) {
+            rejects(error);
+        }
+    })
 }
 export {
     getNotifications,
     countNotifUnread,
-    readMore
+    readMore,
+    markAllAsRead
 }
