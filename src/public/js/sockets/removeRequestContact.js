@@ -25,6 +25,6 @@ socket.on("response-remove-request-contact", user => {//Mỗi khi A gửi yêu c
     $('.noti_content').find(`div[data-uid = ${user.id}]`).remove();
     $('ul.list-notifications').find(`li>div[data-uid=${user.id}]`).parent().remove();//đẩy vào modal
     decreaseNumberNotifiContact('count-request-contact-received');
-    decreaseNumberNotification('noti_contact_counter');
-    decreaseNumberNotification('noti_counter');
+    decreaseNumberNotification('noti_contact_counter',1);
+    decreaseNumberNotification('noti_counter',1);
 });

@@ -37,7 +37,7 @@ socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu 
     `;
     $('.noti_content').prepend(notifi);//Khi nhận được sự kiện add thì tự động đẩy từ trên xuống dưới(thằng mới nhất sẽ lên trên cùng)
     $('ul.list-notifications').prepend(`<li>${notifi}</li>`);//đẩy vào modal
-    increaseNumberNotifiContact('count-request-contact-received');
-    increaseNumberNotification('noti_contact_counter');
-    increaseNumberNotification('noti_counter');
+    increaseNumberNotifiContact('count-request-contact-received',1);
+    increaseNumberNotification('noti_contact_counter',1);
+    increaseNumberNotification('noti_counter',1);
 });
