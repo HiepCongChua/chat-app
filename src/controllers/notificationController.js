@@ -9,7 +9,8 @@ const readMore = async (req, res, next) => {
         return res.status(200).send(notificaions);
     } catch (error) {
         return res.status(500).send(error);
-    }
+    };
+    
 };
 const markAllAsRead = async (req, res, next) => {
     try {
