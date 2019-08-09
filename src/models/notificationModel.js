@@ -42,6 +42,26 @@ NotificationSchema.statics = {
     return this.find({
       "receiverId": userId//user đứng từ receiver để load  
     }).sort({ "createdAt": -1 }).skip(skip).limit(LIMIT_NUMBER_TAKEN).exec();
+  },
+  markAllAsRead(userId,targetUserId){//tham số đầu vào là userId (user hiện tại) targetUserID là mảng những sender
+    console.log(targetUserId);
+    targetUserId = targetUserId.map(s=>mongoose.Types.ObjectId(s));
+    console.log(targetUserId.toString());
+    return this.updateMany(
+      {$and:[
+        {
+            receiverId:userId
+        },
+        {
+            senderId:{
+                $in:targetUserId
+                }
+        }
+        ]
+    }
+    ,
+    {$set: { isRead: true }}
+    ).exec();
   }
 };
 const NOTIFICATION_TYPES = {

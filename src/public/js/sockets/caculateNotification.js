@@ -1,23 +1,22 @@
-function increaseNumberNotification(className){
+function increaseNumberNotification(className,number){
     let currentValue = +($(`.${className}`).text());//thêm dấu + vào trước string nó sẽ tự động convert sang kiểu number
-    currentValue += 1;
+    currentValue += number;
     if(currentValue===0)
     {
       $(`.${className}`).css("display","none").html('');  
     }
     else {
         $(`.${className}`).css("display","block").html(currentValue);
-    }
+    };
 };
-function decreaseNumberNotification(className){
+function decreaseNumberNotification(className,number){
     let currentValue = +($(`.${className}`).text());//thêm dấu + vào trước string nó sẽ tự động convert sang kiểu number
-     currentValue -= 1;
-    console.log("des",currentValue);
+     currentValue -= number;
     if(currentValue===0)
     {
       $(`.${className}`).css("display","none").html('');  
     }
     else {
         $(`.${className}`).css("display","block").html(currentValue);
-    }
-}
+    };
+};
