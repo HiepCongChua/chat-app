@@ -45,7 +45,7 @@ const removeNew = async (req, res, next) => {//Hàm hủy lời mời kết bạ
         console.log(error);
         return res.status(500).send(error);
     };
-}
+};
 export  {
     findUsersContact, 
     addNew,

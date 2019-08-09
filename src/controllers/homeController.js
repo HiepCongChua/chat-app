@@ -12,6 +12,7 @@ const getHome = async (req, res, next) => {
     const countNotifUnread = await countNotifUnreadService(req.user._id);//số lượng thông báo chưa đọc
     const contacts = await getContactsService(req.user._id);//lấy tất cả các user còn lại trong hệ thống 
     const contactsSent = await getContactsSentService(req.user._id);//lấy những contact đã gửi
+    console.log(contactsSent);
     const contactsReceive = await getContactReceiveServive(req.user._id)//lấy những contact đã gửi lời mời kết bạn 
     return res.render('main/home/home', {
         errors: req.flash("errors"),

@@ -75,7 +75,7 @@ const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
   });
 };
 const getContactsSent = (id) => {
-  //Lấy những đã user gửi cho mình lời mời kết bạn
+  //Lấy những user mình đã gửi lời mời kết bạn
    //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
   return new Promise(async (resolve, reject) => {
     try {
