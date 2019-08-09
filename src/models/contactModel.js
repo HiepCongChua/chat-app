@@ -54,14 +54,6 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).exec();
     },
-    // getContacts(id, limit) {
-    //     return this.find({
-    //         $and: [
-    //             { userId: id },
-    //             { status: true }
-    //         ]
-    //     }).sort({ "createdAt": -1 }).limit(limit).exec();
-    // },
     getContacts(id, limit) {
         return this.find({
             $and: [
@@ -72,7 +64,7 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).sort({ "createdAt": -1 }).limit(limit).exec();
     },
-    getContactsReceive(id,limit) {
+    getContactsReceive(id,limit) {//Lấy những user mình đã gửi request (chưa đồng )
         return this.find({
             $and: [
                 { contactId: id },
