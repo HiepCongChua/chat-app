@@ -1,7 +1,8 @@
 import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
-import {model as Notification,types} from './../models/notificationModel';
+import { model as Notification, types } from './../models/notificationModel';
+const LIMIT_RECORD = 2;
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc
   return new Promise(async (resolve, reject) => {
@@ -38,7 +39,7 @@ const addNew = (currentUserId, contactId) => {
     let notificationItem = {
       senderId: currentUserId,
       receiverId: contactId,
-      type:types.ADD_CONTACT
+      type: types.ADD_CONTACT
     };
     await Notification.createNew(notificationItem);
     resolve(newContact);
@@ -47,12 +48,12 @@ const addNew = (currentUserId, contactId) => {
 const removeNew = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     try {
-     await ContactModel.removeRequestContact(
+      await ContactModel.removeRequestContact(
         currentUserId,
         contactId
       );
       //remove notification
-      await Notification.removeRequestContactNotification(currentUserId,contactId,types.ADD_CONTACT);
+      await Notification.removeRequestContactNotification(currentUserId, contactId, types.ADD_CONTACT);
       return resolve(true);
     } catch (error) {
       console.log(error)
@@ -60,4 +61,47 @@ const removeNew = (currentUserId, contactId) => {
     };
   });
 };
-export { findUserContact, addNew, removeNew };
+const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
+  return new Promise(async (resolve, reject) => {
+    try {
+      const contacts = await ContactModel.getContacts(id,LIMIT_RECORD);
+      const users = await Promise.all(contacts.map(async (contact) => {
+        return await UserModel.findUserById(contact.contactId);
+      }));
+      return resolve(users); 
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+const getContactsSent = (id) => {
+  //Lấy những đã user gửi cho mình lời mời kết bạn
+   //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
+  return new Promise(async (resolve, reject) => {
+    try {
+      const contacts = await ContactModel.getContactsSent(id,LIMIT_RECORD);
+      const users = await Promise.all(contacts.map(async (contact) => {
+        return await UserModel.findUserById(contact.contactId);
+      }));
+      return resolve(users); 
+    } catch (error) {
+      reject(error);
+    };
+  });
+};
+const getContactReceive = (id) => {
+  return new Promise(async (resolve, reject) => {
+    //Lấy những user mình đã gửi lời mời kết bạn 
+    //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
+    try {
+      const contacts = await ContactModel.getContactsReceive(id,LIMIT_RECORD);
+      const users = await Promise.all(contacts.map(async (contact) => {
+        return await UserModel.findUserById(contact.userId);
+      }));
+      return resolve(users); 
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export { findUserContact, addNew, removeNew, getContacts, getContactsSent, getContactReceive };

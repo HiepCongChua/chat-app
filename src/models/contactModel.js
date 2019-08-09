@@ -4,59 +4,97 @@ const ContactSchema = new Schema({//Mô hình của bảng contactModel này là
     //userId = id(A)
     //contactId = id(B)
     //status là trạng thái hoạt động của B (có hoạt động hoặc không hoạt động)
-    userId:String,
-    contactId:String,
-    status:{type:Boolean,default:false},
-    createdAt:{
-        type:Number,default:Date.now
+    userId: String,
+    contactId: String,
+    status: { type: Boolean, default: false },
+    createdAt: {
+        type: Number, default: Date.now
     },
-    updatedAt:{
-        type:Number,default:null
+    updatedAt: {
+        type: Number, default: null
     },
-    deletedAt:{
-        type:Number,default:null
+    deletedAt: {
+        type: Number, default: null
     }
 });
 ContactSchema.statics = {//Tạo một contact mới
-    createNew(item){
+    createNew(item) {
         return this.create(item);
     },
-    findAllByUser(id){
+    findAllByUser(id) {
         return this.find({//Hàm này tìm những bản ghi thỏa mãn một trong 2 điều kiện userId = id hoặc contactId = id 
-        //Ví dụ như người dùng A query thì nó sẽ tìm những bản ghi nào mà thỏa mãn một trong 2 vai trò
-        // A là người thêm X vào danh sách kết bạn (A=>userID,X=>contactID)
-        // A là người được X kết bạn (A=>contactID,X=>userID)
-            $or:[
-                {"userId":id},
-                {"contactId":id}
+            //Ví dụ như người dùng A query thì nó sẽ tìm những bản ghi nào mà thỏa mãn một trong 2 vai trò
+            // A là người thêm X vào danh sách kết bạn (A=>userID,X=>contactID)
+            // A là người được X kết bạn (A=>contactID,X=>userID)
+            $or: [
+                { "userId": id },
+                { "contactId": id }
             ]
         }).exec();
     },
-    checkExists(userId,contactId)//Kiểm tra xem trong user gửi lời mời kết bạn đã kết bạn hay chưa ?
+    checkExists(userId, contactId)//Kiểm tra xem trong user gửi lời mời kết bạn đã kết bạn hay chưa ?
     //Tìm kiếm bản ghi thỏa mãn một trong 2 điều kiện 
     //A gửi yêu cầu cho B (A=>userId,B=>contactId)
     //B gửi yêu cầu cho A (B=>userId,A=>contactID)
     {
-       return this.findOne({
-           $or:[
-            {$and:[
-                {"userId":userId},
-                {"contactId":contactId}
-            ]},
-            {$and:[
-                {"userId":contactId},
-                {"contactId":userId}
-            ]}
-           ]
-       }).exec();
+        return this.findOne({
+            $or: [
+                {
+                    $and: [
+                        { "userId": userId },
+                        { "contactId": contactId }
+                    ]
+                },
+                {
+                    $and: [
+                        { "userId": contactId },
+                        { "contactId": userId }
+                    ]
+                }
+            ]
+        }).exec();
     },
-    removeRequestContact(userId,contactId){
-      this.remove({
-          $and:[
-              {userId},
-              {contactId}
-          ]
-      }).exec()
+    // getContacts(id, limit) {
+    //     return this.find({
+    //         $and: [
+    //             { userId: id },
+    //             { status: true }
+    //         ]
+    //     }).sort({ "createdAt": -1 }).limit(limit).exec();
+    // },
+    getContacts(id, limit) {
+        return this.find({
+            $and: [
+                {
+                    $or:[{userId:id},{contactId:id}]
+                },
+                { status: true }
+            ]
+        }).sort({ "createdAt": -1 }).limit(limit).exec();
+    },
+    getContactsReceive(id,limit) {
+        return this.find({
+            $and: [
+                { contactId: id },
+                { status: false }
+            ]
+        }).sort({ "createdAt": -1 }).limit(limit).exec();
+    },
+    getContactsSent(id,limit) {
+        return this.find({
+            $and: [
+                { userId: id },
+                { status: false }
+            ]
+        }).sort({ "createdAt": -1 }).limit(limit).exec();
+    },
+    removeRequestContact(userId, contactId) {
+        this.remove({
+            $and: [
+                { userId },
+                { contactId }
+            ]
+        }).exec()
     }
-}
-export default mongoose.model("contact",ContactSchema);
+};
+export default mongoose.model("contact", ContactSchema);
