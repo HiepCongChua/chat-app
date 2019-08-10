@@ -48,32 +48,32 @@
               <ul class="contactList"></ul>
             </div>
           </div>
-
           <div id="contacts" class="tab-pane fade">
             <div class="find-user-bottom">
               <ul class="contactList">
                 <% contacts.forEach(function(user){ %>
                 <li class="_contactList" data-uid="<%= user._id %>">
+                <li class="_contactList" data-uid="<%= user._id%>">
                   <div class="contactPanel">
                     <div class="user-avatar">
                       <img src="
-                        <%if(user.avatar===null){%>
-                            https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
-                        <%}else{%>
-                           <%= user.avatar %> 
-                        <%}%>
-                        "
-                        alt=""
-                      />
-                    </div>
-                    <div class="user-name">
-                      <p>
-                        <%= user.username %>
-                      </p>
-                    </div>
-                    <br />
-                    <div class=" user-address">
-                      <span>&nbsp <%= user.address %></span>
+                                        <%if(user.avatar===null){%>
+                                            https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
+                                        <%}else{%>
+                                           <%= user.avatar %> 
+                                        <%}%>
+                                        "
+                              alt=""
+                            />
+                          </div>
+                          <div class="user-name">
+                            <p>
+                              <%= user.username %>
+                            </p>
+                          </div>
+                          <br />
+                          <div class=" user-address">
+                      <span>&nbsp <%= user.address %> </span>
                     </div>
                     <div class="user-talk" data-uid="<%= user._id %>">
                       Trò chuyện
@@ -86,7 +86,7 @@
                 <%});%>
               </ul>
               <div class="read_more_contacts">
-                <a href="javascript:void(0)" id="link-read-more-notif">
+                <a href="javascript:void(0)" id="link-read-more-contacts">
                   <strong>Xem thêm 10 bạn bè.</strong>
                 </a>
                 <div class="read-more-loader">
@@ -96,6 +96,7 @@
               </div>
             </div>
           </div>
+
           <div id="request-contact-sent" class="tab-pane fade">
             <div class="find-user-bottom">
               <ul class="contactList">
@@ -130,7 +131,7 @@
                 <%});%>
               </ul>
               <div class="read_more_contacts_sent">
-                <a href="javascript:void(0)" id="link-read-more-notif">
+                <a href="javascript:void(0)" id="link-read-more-">
                   <strong>Xem thêm 10 bạn bè.</strong>
                 </a>
 

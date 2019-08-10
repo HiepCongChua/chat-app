@@ -46,6 +46,21 @@ UserSchema.statics = {
     findByEmail(email){
         return this.findOne({'local.email':email}).exec();
     },
+    findListContacts(userId,contactId,currentId){//Tìm tất cả mọi người đã kết nối 
+        //tức là mình có thể nhận được lời mời và đồng ý mình là contactId người kia là userId
+        //hoặc ngược lại mình gửi lời mời và người kia đồng ý mình là userId và người kia là contactId
+        //tìm bản ghi thỏa mãn khác với id của mình bởi vì mình có thể là contactId hoặc userId
+     return this.find({
+         $and:[
+             {
+                $or:[{_id:userId},{_id:contactId}]
+             },
+             {
+                _id:{$ne:currentId}
+             }
+         ]
+     }).exec();
+    },
     removeById(id){
         return this.findByIdAndRemove(id).exec();
     },
