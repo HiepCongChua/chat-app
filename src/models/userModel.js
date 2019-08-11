@@ -59,7 +59,7 @@ UserSchema.statics = {
                 _id:{$ne:currentId}
              }
          ]
-     }).exec();
+     },{_id:1,username:1,avatar:1,address:1}).exec();
     },
     removeById(id){
         return this.findByIdAndRemove(id).exec();
@@ -86,6 +86,9 @@ UserSchema.statics = {
     },
     findUserById(id)
     {
+        return this.findById(id,{_id:1,username:1,avatar:1,address:1});
+    },
+    findUserByIdForChangePassword(id){
         return this.findById(id);
     },
     findUserByFacebookUid(id){

@@ -54,7 +54,8 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).exec();
     },
-    getContacts(id, limit) {
+    getContacts(id, skip ,limit) {
+        console.log(limit,skip);
         return this.find({
             $and: [
                 {
@@ -62,25 +63,25 @@ ContactSchema.statics = {//Tạo một contact mới
                 },
                 { status: true }
             ]
-        }).sort({ "createdAt": -1 }).limit(limit).exec();
+        }).sort({createdAt:-1}).skip(skip).limit(limit).exec();
     },
-    getContactsReceive(id,limit) {//Lấy những user gửi cho mình lời mời kết bạn
+    getContactsReceive(id,skip,limit) {//Lấy những user gửi cho mình lời mời kết bạn
         //=> mình đóng vai trò là contactId
         return this.find({
             $and: [
                 { contactId: id },
                 { status: false }
             ]
-        }).sort({ "createdAt": -1 }).exec();
+        }).sort({ "createdAt": -1 }).skip(skip).limit(limit).exec();
     },
-    getContactsSent(id,limit) {//Lấy những user mình đã gửi request (chưa đồng ý với lời mời của mình )
+    getContactsSent(id,skip,limit) {//Lấy những user mình đã gửi request (chưa đồng ý với lời mời của mình )
         //=> mình đóng vai trò là userId
         return this.find({
             $and: [
                 { userId: id },
                 { status: false }
             ]
-        }).sort({ "createdAt": -1 }).limit(limit).exec();
+        }).sort({ "createdAt": -1 }).skip(skip).limit(limit).exec();
     },
     removeRequestContact(userId, contactId) {
         this.remove({

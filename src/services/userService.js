@@ -9,7 +9,7 @@ const updatePassword = async (id,{currentPass,newPass}) => {
   //=>giúp có thể trả về một Promise dạng resolve hoặc reject bất cứ lúc nào để cho tầng controller xử lý
   //=> khi sử dụng try catch thì chúng ta phải xử lý luôn ở tầng service.
   return new Promise(async(res, rej) => {
-    const currentUser = await UserModel.findUserById(id);
+    const currentUser = await UserModel.findUserByIdForChangePassword(id);
     if (!currentUser) {
       return rej(transErrorsMessage.ACCOUNT_UNDEFINED);
     };
