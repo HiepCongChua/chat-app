@@ -2,7 +2,7 @@ import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
 import { model as Notification, types } from './../models/notificationModel';
-const LIMIT_RECORD = 2;
+const LIMIT_RECORD = 5;
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc
   return new Promise(async (resolve, reject) => {
@@ -66,7 +66,7 @@ const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
     try {
       const contacts = await ContactModel.getContacts(id,LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
-        return await UserModel.findUserById(contact.contactId);
+        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
       }));
       return resolve(users); 
     } catch (error) {
@@ -104,4 +104,43 @@ const getContactReceive = (id) => {
     }
   });
 };
-export { findUserContact, addNew, removeNew, getContacts, getContactsSent, getContactReceive };
+const countAllcontacts = (id)=>{
+  return new Promise (async(resolve,reject)=>{
+    try {
+      const count = await ContactModel.countAllContacts(id);
+      resolve(count);
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+const countAllcontactsReceive = (id)=>{
+  return new Promise (async(resolve,reject)=>{
+    try {
+      const count = await ContactModel.countAllContactsReceive(id);
+      resolve(count);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+const countAllcontactsSent = (id)=>{
+  return new Promise (async(resolve,reject)=>{
+    try {
+      const count = await ContactModel.countAllContactsSent(id);
+      resolve(count);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export { 
+  findUserContact, 
+  addNew, removeNew, 
+  getContacts, 
+  getContactsSent, 
+  getContactReceive , 
+  countAllcontacts , 
+  countAllcontactsSent , 
+  countAllcontactsReceive 
+};

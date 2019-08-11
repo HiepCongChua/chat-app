@@ -46,7 +46,6 @@ const markAllAsRead = (currentUserId, targetUserId) => {
     return new Promise(async (resoleve, rejects) => {
         try {
             const notifications = await Notification.markAllAsRead(currentUserId, targetUserId);
-            console.log(notifications);
             resoleve(notifications);
         } catch (error) {
             console.log(error);
