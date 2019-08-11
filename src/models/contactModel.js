@@ -71,7 +71,7 @@ ContactSchema.statics = {//Tạo một contact mới
                 { contactId: id },
                 { status: false }
             ]
-        }).sort({ "createdAt": -1 }).limit(limit).exec();
+        }).sort({ "createdAt": -1 }).exec();
     },
     getContactsSent(id,limit) {//Lấy những user mình đã gửi request (chưa đồng ý với lời mời của mình )
         //=> mình đóng vai trò là userId
@@ -88,7 +88,33 @@ ContactSchema.statics = {//Tạo một contact mới
                 { userId },
                 { contactId }
             ]
-        }).exec()
+        }).exec();
+    },
+    countAllContacts(id){//Lấy số lượng trong danh bạ của mình 
+        return this.count({
+            $and: [
+                {
+                    $or:[{userId:id},{contactId:id}]
+                },
+                { status: true }
+            ]
+        }).sort({ "createdAt": -1 }).exec();
+    },
+    countAllContactsReceive(id){//Lấy số lượng danh sách những người đã gửi lời mời kết bạn cho mình
+        return this.count({
+            $and: [
+                { contactId: id },
+                { status: false }
+            ]
+        }).exec();
+    },
+    countAllContactsSent(id){//Lấy số lượng những người mình đã gửi lời mời kết bạn
+        return this.count({
+            $and: [
+                { userId: id },
+                { status: false }
+            ]
+        }).exec();
     }
 };
 export default mongoose.model("contact", ContactSchema);

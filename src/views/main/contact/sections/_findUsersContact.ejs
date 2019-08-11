@@ -1,7 +1,6 @@
 <% users.forEach(function(user){ %>
 <li class="_contactList" data-uid="<%= user.id %>">
     <div class="contactPanel">
-
         <div class="user-avatar">
             <img src="
             <% if(user.avatar===null){ %>
@@ -17,7 +16,7 @@
                 <%= user.username%>
             </p>
         </div>
-
+        <br/>
         <div class="user-address">
             <span>&nbsp <%= user.address %></span>
         </div>
@@ -26,8 +25,7 @@
             Thêm vào danh sách liên lạc
         </div>
 
-        <div class="user-remove-request-contact action-danger" 
-             data-uid="<%= user._id %>">
+        <div class="user-remove-request-contact action-danger" data-uid="<%= user._id %>">
             Hủy yêu cầu
         </div>
 

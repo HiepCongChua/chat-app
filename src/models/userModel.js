@@ -123,5 +123,4 @@ UserSchema.methods = {
         return bcrypt.compare(password,this.local.password);
     }
 }
-
 export default mongoose.model("user",UserSchema);

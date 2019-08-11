@@ -68,7 +68,6 @@ const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
       const users = await Promise.all(contacts.map(async (contact) => {
         return await UserModel.findListContacts(contact.userId,contact.contactId,id);
       }));
-      console.log("contact for server",users);
       return resolve(users); 
     } catch (error) {
       reject(error);
@@ -105,46 +104,43 @@ const getContactReceive = (id) => {
     }
   });
 };
-const countAllcontactsSent = (id)=>{
-
-};
-const countAllcontactsSent = (id)=>{
-  return new Promise ((resolve,reject)=>{
-    try {
-      
-    } catch (error) {
-      
-    }
-  })
-};
 const countAllcontacts = (id)=>{
   return new Promise (async(resolve,reject)=>{
     try {
-      const count = await ContactModel.countAllcontacts(id);
+      const count = await ContactModel.countAllContacts(id);
       resolve(count);
     } catch (error) {
-      
+      reject(error);
     }
   })
 };
 const countAllcontactsReceive = (id)=>{
   return new Promise (async(resolve,reject)=>{
     try {
-      const count = await ContactModel.countAllcontactsReceive(id);
+      const count = await ContactModel.countAllContactsReceive(id);
       resolve(count);
     } catch (error) {
-      
+      reject(error);
     }
   });
 };
 const countAllcontactsSent = (id)=>{
   return new Promise (async(resolve,reject)=>{
     try {
-      const count = await ContactModel.countAllcontactsSent(id);
+      const count = await ContactModel.countAllContactsSent(id);
       resolve(count);
     } catch (error) {
-      
+      reject(error);
     }
   });
 };
-export { findUserContact, addNew, removeNew, getContacts, getContactsSent, getContactReceive , countAllcontacts , countAllcontactsSent , countAllcontactsReceive };
+export { 
+  findUserContact, 
+  addNew, removeNew, 
+  getContacts, 
+  getContactsSent, 
+  getContactReceive , 
+  countAllcontacts , 
+  countAllcontactsSent , 
+  countAllcontactsReceive 
+};

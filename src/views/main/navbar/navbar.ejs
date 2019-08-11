@@ -33,7 +33,14 @@
                 <li>
                     <a href="#contactsModal" data-toggle="modal" title="Quản lý liên lạc" id="show-modal-contacts">
                         <i class="fa fa-user-plus"></i>
-                        <div class="noti_contact_counter"></div>
+                        <% if( countAllContactsReceive + countAllContactsSent){ %>
+                        <div class="noti_contact_counter">
+                            <%=  countAllContactsReceive + countAllContactsSent %>
+                        </div>
+                        <% } else{ %>
+                        <div class="noti_contact_counter display-none">
+                        </div>
+                        <%}%>
                     </a>
                 </li>
                 <li>
@@ -54,7 +61,7 @@
                         <% notifications.forEach(notifi=>{ %>
                         <%- notifi  %>
                         <%});%>
-                         </div>
+        </div>
         <div class="seeAll"><a href="#notificationsModal" data-toggle="modal">Xem tất cả</a></div>
     </div>
     </div>
