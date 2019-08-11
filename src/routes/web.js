@@ -1,17 +1,7 @@
  import express from "express";
-import { 
-  getLoginRegister,
-  postRegister,
-  verifyAccount,
-  getLogout,
-  checkLoggedIn,
-  checkLoggedOut} from "./../controllers/authController";
+import { getLoginRegister,postRegister,verifyAccount,getLogout,checkLoggedIn,checkLoggedOut} from "./../controllers/authController";
 import {getHome} from "./../controllers/homeController";
-import {
-  findUsersContact,
-  addNew,
-  removeNew
-} from './../controllers/contactController';
+import {findUsersContact,addNew,removeNew,readMoreContacts,readMoreContactsSent,readMoreContactsReceived} from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
@@ -30,7 +20,6 @@ const initRouters = app => {
   router.get("/login-register",checkLoggedOut,getLoginRegister);
   router.post("/register",checkLoggedOut,registerValidation,postRegister);
   router.get("/verify/:token", checkLoggedOut, verifyAccount);
-
   router.post(
     "/login",
     passport.authenticate("local", {
@@ -74,7 +63,10 @@ const initRouters = app => {
   router.post('/contact/add-new', checkLoggedIn,  addNew); //Router gửi một yêu cầu kết bạn
   router.delete('/contact/remove-request-contact', checkLoggedIn,  removeNew);//Router hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời);
   router.get('/notification/read-more', checkLoggedIn,readMore);
-  router.put('/notification/mark-all-as-read',checkLoggedIn,markAllAsRead)
+  router.put('/notification/mark-all-as-read',checkLoggedIn,markAllAsRead);
+  router.get('/contact/read-more-contacts',checkLoggedIn,readMoreContacts);
+  router.get('/contact/read-more-contacts-sent',checkLoggedIn,readMoreContactsSent);
+  router.get('/contact/read-more-contacts-received',checkLoggedIn,readMoreContactsReceived)
   return app.use("/", router);
 };
 export default initRouters;

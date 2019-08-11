@@ -2,7 +2,10 @@ import { validationResult } from "express-validator/check";
 import {
     findUserContact as findUsersContactService,
     addNew as addNewService,
-    removeNew as removeNewService
+    removeNew as removeNewService,
+    readMoreContacts as readMoreContactsService,
+    readMoreContactsSent as readMoreContactsSentService,
+    readMoreContactsReceived as readMoreContactsReceivedService
 } from "../services/contactService";
 const findUsersContact = async (req, res, next) => {
     const errorArr = [];
@@ -46,8 +49,38 @@ const removeNew = async (req, res, next) => {//Hàm hủy lời mời kết bạ
         return res.status(500).send(error);
     };
 };
+const readMoreContacts = async (req,res,next)=>{
+    try {
+        const skipNumberContact = +(req.query.skipNumber);
+        const contacts = await readMoreContactsService(req.user._id,skipNumberContact);
+        return res.status(200).send(contacts);
+    } catch (error) {
+        return res.status(500).send(error);
+    };
+};
+const readMoreContactsSent = async (req,res,next)=>{
+    try {
+        const skipNumberContact = +(req.query.skipNumber);
+        const contacts = await readMoreContactsSentService(req.user._id,skipNumberContact);
+        return res.status(200).send(contacts);
+    } catch (error) {
+        return res.status(500).send(error);
+    };
+}
+const readMoreContactsReceived = async (req,res,next)=>{
+    try {
+        const skipNumberContact = +(req.query.skipNumber);
+        const contacts = await readMoreContactsReceivedService(req.user._id,skipNumberContact);
+        return res.status(200).send(contacts);
+    } catch (error) {
+        return res.status(500).send(error);
+    };
+}
 export  {
     findUsersContact, 
     addNew,
-    removeNew
+    removeNew,
+    readMoreContacts,
+    readMoreContactsSent,
+    readMoreContactsReceived
 }

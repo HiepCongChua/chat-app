@@ -2,7 +2,7 @@ import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
 import { model as Notification, types } from './../models/notificationModel';
-const LIMIT_RECORD = 5;
+const LIMIT_RECORD = 1; 
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc
   return new Promise(async (resolve, reject) => {
@@ -64,7 +64,8 @@ const removeNew = (currentUserId, contactId) => {
 const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
   return new Promise(async (resolve, reject) => {
     try {
-      const contacts = await ContactModel.getContacts(id,LIMIT_RECORD);
+      const skip = 0
+      const contacts = await ContactModel.getContacts(id,skip,LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
         return await UserModel.findListContacts(contact.userId,contact.contactId,id);
       }));
@@ -79,7 +80,8 @@ const getContactsSent = (id) => {
    //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
   return new Promise(async (resolve, reject) => {
     try {
-      const contacts = await ContactModel.getContactsSent(id,LIMIT_RECORD);
+      const skip = 0;
+      const contacts = await ContactModel.getContactsSent(id,skip,LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
         return await UserModel.findUserById(contact.contactId);
       }));
@@ -94,12 +96,14 @@ const getContactReceive = (id) => {
     //Lấy những user mình đã gửi lời mời kết bạn 
     //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
     try {
-      const contacts = await ContactModel.getContactsReceive(id,LIMIT_RECORD);
+      const skip = 0;
+      const contacts = await ContactModel.getContactsReceive(id,skip,LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
         return await UserModel.findUserById(contact.userId);
       }));
       return resolve(users); 
     } catch (error) {
+      console.log(error);
       reject(error);
     }
   });
@@ -134,6 +138,49 @@ const countAllcontactsSent = (id)=>{
     }
   });
 };
+const readMoreContacts = (id,skip)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+       skip = (!!parseInt(skip)) ? parseInt(skip):0;
+      const contacts = await ContactModel.getContacts(id,skip,LIMIT_RECORD);
+      const users = await Promise.all(contacts.map(async (contact) => {
+        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+      }));
+      return resolve(users); 
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+const readMoreContactsSent = (id,skip)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+       skip = (!!parseInt(skip)) ? parseInt(skip):0;
+      const contacts = await ContactModel.getContactsSent(id,skip,LIMIT_RECORD);
+      const users = await Promise.all(contacts.map(async (contact) => {
+        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+      }));
+      return resolve(users); 
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+const readMoreContactsReceived = (id,skip)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+       skip = (!!parseInt(skip)) ? parseInt(skip):0;
+      const contacts = await ContactModel.getContactsReceive(id,skip,LIMIT_RECORD);
+      const users = await Promise.all(contacts.map(async (contact) => {
+        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+      }));
+      return resolve(users); 
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
 export { 
   findUserContact, 
   addNew, removeNew, 
@@ -142,5 +189,8 @@ export {
   getContactReceive , 
   countAllcontacts , 
   countAllcontactsSent , 
-  countAllcontactsReceive 
+  countAllcontactsReceive ,
+  readMoreContacts,
+  readMoreContactsSent,
+  readMoreContactsReceived
 };
