@@ -9,7 +9,7 @@ function callFindUsers (e){
     $.get(`/contact/find-users/${keyword}`,{keyword},function(data){
           $('#find-user ul').html(data);
           addContact()//đây là hàm ở file addContact.js được chèn bên trên file findUsersContact
-          removeRequestContact();
+          removeRequestContactSent();
     });
 };
 $(document).ready(function(){
