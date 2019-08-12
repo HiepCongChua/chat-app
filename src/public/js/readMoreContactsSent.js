@@ -37,13 +37,14 @@
                     <div class=" user-address">
                 <span>&nbsp ${contact.address||''}</span>
               </div>
-              <div class="user-remove-request-sent action-danger" data-uid="${contact._id}">
+              <div class="user-remove-request-contact-sent action-danger display-important" data-uid="${contact._id}">
                 Hủy yêu cầu
               </div>
             </div>
           </li>
              `);
             });
+            removeRequestContactSent();
               $("#link-read-more-contacts-sent").css('display','inline-block');
             $(".read-more-contacts-loader").css('display','none');
         });

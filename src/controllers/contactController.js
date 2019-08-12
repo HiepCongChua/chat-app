@@ -2,7 +2,7 @@ import { validationResult } from "express-validator/check";
 import {
     findUserContact as findUsersContactService,
     addNew as addNewService,
-    removeNew as removeNewService,
+    removeRequestContactSent as removeRequestContactSentService,
     readMoreContacts as readMoreContactsService,
     readMoreContactsSent as readMoreContactsSentService,
     readMoreContactsReceived as readMoreContactsReceivedService
@@ -38,11 +38,11 @@ const addNew = async (req, res, next) => {//Đây là hàm có nhiệm vụ add 
         return res.status(500).send(error);
     };
 };
-const removeNew = async (req, res, next) => {//Hàm hủy lời mời kết bạn đã gửi
+const removeRequestContactSent = async (req, res, next) => {//Hàm hủy lời mời kết bạn đã gửi
     try {
         const currentUserId = req.user._id;
         const contactId = req.body.uid;
-        const removeContact = await removeNewService(currentUserId, contactId);//Hàm này ở phía service(truyền cho nó 2 tham số là id của người dùng hiện tại và id của người dùng muốn gửi lời mời kết bạn)
+        const removeContact = await removeRequestContactSentService(currentUserId, contactId);//Hàm này ở phía service(truyền cho nó 2 tham số là id của người dùng hiện tại và id của người dùng muốn gửi lời mời kết bạn)
         return res.status(200).send({ success: !!removeContact });//(!!newContact kiểm tra xem bản ghi mới có được tạo hay không true or false)
     } catch (error) {
         console.log(error);
@@ -79,7 +79,7 @@ const readMoreContactsReceived = async (req,res,next)=>{
 export  {
     findUsersContact, 
     addNew,
-    removeNew,
+    removeRequestContactSent,
     readMoreContacts,
     readMoreContactsSent,
     readMoreContactsReceived

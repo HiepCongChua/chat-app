@@ -8,19 +8,19 @@ function addContact() {
                     .find(`div.user-add-new-contact[data-uid = ${targetId}]`)
                     .hide();
                 $("#find-user")
-                    .find(`div.user-remove-request-contact[data-uid = ${targetId}]`)
+                    .find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`)
                     .css("display", "inline-block");
                 //Khi nhấn thêm mới thì đồng thời tăng giá trị trên màn hình.
                 increaseNumberNotifiContact("count-request-contact-sent");
                 const userInfoHtml = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML;//Sau khi chúng ta gửi yêu cầu kết bạn
                 //thì khối info của user mà chúng ta vừa gửi lời mời kết bạn ở bên find user để append lập tức vào bên request contact sent
-                console.log(userInfoHtml);
                 $("#request-contact-sent").find("ul").prepend(userInfoHtml);
+                removeRequestContactSent();
                 socket.emit("add-new-contact", {
                     //Khi addContact thì bắn một sự kiện lên server
                     contactId: targetId
                 });
-            }
+            };
         });
     });
 };

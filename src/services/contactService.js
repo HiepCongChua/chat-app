@@ -2,7 +2,7 @@ import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
 import { model as Notification, types } from './../models/notificationModel';
-const LIMIT_RECORD = 1; 
+const LIMIT_RECORD = 1;
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc
   return new Promise(async (resolve, reject) => {
@@ -45,10 +45,10 @@ const addNew = (currentUserId, contactId) => {
     resolve(newContact);
   });
 };
-const removeNew = (currentUserId, contactId) => {
+const removeRequestContactSent = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await ContactModel.removeRequestContact(
+      await ContactModel.removeRequestContactSent(
         currentUserId,
         contactId
       );
@@ -65,11 +65,11 @@ const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
   return new Promise(async (resolve, reject) => {
     try {
       const skip = 0
-      const contacts = await ContactModel.getContacts(id,skip,LIMIT_RECORD);
+      const contacts = await ContactModel.getContacts(id, skip, LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
-        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+        return await UserModel.findListContacts(contact.userId, contact.contactId, id);
       }));
-      return resolve(users); 
+      return resolve(users);
     } catch (error) {
       reject(error);
     }
@@ -77,15 +77,15 @@ const getContacts = (id) => {//Lấy những user trong danh sách bạn bè
 };
 const getContactsSent = (id) => {
   //Lấy những user mình đã gửi lời mời kết bạn
-   //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
+  //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
   return new Promise(async (resolve, reject) => {
     try {
       const skip = 0;
-      const contacts = await ContactModel.getContactsSent(id,skip,LIMIT_RECORD);
+      const contacts = await ContactModel.getContactsSent(id, skip, LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
         return await UserModel.findUserById(contact.contactId);
       }));
-      return resolve(users); 
+      return resolve(users);
     } catch (error) {
       reject(error);
     };
@@ -97,19 +97,19 @@ const getContactReceive = (id) => {
     //trong bảng Contact thì userId là người gửi lời mời kết bạn còn contactId là người nhận
     try {
       const skip = 0;
-      const contacts = await ContactModel.getContactsReceive(id,skip,LIMIT_RECORD);
+      const contacts = await ContactModel.getContactsReceive(id, skip, LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
         return await UserModel.findUserById(contact.userId);
       }));
-      return resolve(users); 
+      return resolve(users);
     } catch (error) {
       console.log(error);
       reject(error);
     }
   });
 };
-const countAllcontacts = (id)=>{
-  return new Promise (async(resolve,reject)=>{
+const countAllcontacts = (id) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const count = await ContactModel.countAllContacts(id);
       resolve(count);
@@ -118,8 +118,8 @@ const countAllcontacts = (id)=>{
     }
   })
 };
-const countAllcontactsReceive = (id)=>{
-  return new Promise (async(resolve,reject)=>{
+const countAllcontactsReceive = (id) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const count = await ContactModel.countAllContactsReceive(id);
       resolve(count);
@@ -128,8 +128,8 @@ const countAllcontactsReceive = (id)=>{
     }
   });
 };
-const countAllcontactsSent = (id)=>{
-  return new Promise (async(resolve,reject)=>{
+const countAllcontactsSent = (id) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const count = await ContactModel.countAllContactsSent(id);
       resolve(count);
@@ -138,58 +138,59 @@ const countAllcontactsSent = (id)=>{
     }
   });
 };
-const readMoreContacts = (id,skip)=>{
+const readMoreContacts = (id, skip) => {
   return new Promise(async (resolve, reject) => {
     try {
-       skip = (!!parseInt(skip)) ? parseInt(skip):0;
-      const contacts = await ContactModel.getContacts(id,skip,LIMIT_RECORD);
+      skip = (!!parseInt(skip)) ? parseInt(skip) : 0;
+      const contacts = await ContactModel.getContacts(id, skip, LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
-        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+        return await UserModel.findListContacts(contact.userId, contact.contactId, id);
       }));
-      return resolve(users); 
+      return resolve(users);
     } catch (error) {
       reject(error);
     }
   });
 };
-const readMoreContactsSent = (id,skip)=>{
+const readMoreContactsSent = (id, skip) => {
   return new Promise(async (resolve, reject) => {
     try {
-       skip = (!!parseInt(skip)) ? parseInt(skip):0;
-      const contacts = await ContactModel.getContactsSent(id,skip,LIMIT_RECORD);
+      skip = (!!parseInt(skip)) ? parseInt(skip) : 0;
+      const contacts = await ContactModel.getContactsSent(id, skip, LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
-        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+        return await UserModel.findListContacts(contact.userId, contact.contactId, id);
       }));
-      return resolve(users); 
+      return resolve(users);
     } catch (error) {
       reject(error);
     }
   });
 };
-const readMoreContactsReceived = (id,skip)=>{
+const readMoreContactsReceived = (id, skip) => {
   return new Promise(async (resolve, reject) => {
     try {
-       skip = (!!parseInt(skip)) ? parseInt(skip):0;
-      const contacts = await ContactModel.getContactsReceive(id,skip,LIMIT_RECORD);
+      skip = (!!parseInt(skip)) ? parseInt(skip) : 0;
+      const contacts = await ContactModel.getContactsReceive(id, skip, LIMIT_RECORD);
       const users = await Promise.all(contacts.map(async (contact) => {
-        return await UserModel.findListContacts(contact.userId,contact.contactId,id);
+        return await UserModel.findListContacts(contact.userId, contact.contactId, id);
       }));
-      return resolve(users); 
+      return resolve(users);
     } catch (error) {
       console.log(error);
       reject(error);
     }
   });
 };
-export { 
-  findUserContact, 
-  addNew, removeNew, 
-  getContacts, 
-  getContactsSent, 
-  getContactReceive , 
-  countAllcontacts , 
-  countAllcontactsSent , 
-  countAllcontactsReceive ,
+export {
+  findUserContact,
+  addNew,
+  removeRequestContactSent,
+  getContacts,
+  getContactsSent,
+  getContactReceive,
+  countAllcontacts,
+  countAllcontactsSent,
+  countAllcontactsReceive,
   readMoreContacts,
   readMoreContactsSent,
   readMoreContactsReceived
