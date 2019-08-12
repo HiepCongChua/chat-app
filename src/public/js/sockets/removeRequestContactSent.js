@@ -9,7 +9,7 @@ function removeRequestContactSent(){
              if(data.success)
              {
             $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display","inline-block");
-            $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`).hide(); 
+            $("#find-user").find(`div.user-remove-request-contact-received[data-uid = ${targetId}]`).hide(); 
             decreaseNumberNotifiContact('count-request-contact-sent'); 
             decreaseNumberNotification('noti_contact_counter',1);
             $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();

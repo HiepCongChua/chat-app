@@ -38,7 +38,7 @@
                      <div class=" user-address">
                  <span>&nbsp ${contact.address||''} </span>
                </div>
-               <div class="user-acccept-contact-received" data-uid="${contact._id}">
+               <div class="user-accept-contact-received" data-uid="${contact._id}">
                  Chấp nhận
                </div>
                <div class="user-remove-request-contact-received action-danger" data-uid="${contact._id}">

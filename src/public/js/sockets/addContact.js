@@ -58,7 +58,7 @@ socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu 
             <div class=" user-address">
         <span>&nbsp ${user.address} </span>
       </div>
-      <div class="user-acccept-contact-received" data-uid="${user.id}">
+      <div class="user-accept-contact-received" data-uid="${user.id}">
         Chấp nhận
       </div>
       <div class="user-remove-request-contact-received action-danger" data-uid="${user.id}">
