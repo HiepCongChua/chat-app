@@ -1,7 +1,7 @@
  import express from "express";
 import { getLoginRegister,postRegister,verifyAccount,getLogout,checkLoggedIn,checkLoggedOut} from "./../controllers/authController";
 import {getHome} from "./../controllers/homeController";
-import {findUsersContact,addNew,removeRequestContactSent,readMoreContacts,readMoreContactsSent,readMoreContactsReceived} from './../controllers/contactController';
+import {findUsersContact,addNew,removeRequestContactSent,readMoreContacts,readMoreContactsSent,readMoreContactsReceived,removeRequestContactReceived} from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
@@ -62,6 +62,7 @@ const initRouters = app => {
   router.get('/contact/find-users/:keyword', checkLoggedIn,findUsersContactValid,  findUsersContact);
   router.post('/contact/add-new', checkLoggedIn,  addNew); //Router gửi một yêu cầu kết bạn
   router.delete('/contact/remove-request-contact-sent', checkLoggedIn, removeRequestContactSent);//Router hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời);
+  router.delete('/contact/remove-request-contact-received',checkLoggedIn,removeRequestContactReceived)
   router.get('/notification/read-more', checkLoggedIn,readMore);
   router.put('/notification/mark-all-as-read',checkLoggedIn,markAllAsRead);
   router.get('/contact/read-more-contacts',checkLoggedIn,readMoreContacts);

@@ -11,14 +11,14 @@ function removeRequestContactSent(){
             $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display","inline-block");
             $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`).hide(); 
             decreaseNumberNotifiContact('count-request-contact-sent'); 
-            
+            decreaseNumberNotification('noti_contact_counter',1);
             $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();
             //Socket emit remove contact
             socket.emit("remove-request-contact-sent", {
                 //Khi addContact thì bắn một sự kiện lên server
                 contactId: targetId
             });
-             }
+             };
          }
      });
     });

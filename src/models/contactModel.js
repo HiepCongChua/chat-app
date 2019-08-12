@@ -116,6 +116,14 @@ ContactSchema.statics = {//Tạo một contact mới
                 { status: false }
             ]
         }).exec();
+    },
+    removeRequestContactReceived(userId,contactId){
+        this.remove({
+            $and: [
+                { userId : contactId },
+                { contactId : userId }
+            ]
+        }).exec(); 
     }
 };
 export default mongoose.model("contact", ContactSchema);

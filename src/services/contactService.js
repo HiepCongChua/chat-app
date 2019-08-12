@@ -181,6 +181,22 @@ const readMoreContactsReceived = (id, skip) => {
     }
   });
 };
+const removeRequestContactReceived = ()=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+      await ContactModel.removeRequestContactReceived(
+        currentUserId,
+        contactId
+      );
+      //remove notification
+      // await Notification.removeRequestContactReceivedNotification(currentUserId, contactId, types.ADD_CONTACT);
+      return resolve(true);
+    } catch (error) {
+      console.log(error)
+      return reject(false)
+    };
+  });
+}
 export {
   findUserContact,
   addNew,
@@ -193,5 +209,6 @@ export {
   countAllcontactsReceive,
   readMoreContacts,
   readMoreContactsSent,
-  readMoreContactsReceived
+  readMoreContactsReceived,
+  removeRequestContactReceived
 };
