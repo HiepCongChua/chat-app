@@ -181,7 +181,7 @@ const readMoreContactsReceived = (id, skip) => {
     }
   });
 };
-const removeRequestContactReceived = ()=>{
+const removeRequestContactReceived = (currentUserId, contactId)=>{
   return new Promise(async (resolve, reject) => {
     try {
       await ContactModel.removeRequestContactReceived(
