@@ -297,6 +297,7 @@ $(document).ready(function() {
     $("#input-change-phone").val(originUserInfo.phone);
   });
   $("#input-btn-update-user-password").bind("click",function(){
+    
     if(Object.keys(userUpdatePassword).length!==3)
     {
        alertify.notify("Bạn phải nhập đầy đủ thông tin !","error",5);
@@ -314,6 +315,7 @@ $(document).ready(function() {
     }).then((result) => {//Nếu click vào cập nhật thì result.value = true => thực hiện gọi hàm callUpdateUserPassword
      if(result.value)
      {
+       $('#input-btn-cancel-update-user-password').click();
       return  callUpdateUserPassword();
      }
       return false;

@@ -7,7 +7,8 @@ import {
     readMoreContactsSent as readMoreContactsSentService,
     readMoreContactsReceived as readMoreContactsReceivedService,
     removeRequestContactReceived as removeRequestContactReceivedService,
-    acceptRequestContactReceived as acceptRequestContactReceivedService
+    acceptRequestContactReceived as acceptRequestContactReceivedService,
+    removeContact as removeContactService
 } from "../services/contactService";
 const findUsersContact = async (req, res, next) => {
     const errorArr = [];
@@ -68,7 +69,7 @@ const readMoreContactsSent = async (req,res,next)=>{
     } catch (error) {
         return res.status(500).send(error);
     };
-}
+};
 const readMoreContactsReceived = async (req,res,next)=>{
     try {
         const skipNumberContact = +(req.query.skipNumber);
@@ -100,6 +101,17 @@ const acceptRequestContactReceived = async (req,res,next)=>{
         return res.status(500).send(error);
     };
 };
+const removeContact = async (req,res,next)=>{
+    try {
+        const currentUserId = req.user._id;
+        const contactId = req.body.uid;
+        const removeContact = await removeContactService(currentUserId,contactId);
+        return res.status(200).send({ success: !!removeContact });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }; 
+};
 export  {
     findUsersContact, 
     addNew,
@@ -108,5 +120,6 @@ export  {
     readMoreContactsSent,
     readMoreContactsReceived,
     removeRequestContactReceived,
-    acceptRequestContactReceived
+    acceptRequestContactReceived,
+    removeContact
 }

@@ -17,7 +17,7 @@
               Danh bạ
               <% if(countAllContacts>0){ %>
               <span class="show-number-contacts count-contacts">
-                <em>(<%= countAllContacts %>)</em>
+                (<em><%= countAllContacts %></em>)
               </span>
               <%}else{%>
               <span class="show-number-contacts count-contacts"></span>
@@ -29,11 +29,11 @@
               Đang chờ xác nhận
               <span class="show-number-contacts count-request-contact-sent">
                 <% if(countAllContactsSent>0){ %>
-              <span class="show-number-contacts count-contacts">
+              <!-- <span class="show-number-contacts count-contacts"> -->
                 (<em><%= countAllContactsSent %></em>)
-              </span>
+              <!-- </span> -->
               <%}else{%>
-              <span class="show-number-contacts count-contacts"></span>
+              <!-- <span class="show-number-contacts count-contacts"></span> -->
               <%}%>
               </span>
             </a>
@@ -43,11 +43,11 @@
               Yêu cầu kết bạn
               <span class="show-number-contacts count-request-contact-received">
                 <% if(countAllContactsReceive>0){ %>
-              <span class="show-number-contacts count-contacts">
+              <!-- <span class="show-number-contacts count-contacts"> -->
                 (<em><%= countAllContactsReceive %></em>)
-              </span>
+              <!-- </span> -->
               <%}else{%>
-              <span class="show-number-contacts count-contacts"></span>
+              <!-- <span class="show-number-contacts count-contacts"></span> -->
               <%}%>
               </span>
             </a>
@@ -75,7 +75,7 @@
             <div class="find-user-bottom">
               <ul class="contactList">
                 <% contacts.forEach(function(user){ %>
-          <li class="_contactList" data-uid="<%= user._id%>">
+          <li class="_contactList" data-uid="<%= user._id %>">
             <div class="contactPanel">
               <div class="user-avatar">
                 <img src="
@@ -100,7 +100,7 @@
               <div class="user-talk" data-uid="<%= user._id %>">
                 Trò chuyện
               </div>
-              <div class="user-remove-contact action-danger" data-uid="user._id">
+              <div class="user-remove-contact action-danger" data-uid="<%=user._id%>">
                 Xóa liên hệ
               </div>
             </div>

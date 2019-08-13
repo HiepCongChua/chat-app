@@ -11,6 +11,7 @@ import {
     countAllcontacts as countAllContactsService
 } from '../services/contactService';
 const getHome = async (req, res, next) => {
+    console.log(req.user);
     const notifications = await getNotifications(req.user._id);//chứa text là những khối div bên trong là những thông tin của thông báo
     const countNotifUnread = await countNotifUnreadService(req.user._id);//số lượng thông báo chưa đọc
     const contacts = (await getContactsService(req.user._id)).map((el)=>{

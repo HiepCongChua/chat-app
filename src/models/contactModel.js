@@ -54,17 +54,17 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).exec();
     },
-    getContacts(id, skip ,limit) {
+    getContacts(id, skip, limit) {
         return this.find({
             $and: [
                 {
-                    $or:[{userId:id},{contactId:id}]
+                    $or: [{ userId: id }, { contactId: id }]
                 },
                 { status: true }
             ]
-        }).sort({createdAt:-1}).skip(skip).limit(limit).exec();
+        }).sort({ createdAt: -1 }).skip(skip).limit(limit).exec();
     },
-    getContactsReceive(id,skip,limit) {//Lấy những user gửi cho mình lời mời kết bạn
+    getContactsReceive(id, skip, limit) {//Lấy những user gửi cho mình lời mời kết bạn
         //=> mình đóng vai trò là contactId
         return this.find({
             $and: [
@@ -73,7 +73,7 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).sort({ "createdAt": -1 }).skip(skip).limit(limit).exec();
     },
-    getContactsSent(id,skip,limit) {//Lấy những user mình đã gửi request (chưa đồng ý với lời mời của mình )
+    getContactsSent(id, skip, limit) {//Lấy những user mình đã gửi request (chưa đồng ý với lời mời của mình )
         //=> mình đóng vai trò là userId
         return this.find({
             $and: [
@@ -87,21 +87,21 @@ ContactSchema.statics = {//Tạo một contact mới
             $and: [
                 { userId },
                 { contactId },
-                {status:false}
+                { status: false }
             ]
         }).exec();
     },
-    countAllContacts(id){//Lấy số lượng trong danh bạ của mình 
+    countAllContacts(id) {//Lấy số lượng trong danh bạ của mình 
         return this.count({
             $and: [
                 {
-                    $or:[{userId:id},{contactId:id}]
+                    $or: [{ userId: id }, { contactId: id }]
                 },
                 { status: true }
             ]
         }).sort({ "createdAt": -1 }).exec();
     },
-    countAllContactsReceive(id){//Lấy số lượng danh sách những người đã gửi lời mời kết bạn cho mình
+    countAllContactsReceive(id) {//Lấy số lượng danh sách những người đã gửi lời mời kết bạn cho mình
         return this.count({
             $and: [
                 { contactId: id },
@@ -109,7 +109,7 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).exec();
     },
-    countAllContactsSent(id){//Lấy số lượng những người mình đã gửi lời mời kết bạn
+    countAllContactsSent(id) {//Lấy số lượng những người mình đã gửi lời mời kết bạn
         return this.count({
             $and: [
                 { userId: id },
@@ -117,23 +117,38 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).exec();
     },
-    removeRequestContactReceived(userId,contactId){
-       return this.remove({
+    removeRequestContactReceived(userId, contactId) {
+        return this.remove({
             $and: [
-                { userId : contactId },
-                { contactId : userId },
-                {status:false}
+                { userId: contactId },
+                { contactId: userId },
+                { status: false }
             ]
-        }).exec(); 
+        }).exec();
     },
-    acceptRequestContactReceived(contactId,userId){
+    acceptRequestContactReceived(contactId, userId) {
         return this.updateOne(
-        {
-            $and: [{userId},{contactId},{status:false}]
-        },
-        {
-            $set:{status:true}
-        }).exec();    
+            {
+                $and: [{ userId }, { contactId }, { status: false }]
+            },
+            {
+                $set: { status: true }
+            }).exec();
+    },
+    removeContact(userId,contactId) {
+        return this.deleteOne({
+            $and: [
+                {
+                    $or: [
+                       {userId},
+                       {userId:contactId}
+                    ]
+                },
+                {
+                    status:true
+                }
+            ]
+        }).exec();
     }
 };
 export default mongoose.model("contact", ContactSchema);

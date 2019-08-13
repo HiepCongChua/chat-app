@@ -4,7 +4,7 @@ function acceptRequestContactReceived() {//Khi chúng ta chấp nhận yêu cầ
     .on("click", function () {
       let targetId = $(this).data("uid");
       $.ajax({
-        url: 'contact/accept-request-contact-received',
+        url: '/contact/accept-request-contact-received',
         type: 'PUT',
         data: { uid: targetId },
         success: function (data) {
@@ -29,6 +29,7 @@ function acceptRequestContactReceived() {//Khi chúng ta chấp nhận yêu cầ
             const userInfoHtml = userInfo.get(0).outerHTML;
             $("#contacts").find("ul").prepend(userInfoHtml);
             userInfo.remove();
+            removeContact();
             decreaseNumberNotifiContact('count-request-contact-received');//Sau khi đồng ý yêu cầu kết bạn thì trừ đi số lượng yêu cầu kết bạn đi 1
             increaseNumberNotifiContact('count-contacts');
             decreaseNumberNotification('noti_contact_counter', 1);
@@ -37,7 +38,7 @@ function acceptRequestContactReceived() {//Khi chúng ta chấp nhận yêu cầ
         }
       });
     });
-}
+};
 socket.on("response-accept-request-contact-received", user => {//Khi chúng ta được một người khác đồng ý yêu cầu kết bạn.
   let img = '';
   if (!user.avatar) {
@@ -58,8 +59,9 @@ socket.on("response-accept-request-contact-received", user => {//Khi chúng ta �
   decreaseNumberNotification('noti_contact_counter', 1);
   increaseNumberNotification('noti_counter', 1);
 
-  decreaseNumberNotifiContact('count-request-contact-sent');//Sau khi đồng ý yêu cầu kết bạn thì trừ đi số lượng yêu cầu kết bạn đi 1
-  increaseNumberNotifiContact('count-contacts');
+  decreaseNumberNotifiContact('count-request-contact-sent');//giảm
+  //Sau khi đồng ý yêu cầu kết bạn thì trừ đi số lượng yêu cầu kết bạn đi 1
+  increaseNumberNotifiContact('count-contacts');//tăng
   $("#request-contact-sent").find(`ul li[data-uid=${user.id}]`).remove();
   $("#find-user").find(`ul li[data-uid=${user.id}]`).remove();
   const userInfoHtml = `
@@ -85,6 +87,7 @@ socket.on("response-accept-request-contact-received", user => {//Khi chúng ta �
   </li>
     `;
   $("#contacts").find("ul").prepend(userInfoHtml);
+  removeContact();
 });
 
 $(document).ready(function () {

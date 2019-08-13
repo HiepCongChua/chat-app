@@ -86,7 +86,7 @@ UserSchema.statics = {
     },
     findUserById(id)
     {
-        return this.findById(id,{_id:1,username:1,avatar:1,address:1});
+        return this.findById(id,{_id:1,username:1,avatar:1,address:1,"google.uid":1,"facebook.id":1});
     },
     findUserByIdForChangePassword(id){
         return this.findById(id);

@@ -2,11 +2,13 @@ import {addNewContact} from './contact/addNewContact';//Add socket vào một th
 import {removeRequestContactSent} from './contact/removeRequestContactSent';
 import {removeRequestContactReceived} from './contact/removeRequestContactReceived';
 import {acceptRequestContactReceived} from './contact/acceptRequestContactReceived';
+import {removeContact} from './contact/removeContact';
 const initSockets = (io)=>{
     addNewContact(io);//A gửi lời mời kết bạn cho B
     removeRequestContactSent(io);//Sự kiện A gửi cho B lời mời kết bạn rồi lại hủy
     removeRequestContactReceived(io);
     acceptRequestContactReceived(io);
+    removeContact(io);
 }
 export  {
   initSockets

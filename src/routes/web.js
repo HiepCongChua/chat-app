@@ -7,7 +7,8 @@ import {
   readMoreContacts,readMoreContactsSent,
   readMoreContactsReceived,
   removeRequestContactReceived,
-  acceptRequestContactReceived
+  acceptRequestContactReceived,
+  removeContact
 } from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
@@ -75,7 +76,8 @@ const initRouters = app => {
   router.get('/contact/read-more-contacts',checkLoggedIn,readMoreContacts);
   router.get('/contact/read-more-contacts-sent',checkLoggedIn,readMoreContactsSent);
   router.get('/contact/read-more-contacts-received',checkLoggedIn,readMoreContactsReceived);
-  router.put('/contact/accept-request-contact-received',checkLoggedIn,acceptRequestContactReceived)
+  router.put('/contact/accept-request-contact-received',checkLoggedIn,acceptRequestContactReceived);
+  router.delete('/contact/user-remove-contact',checkLoggedIn,removeContact);
   return app.use("/", router);
 };
 export default initRouters;

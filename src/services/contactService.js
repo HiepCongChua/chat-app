@@ -2,6 +2,7 @@ import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
 import { model as Notification, types } from './../models/notificationModel';
+import { ok } from "assert";
 const LIMIT_RECORD = 1;
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc
@@ -218,7 +219,23 @@ const acceptRequestContactReceived = (contactId, userId) => {
       return reject(false)
     };
   });
-}
+};
+const removeContact = (currentUserId,contactId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+       const {result} = await ContactModel.removeContact(currentUserId,contactId);
+       const {n} = result;
+       if(n===0)
+       {
+        return reject(false);
+       }
+       resolve(true);
+    } catch (error) {
+      console.log(error)
+      return reject(false);
+    };
+  });
+};
 export {
   findUserContact,
   addNew,
@@ -233,5 +250,6 @@ export {
   readMoreContactsSent,
   readMoreContactsReceived,
   removeRequestContactReceived,
-  acceptRequestContactReceived
+  acceptRequestContactReceived,
+  removeContact
 };
