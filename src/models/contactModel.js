@@ -55,7 +55,6 @@ ContactSchema.statics = {//Tạo một contact mới
         }).exec();
     },
     getContacts(id, skip ,limit) {
-        console.log(limit,skip);
         return this.find({
             $and: [
                 {
@@ -87,7 +86,8 @@ ContactSchema.statics = {//Tạo một contact mới
         this.remove({
             $and: [
                 { userId },
-                { contactId }
+                { contactId },
+                {status:false}
             ]
         }).exec();
     },
@@ -118,12 +118,22 @@ ContactSchema.statics = {//Tạo một contact mới
         }).exec();
     },
     removeRequestContactReceived(userId,contactId){
-        this.remove({
+       return this.remove({
             $and: [
                 { userId : contactId },
-                { contactId : userId }
+                { contactId : userId },
+                {status:false}
             ]
         }).exec(); 
+    },
+    acceptRequestContactReceived(contactId,userId){
+        return this.updateOne(
+        {
+            $and: [{userId},{contactId},{status:false}]
+        },
+        {
+            $set:{status:true}
+        }).exec();    
     }
 };
 export default mongoose.model("contact", ContactSchema);

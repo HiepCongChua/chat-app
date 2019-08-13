@@ -49,6 +49,7 @@
              `);
             });
             removeRequestContactReceived();
+            acceptRequestContactReceived();
               $("#link-read-more-contacts-received").css('display','inline-block');
             $(".read-more-contacts-loader").css('display','none');
         });

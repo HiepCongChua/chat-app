@@ -181,7 +181,7 @@ const readMoreContactsReceived = (id, skip) => {
     }
   });
 };
-const removeRequestContactReceived = (currentUserId, contactId)=>{
+const removeRequestContactReceived = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     try {
       await ContactModel.removeRequestContactReceived(
@@ -190,6 +190,28 @@ const removeRequestContactReceived = (currentUserId, contactId)=>{
       );
       //remove notification
       // await Notification.removeRequestContactReceivedNotification(currentUserId, contactId, types.ADD_CONTACT);
+      return resolve(true);
+    } catch (error) {
+      console.log(error)
+      return reject(false)
+    };
+  });
+};
+const acceptRequestContactReceived = (contactId, userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { nModified} = await ContactModel.acceptRequestContactReceived(contactId, userId);
+      if(nModified!==1)
+      {
+        return reject(false);
+      }
+      //remove notification
+      let notificationItem = {
+        senderId: contactId,
+        receiverId: userId,
+        type: types.ACCEPT_CONTACT
+      };
+      await Notification.createNew(notificationItem);
       return resolve(true);
     } catch (error) {
       console.log(error)
@@ -210,5 +232,6 @@ export {
   readMoreContacts,
   readMoreContactsSent,
   readMoreContactsReceived,
-  removeRequestContactReceived
+  removeRequestContactReceived,
+  acceptRequestContactReceived
 };
