@@ -44,6 +44,7 @@ socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu 
   increaseNumberNotifiContact('count-request-contact-received', 1);
   increaseNumberNotification('noti_contact_counter', 1);
   increaseNumberNotification('noti_counter', 1);
+  $("#find-user").find(`ul li[data-uid=${user.id}]`).remove();
   const userInfoHtml = `
     <li style="text-decoration: none" class="_contactList" data-uid="${user.id}">
     <div class="contactPanel">
@@ -69,4 +70,5 @@ socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu 
     `
   $('#request-contact-received').find("ul").prepend(userInfoHtml);
   removeRequestContactReceived();
+  acceptRequestContactReceived();
 });

@@ -1,7 +1,14 @@
  import express from "express";
 import { getLoginRegister,postRegister,verifyAccount,getLogout,checkLoggedIn,checkLoggedOut} from "./../controllers/authController";
 import {getHome} from "./../controllers/homeController";
-import {findUsersContact,addNew,removeRequestContactSent,readMoreContacts,readMoreContactsSent,readMoreContactsReceived,removeRequestContactReceived} from './../controllers/contactController';
+import {
+  findUsersContact,
+  addNew,removeRequestContactSent,
+  readMoreContacts,readMoreContactsSent,
+  readMoreContactsReceived,
+  removeRequestContactReceived,
+  acceptRequestContactReceived
+} from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
@@ -67,7 +74,8 @@ const initRouters = app => {
   router.put('/notification/mark-all-as-read',checkLoggedIn,markAllAsRead);
   router.get('/contact/read-more-contacts',checkLoggedIn,readMoreContacts);
   router.get('/contact/read-more-contacts-sent',checkLoggedIn,readMoreContactsSent);
-  router.get('/contact/read-more-contacts-received',checkLoggedIn,readMoreContactsReceived)
+  router.get('/contact/read-more-contacts-received',checkLoggedIn,readMoreContactsReceived);
+  router.put('/contact/accept-request-contact-received',checkLoggedIn,acceptRequestContactReceived)
   return app.use("/", router);
 };
 export default initRouters;

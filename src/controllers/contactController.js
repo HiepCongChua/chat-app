@@ -6,7 +6,8 @@ import {
     readMoreContacts as readMoreContactsService,
     readMoreContactsSent as readMoreContactsSentService,
     readMoreContactsReceived as readMoreContactsReceivedService,
-    removeRequestContactReceived as removeRequestContactReceivedService
+    removeRequestContactReceived as removeRequestContactReceivedService,
+    acceptRequestContactReceived as acceptRequestContactReceivedService
 } from "../services/contactService";
 const findUsersContact = async (req, res, next) => {
     const errorArr = [];
@@ -88,6 +89,17 @@ const removeRequestContactReceived = async(req,res,next)=>{
         return res.status(500).send(error);
     };
 }
+const acceptRequestContactReceived = async (req,res,next)=>{
+    try {
+        const contactId = req.user._id;//user hiện tại đồng ý yêu cầu kết bạn
+        const userId = req.body.uid;//user gửi lời mời kết bạn
+        const removeContact = await acceptRequestContactReceivedService(contactId,userId);//Hàm này ở phía service(truyền cho nó 2 tham số là id của người dùng hiện tại và id của người dùng muốn gửi lời mời kết bạn)
+        return res.status(200).send({ success: !!removeContact });//(!!newContact kiểm tra xem bản ghi mới có được tạo hay không true or false)
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    };
+};
 export  {
     findUsersContact, 
     addNew,
@@ -95,5 +107,6 @@ export  {
     readMoreContacts,
     readMoreContactsSent,
     readMoreContactsReceived,
-    removeRequestContactReceived
+    removeRequestContactReceived,
+    acceptRequestContactReceived
 }

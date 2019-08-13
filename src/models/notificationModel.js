@@ -1,7 +1,7 @@
 
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-const  LIMIT_NUMBER_TAKEN = 2;
+const LIMIT_NUMBER_TAKEN = 2;
 const NotificationSchema = new Schema({
   senderId: String,
   receiverId: String,
@@ -30,42 +30,44 @@ NotificationSchema.statics = {
       "receiverId": userId//user đứng từ receiver để load  
     }).sort({ "createdAt": -1 }).limit(LIMIT_NUMBER_TAKEN).exec();
   },
-  notifcationsUnread(id){//Đếm số lượng thông báo chưa đọc
-     return this.count({
-       $and:[
-         {receiverId:id},
-         {isRead:false}
-       ]
-     }).exec();
+  notifcationsUnread(id) {//Đếm số lượng thông báo chưa đọc
+    return this.count({
+      $and: [
+        { receiverId: id },
+        { isRead: false }
+      ]
+    }).exec();
   },
-  readMore(userId,skip,limit){//nhiệm vụ giống với phân trang
+  readMore(userId, skip, limit) {//nhiệm vụ giống với phân trang
     return this.find({
       "receiverId": userId//user đứng từ receiver để load  
     }).sort({ "createdAt": -1 }).skip(skip).limit(LIMIT_NUMBER_TAKEN).exec();
   },
-  markAllAsRead(userId,targetUserId){//tham số đầu vào là userId (user hiện tại) targetUserID là mảng những sender
+  markAllAsRead(userId, targetUserId) {//tham số đầu vào là userId (user hiện tại) targetUserID là mảng những sender
     console.log(targetUserId);
-    targetUserId = targetUserId.map(s=>mongoose.Types.ObjectId(s));
+    targetUserId = targetUserId.map(s => mongoose.Types.ObjectId(s));
     console.log(targetUserId.toString());
     return this.updateMany(
-      {$and:[
-        {
-            receiverId:userId
-        },
-        {
-            senderId:{
-                $in:targetUserId
-                }
-        }
+      {
+        $and: [
+          {
+            receiverId: userId
+          },
+          {
+            senderId: {
+              $in: targetUserId
+            }
+          }
         ]
-    }
-    ,
-    {$set: { isRead: true }}
+      }
+      ,
+      { $set: { isRead: true } }
     ).exec();
   }
 };
 const NOTIFICATION_TYPES = {
-  ADD_CONTACT: 'add_contact'
+  ADD_CONTACT: 'add_contact',
+  ACCEPT_CONTACT: 'accept_contact'
 };
 const NOTIFICATION_CONTENTS = {
   getContent: (notificationType, isRead, userId, username, userAvatar) => {
@@ -95,6 +97,33 @@ const NOTIFICATION_CONTENTS = {
             </div>
             `;
     }
+    else if (notificationType === NOTIFICATION_TYPES.ACCEPT_CONTACT) {
+      let img = ''
+      if (!userAvatar) {
+        img = `<img class="avatar-small" src="
+        https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+         "
+         `
+      }
+      else {
+        img = `<img class="avatar-small" src="${userAvatar}" alt="">`
+      }
+      if (!isRead) {
+        return `
+            <div class="notif-readed-false" data-uid="${userId}">
+            ${img}
+            <strong>${username}</strong> đã chấp nhận lời mời kết bạn của bạn.
+            </div>
+               `;
+      }
+      return `
+            <div data-uid="${userId}">
+            ${img}
+            <strong>${username}</strong> đã chấp nhận lời mời kết bạn của bạn.
+            </div>
+            `;
+    }
+    return 'No matching with any notification type'
   }
 }
 module.exports = {
