@@ -10,12 +10,12 @@ const getAllConversationItems = (currentUserId)=>{
         const contacts = await ContactModel.getContacts(currentUserId, skip, LIMIT_CONVERSATIONS_TAKEN);
         let userConversations = await Promise.all(contacts.map(async (contact) => {
           const getUserContact = await UserModel.findListContacts(contact.userId, contact.contactId,currentUserId);
-          getUserContact[0].createdAt = contact.createdAt;
+          getUserContact[0].updatedAt = contact.updatedAt;
           return getUserContact[0];
         })); 
         const groupConversations = await ChatGroupModel.getChatGroups(currentUserId,LIMIT_CONVERSATIONS_TAKEN);
         const allConversations = userConversations.concat(groupConversations).sort((itemPre,itemNext)=>{
-          return itemNext.createdAt - itemPre.createdAt
+          return itemNext.updatedAt - itemPre.updatedAt
         });
         resolve({
           userConversations,

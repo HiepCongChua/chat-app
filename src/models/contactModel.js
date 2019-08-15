@@ -60,9 +60,9 @@ ContactSchema.statics = {//Tạo một contact mới
                 {
                     $or: [{ userId: id }, { contactId: id }]
                 },
-                { status: true }
+                  { status: true }
             ]
-        }).sort({ createdAt: -1 }).skip(skip).limit(limit).exec();
+        }).sort({ updatedAt: -1 }).skip(skip).limit(limit).exec();
     },
     getContactsReceive(id, skip, limit) {//Lấy những user gửi cho mình lời mời kết bạn
         //=> mình đóng vai trò là contactId
@@ -132,7 +132,7 @@ ContactSchema.statics = {//Tạo một contact mới
                 $and: [{ userId }, { contactId }, { status: false }]
             },
             {
-                $set: { status: true }
+                $set: { status: true , updatedAt:Date.now() }
             }).exec();
     },
     removeContact(userId,contactId) {

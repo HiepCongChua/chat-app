@@ -1,121 +1,155 @@
 <div class="col-sm-3 sidenav no-padding">
-    <div class="left">
-        <div class="top form-group">
-            <select class="form-control" id="select-type-chat">
-                <option data-target="#all-chat" value="all-chat">Toàn bộ trò chuyện</option>
-                <option data-target="#user-chat" value="user-chat">Trò chuyện cá nhân</option>
-                <option data-target="#group-chat" value="group-chat">Trò chuyện nhóm</option>
-            </select>
-            <a href="#groupChatModal" class="create-group-chat" data-toggle="modal"
-                title="Tạo một nhóm trò chuyện mới"></a>
-        </div>
-        <div class="tab-content">
-            <div class="tab-pane active" id="all-chat">
-                <ul class="people no-padding-start">
-                    <% allConversations.forEach((conversation)=>{ %> <%
-                     if(conversation.members){ %>
-                    <a href="#uid_<%= conversation._id %>" class="room-chat">
-                        <li class="person group-chat" data-chat="<%= conversation._id %>">
-                            <div class="left-avatar">
-                                <!-- <div class="dot"></div> -->
-                                <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"
-                                    alt="" />
-                            </div>
-                            <span class="name">
-                                <span class="group-chat-name"><%= conversation.name %></span>
-                            </span>
-                            <span class="time">Hai giờ trước fake</span>
-                            <span class="preview">Chào cả nhóm fake</span>
-                        </li>
-                    </a>
-                    <%}else{%>
-                    <a href="#uid_<%= conversation._id %>" class="room-chat">
-                        <li class="person" data-chat="<%= conversation._id %>">
-                            <div class="left-avatar">
-                                <div class="dot"></div>
-                                <img src="<%= conversation.avatar || 'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png'%>"
-                                    alt="" />
-                            </div>
-                            <span class="name">
-                                <%= conversation.username %>
-                            </span>
-                            <span class="time">Một phút trước</span>
-                            <span class="preview">Xin chào</span>
-                        </li>
-                    </a>
-                    <%}%> <%});%>
-                </ul>
-                <hr>
-                <div class="read_more_all_chat">
-                  <a href="javascript:void(0)" id="link-read-more-all-chat">
-                    <strong>Xem thêm....</strong>
-                  </a>
-                  <div class="read-more-contacts-loader">
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="user-chat">
-                <ul class="people no-padding-start">
-                    <% userConversations.forEach((conversation)=>{ %>
-                    <a href="#uid_<%= conversation._id %>" class="room-chat">
-                        <li class="person" data-chat="<%= conversation._id %>">
-                            <div class="left-avatar">
-                                <div class="dot"></div>
-                                <img src="<%= conversation.avatar || 'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png'%>"
-                                    alt="" />
-                            </div>
-                            <span class="name">
-                                <%= conversation.username %>
-                            </span>
-                            <span class="time">Một phút trước</span>
-                            <span class="preview">Xin chào</span>
-                        </li>
-                    </a>
-                    <%});%>
-                </ul>
-                <hr>
-                <div class="read_more_user_chat">
-                  <a href="javascript:void(0)" id="link-read-more-user-chat">
-                    <strong>Xem thêm...</strong>
-                  </a>
-                  <div class="read-more-contacts-loader">
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="group-chat">
-                <ul class="people no-padding-start">
-                    <% groupConversations.forEach((conversation)=>{ %>
-                    <a href="#uid_<%= conversation._id %>" class="room-chat">
-                        <li class="person group-chat" data-chat="<%= conversation._id %>">
-                            <div class="left-avatar">
-                                <!-- <div class="dot"></div> -->
-                                <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"
-                                    alt="" />
-                            </div>
-                            <span class="name">
-                                <span class="group-chat-name"><%= conversation.name %></span>
-                            </span>
-                            <span class="time">Hai giờ trước fake</span>
-                            <span class="preview">Chào cả nhóm fake</span>
-                        </li>
-                    </a>
-                    <% });%>
-                </ul>
-                <hr>
-                <div class="read_more_group_chat">
-                  <a href="javascript:void(0)" id="link-read-more-group-chat">
-                    <strong>Xem thêm...</strong>
-                  </a>
-                  <div class="read-more-contacts-loader">
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-            </div>
-        </div>
+  <div class="left">
+    <div class="top form-group">
+      <select class="form-control" id="select-type-chat">
+        <option data-target="#all-chat" value="all-chat"
+          >Toàn bộ trò chuyện</option
+        >
+        <option data-target="#user-chat" value="user-chat"
+          >Trò chuyện cá nhân</option
+        >
+        <option data-target="#group-chat" value="group-chat"
+          >Trò chuyện nhóm</option
+        >
+      </select>
+      <a
+        href="#groupChatModal"
+        class="create-group-chat"
+        data-toggle="modal"
+        title="Tạo một nhóm trò chuyện mới"
+      ></a>
     </div>
+    <div class="tab-content">
+      <div class="tab-pane active" id="all-chat">
+        <ul class="people no-padding-start">
+          <% allConversations.forEach((conversation)=>{ %> <%
+          if(conversation.members){ %>
+          <a href="#uid_<%= conversation._id %>" class="room-chat">
+            <li class="person group-chat" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                <!-- <div class="dot"></div> -->
+                <img
+                  src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"
+                  alt=""
+                />
+              </div>
+              <span class="name">
+                <span class="group-chat-name">
+                <% if(conversation.name.length>15){ %> 
+                 <%=conversation.name.substr(0,11) %><span>...</span>  
+                    <% }else{ %> 
+                    <%=conversation.name %> <% } %>
+                   </span> 
+              </span>
+              <span class="time">Hai giờ trước</span>
+              <span class="preview">Chào cả nhóm</span>
+            </li>
+          </a>
+          <%}else{%>
+          <a href="#uid_<%= conversation._id %>" class="room-chat">
+            <li class="person" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                <div class="dot"></div>
+                <img
+                  src="<%= conversation.avatar || 'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png'%>"
+                  alt=""
+                />
+              </div>
+              <span class="name">
+                    <% if(conversation.username.length>15){ %> 
+                        <%=conversation.username.substr(0,11) %><span>...</span>  
+                           <% }else{ %> 
+                           <%=conversation.username %> <% } %>
+              </span>
+              <span class="time">Một phút trước</span>
+              <span class="preview">Xin chào</span>
+            </li>
+          </a>
+          <%}%> <%});%>
+        </ul>
+        <hr />
+        <div class="read_more_all_chat">
+          <a href="javascript:void(0)" id="link-read-more-all-chat">
+            <strong>Xem thêm....</strong>
+          </a>
+          <div class="read-more-contacts-loader">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="user-chat">
+        <ul class="people no-padding-start">
+          <% userConversations.forEach((conversation)=>{ %>
+          <a href="#uid_<%= conversation._id %>" class="room-chat">
+            <li class="person" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                <div class="dot"></div>
+                <img
+                  src="<%= conversation.avatar || 'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png'%>"
+                  alt=""
+                />
+              </div>
+              <span class="name">
+                    <% if(conversation.username.length>10){ %> 
+                        <%=conversation.username.substr(0,10) %><span>...</span> 
+                        <%}else{%> 
+                    <%=conversation.username%><%}%>
+              </span>
+              <span class="time">Một phút trước</span>
+              <span class="preview">Xin chào</span>
+            </li>
+          </a>
+          <%});%>
+        </ul>
+        <hr />
+        <div class="read_more_user_chat">
+          <a href="javascript:void(0)" id="link-read-more-user-chat">
+            <strong>Xem thêm...</strong>
+          </a>
+          <div class="read-more-contacts-loader">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="group-chat">
+        <ul class="people no-padding-start">
+          <% groupConversations.forEach((conversation)=>{ %>
+          <a href="#uid_<%= conversation._id %>" class="room-chat">
+            <li class="person group-chat" data-chat="<%= conversation._id %>">
+              <div class="left-avatar">
+                <!-- <div class="dot"></div> -->
+                <img
+                  src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"
+                  alt=""
+                />
+              </div>
+              <span class="name">
+                <span class="group-chat-name">
+                <% if(conversation.name.length>15){ %> 
+                    <%=conversation.name.substr(0,11) %><span>...</span> 
+                    <%}else{%> 
+                <%=conversation.name%><%}%>
+              </span>
+              </span>
+              <span class="time">Hai giờ trước fake</span>
+              <span class="preview">Chào cả nhóm fake</span>
+            </li>
+          </a>
+          <% });%>
+        </ul>
+        <hr />
+        <div class="read_more_group_chat">
+          <a href="javascript:void(0)" id="link-read-more-group-chat">
+            <strong>Xem thêm...</strong>
+          </a>
+          <div class="read-more-contacts-loader">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

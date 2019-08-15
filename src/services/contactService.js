@@ -222,8 +222,7 @@ const acceptRequestContactReceived = (contactId, userId) => {
 const removeContact = (currentUserId,contactId) => {
   return new Promise(async (resolve, reject) => {
     try {
-       const {result} = await ContactModel.removeContact(currentUserId,contactId);
-       const {n} = result;
+       const {n,ok,deletedCount} = await ContactModel.removeContact(currentUserId,contactId);
        if(n===0)
        {
         return reject(false);
