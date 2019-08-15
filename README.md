@@ -25,3 +25,4 @@ CALLBACK_URL_FB
 #Khi muốn lưu session trên Cloud thì update mongoose lên phiên bản cao nhất
 #Sử dụng thư viện passport.socket.io để lấy dữ liệu trong session để truyền cho socket
 #Sử dụng cookie-parser để gán dữl liệu cookie vào một biến (req.cookie)
+#Muốn đẩy dữ liệu lên cloud thì phải sử dụng mongoose phiên bản 5.6.9,để sử dụng ổn định nhất sử dụng 4.13.9,

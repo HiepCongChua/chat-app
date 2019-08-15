@@ -16,15 +16,20 @@
                  return contact[0];
             });
             contacts.forEach(contact => {
+              let src = ''
               if(!contact.avatar)
               {
-                contact.avatar = ' https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png '
+
+                src = ' https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png '
+              }
+              else {
+                  src = `images/users/${contact.avatar}`;
               }
              $('#request-contact-received').find("ul").append(`
              <li style="text-decoration: none" class="_contactList" data-uid="${contact._id}">
              <div class="contactPanel">
                <div class="user-avatar">
-                 <img src="${contact.avatar}"
+                 <img src="${src}"
                          alt=""
                        />
                      </div>

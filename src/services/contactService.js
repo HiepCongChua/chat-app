@@ -2,7 +2,6 @@ import ContactModel from "../models/contactModel";
 import UserModel from "../models/userModel";
 import _ from "lodash";
 import { model as Notification, types } from './../models/notificationModel';
-import { ok } from "assert";
 const LIMIT_RECORD = 1;
 const findUserContact = (currentUserId, keyword) => {
   //Hàm này giao tiếp của model để lấy kết quả của tìm kiếm , kết quả trả về không bao gồm (người dùng hiện tại) và những người đã trong danh sách liên lạc

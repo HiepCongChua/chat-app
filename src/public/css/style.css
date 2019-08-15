@@ -676,7 +676,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 40px;
   height: 40px;
@@ -1282,7 +1282,10 @@ label:focus,
 .read_more_notif,
 .read_more_contacts,
 .read_more_contacts_sent,
-.read_more_contacts_received
+.read_more_contacts_received,
+.read_more_all_chat,
+.read_more_user_chat,
+.read_more_group_chat
 {
   text-align: center;
 }
@@ -1422,4 +1425,7 @@ label:focus,
 
 .display-important {
   display: inline-block !important;
+}
+.tab-content > .active{
+  background-color: #FFFFFF;
 }

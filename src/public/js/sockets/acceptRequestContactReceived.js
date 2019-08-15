@@ -45,7 +45,7 @@ socket.on("response-accept-request-contact-received", user => {//Khi chÃºng ta Ä
     img = `<img class="avatar-small" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png">`
   }
   else {
-    img = `<img class="avatar-small" src="${user.avatar}" alt="">`
+    img = `<img class="avatar-small" src="images/users/${user.avatar}" alt="">`
   }
   const notifi = `
   <div class="notif-readed-false" data-uid="${user.id}">
@@ -65,7 +65,7 @@ socket.on("response-accept-request-contact-received", user => {//Khi chÃºng ta Ä
   $("#request-contact-sent").find(`ul li[data-uid=${user.id}]`).remove();
   $("#find-user").find(`ul li[data-uid=${user.id}]`).remove();
   const userInfoHtml = `
-    <li class="_contactList" data-uid="<%= user._id%>">
+    <li class="_contactList" data-uid="${user.id}">
     <div class="contactPanel">
       <div class="user-avatar">${img}</div>
                   <div class="user-name">
