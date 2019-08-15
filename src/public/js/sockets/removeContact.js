@@ -22,9 +22,7 @@ function removeContact() {//Khi chúng ta chấp nhận yêu cầu kết bạn
           type: 'DELETE',
           data: { uid: targetId },
           success: function (data) {
-            console.log(data)
             if (data.success) {
-              console.log(targetId);
               $('#contacts').find(`ul li[data-uid=${targetId}]`).remove();
               decreaseNumberNotifiContact('count-contacts');
               //Sau này làm tiếp phần chat thì xóa khối userInfo ở phần chat

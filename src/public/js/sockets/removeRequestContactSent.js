@@ -35,13 +35,12 @@ socket.on("response-remove-request-contact-sent", user => {//Mỗi khi A gửi y
     img = `<img class="avatar-small" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png">`
   }
   else {
-    img = `<img class="avatar-small" src="${user.avatar}" alt="">`
+    img = `<img class="avatar-small" src="images/users/${user.avatar}" alt="">`
   }
     const userInfo = `
     <li class="_contactList" data-uid="${user.id}">
     <div class="contactPanel">
         <div class="user-avatar">${img}</div>
-
         <div class="user-name">
             <p>
                 ${user.username}

@@ -82,7 +82,7 @@
                                         <%if(user.avatar===null){%>
                                             https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
                                         <%}else{%>
-                                           <%= user.avatar %> 
+                                          images/users/<%= user.avatar %>  
                                         <%}%>
                                         "
                               alt=""
@@ -107,6 +107,7 @@
           </li>
           <%});%>
         </ul>
+        <hr>
         <div class="read_more_contacts">
           <a href="javascript:void(0)" id="link-read-more-contacts">
             <strong>Xem thêm 1 bạn bè.</strong>
@@ -129,7 +130,7 @@
                                   <%if(user.avatar===null){%>
                                       https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
                                   <%}else{%>
-                                     <%= user.avatar %> 
+                                    images/users/<%= user.avatar %>  
                                   <%}%>
                                   "
                         alt=""
@@ -173,7 +174,7 @@
                                   <%if(user.avatar===null){%>
                                       https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
                                   <%}else{%>
-                                     <%= user.avatar %> 
+                                    images/users/<%= user.avatar %>   
                                   <%}%>
                                   "
                         alt=""

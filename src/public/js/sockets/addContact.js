@@ -31,7 +31,7 @@ socket.on("response-add-new-contact", user => {//Mỗi khi nhận được yêu 
     img = `<img class="avatar-small" src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png">`
   }
   else {
-    img = `<img class="avatar-small" src="${user.avatar}" alt="">`
+    img = `<img class="avatar-small" src="images/users/${user.avatar}" alt="">`
   }
   const notifi = `
   <div class="notif-readed-false" data-uid="${user.id}">

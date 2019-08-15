@@ -80,7 +80,7 @@ const NOTIFICATION_CONTENTS = {
          `
       }
       else {
-        img = `<img class="avatar-small" src="${userAvatar}" alt="">`
+        img = `<img class="avatar-small" src="images/users/${userAvatar}" alt="">`
       }
       if (!isRead) {
         return `
@@ -106,7 +106,7 @@ const NOTIFICATION_CONTENTS = {
          `
       }
       else {
-        img = `<img class="avatar-small" src="${userAvatar}" alt="">`
+        img = `<img class="avatar-small" src="images/users/${userAvatar}" alt="">`
       }
       if (!isRead) {
         return `
