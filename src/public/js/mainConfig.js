@@ -32,12 +32,12 @@ function enableEmojioneArea(chatId) {
     search: false,
     shortnames: false,
     events: {
-      keyup: function(editor, event) {
+      keyup: function (editor, event) {
         $('.write-chat').val(this.getText());
       }
     },
   });
-  $('.icon-chat').bind('click', function(event) {
+  $('.icon-chat').bind('click', function (event) {
     event.preventDefault();
     $('.emojionearea-button').click();
     $('.emojionearea-editor').focus();
@@ -54,27 +54,27 @@ function spinLoading() {
 
 function ajaxLoading() {
   $(document)
-    .ajaxStart(function() {
+    .ajaxStart(function () {
       spinLoading();
     })
-    .ajaxStop(function() {
+    .ajaxStop(function () {
       spinLoaded();
     });
 }
 
 function showModalContacts() {
-  $('#show-modal-contacts').click(function() {
+  $('#show-modal-contacts').click(function () {
     $(this).find('.noti_contact_counter').fadeOut('slow');
   });
 }
 
 function configNotification() {
-  $('#noti_Button').click(function() {
+  $('#noti_Button').click(function () {
     $('#notifications').fadeToggle('fast', 'linear');
     $('.noti_counter').fadeOut('slow');
     return false;
   });
-  $('.main-content').click(function() {
+  $('.main-content').click(function () {
     $('#notifications').fadeOut('fast', 'linear');
   });
 };
@@ -86,7 +86,7 @@ function gridPhotos(layoutNumber) {
     rel: 'withhearts-gallery',
     gutter: '2px',
     layout: layoutStr,
-    onComplete: function() {
+    onComplete: function () {
       $('.all-images').css({
         'visibility': 'visible'
       });
@@ -101,56 +101,60 @@ function gridPhotos(layoutNumber) {
 }
 
 function addFriendsToGroup() {
-  $('ul#group-chat-friends').find('div.add-user').bind('click', function() {
+  $('ul#group-chat-friends').find('div.add-user').bind('click', function () {
     let uid = $(this).data('uid');
     $(this).remove();
     let html = $('ul#group-chat-friends').find('div[data-uid=' + uid + ']').html();
 
-    let promise = new Promise(function(resolve, reject) {
+    let promise = new Promise(function (resolve, reject) {
       $('ul#friends-added').append(html);
       $('#groupChatModal .list-user-added').show();
       resolve(true);
     });
-    promise.then(function(success) {
+    promise.then(function (success) {
       $('ul#group-chat-friends').find('div[data-uid=' + uid + ']').remove();
     });
   });
 }
 function cancelCreateGroup() {
-  $('#cancel-group-chat').bind('click', function() {
+  $('#cancel-group-chat').bind('click', function () {
     $('#groupChatModal .list-user-added').hide();
     if ($('ul#friends-added>li').length) {
-      $('ul#friends-added>li').each(function(index) {
+      $('ul#friends-added>li').each(function (index) {
         $(this).remove();
       });
     }
   });
 }
-function flashMasterNotify(){
+function flashMasterNotify() {
   const notify = $('.master-success-message').text();
-  if(notify.length)
-  { 
-    alertify.notify(notify,"success",7);
+  if (notify.length) {
+    alertify.notify(notify, "success", 7);
   }
 };
 
-function changeTypeChat(){
-  $("#select-type-chat").bind("change",function(){
-      const optionSelected = $("option:selected",this);
-      optionSelected.tab("show");
-      if($(this).val()==="user-chat")
-      {
-        $(".create-group-chat").hide();
-      }
-      else {
-        $(".create-group-chat").show();
-      }
+function changeTypeChat() {
+  $("#select-type-chat").bind("change", function () {
+    const optionSelected = $("option:selected", this);
+    optionSelected.tab("show");
+    if ($(this).val() === "user-chat") {
+      $(".create-group-chat").hide();
+    }
+    else {
+      $(".create-group-chat").show();
+    }
   });
 
 
 }
-
-$(document).ready(function() {
+function changeScreenChat() {
+  $('.room-chat').unbind("click").on("click", function () {
+    $('.person').removeClass('active');
+    $(this).find("li").addClass("active");
+    $(this).tab('show');
+  });
+}
+$(document).ready(function () {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
 
@@ -180,5 +184,7 @@ $(document).ready(function() {
   //
   flashMasterNotify();
 
-   changeTypeChat();
-});
+  changeTypeChat();
+  changeScreenChat();
+  $('ul.people').find("li")[0].click();
+});  
