@@ -10,7 +10,7 @@ import {
     countAllcontactsSent as countAllContactsSentService,
     countAllcontacts as countAllContactsService
 } from '../services/contactService';
-import {bufferToBase64} from "../helpers/clientHelper";
+import {bufferToBase64,lastItemOfArray,convertTimestampToHumanTime} from "../helpers/clientHelper";
 import { getAllConversationItems as getAllConversationItemsService } from '../services/messageService';
 const getHome = async (req, res, next) => {
     const notifications = await getNotifications(req.user._id);//chứa text là những khối div bên trong là những thông tin của thông báo
@@ -23,8 +23,7 @@ const getHome = async (req, res, next) => {
     const countAllContacts = (await countAllContactsService(req.user._id))//lấy tất cả các user đã là bạn bè (ở trong trường hợp này không hiểu vì sao lại bị mảng lồng mảng)
     const countAllContactsSent = await countAllContactsSentService(req.user._id);//lấy những contact đã gửi
     const countAllContactsReceive = await countAllContactsReceiveService(req.user._id)//lấy những contact đã gửi lời mời kết bạn 
-    const {userConversations,groupConversations,allConversations,allConversationWithMessage} = await getAllConversationItemsService(req.user._id);
-    console.log(req.user);
+    const {allConversationWithMessage} = await getAllConversationItemsService(req.user._id);
     return res.render(
         'main/home/home', 
         {
@@ -39,11 +38,10 @@ const getHome = async (req, res, next) => {
         countAllContacts,
         countAllContactsReceive,
         countAllContactsSent,
-        userConversations,
-        groupConversations,
-        allConversations,
         allConversationWithMessage,
-        bufferToBase64
+        bufferToBase64,
+        lastItemOfArray,
+        convertTimestampToHumanTime
     });
 };
 export {

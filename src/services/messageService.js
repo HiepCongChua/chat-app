@@ -32,9 +32,6 @@ const getAllConversationItems = (currentUserId)=>{
         ;
 
         resolve({
-          userConversations,
-          groupConversations,
-          allConversations,
           allConversationWithMessage
         });
       } catch (error) {
