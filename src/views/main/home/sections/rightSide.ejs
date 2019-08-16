@@ -11,7 +11,7 @@
         <div class="top">
           <span>To: <span class="name"><%= conversation.name %></span></span>
           <span class="chat-menu-right">
-            <a href="#attachsModal" id="show-attachs" data-toggle="modal">
+            <a href="#attachsModal_<%= conversation._id%>" class="show-attachs" data-toggle="modal">
               Tệp đính kèm
               <i class="fa fa-paperclip"></i>
             </a>
@@ -20,7 +20,7 @@
             <a href="javascript:void(0)">&nbsp;</a>
           </span>
           <span class="chat-menu-right">
-            <a href="#imagesModal" id="show-images" data-toggle="modal">
+            <a href="#imagesModal_<%= conversation._id %>" class="show-images" data-toggle="modal">
               Hình ảnh
               <i class="fa fa-photo"></i>
             </a>
@@ -113,7 +113,6 @@
             <%}%> <%})%>
           </div>
         </div>
-        <!-- </div> -->
         <div class="write" data-chat="">
           <input
             type="text"
@@ -157,9 +156,7 @@
           </div>
         </div>
       </div>
-
       <%}else{%>
-
       <div
         class="right tab-pane <% if(index===0){ %> active <% } %>"
         data-chat="<%= conversation._id %>"
@@ -170,7 +167,7 @@
             >To: <span class="name"><%= conversation.username %></span></span
           >
           <span class="chat-menu-right">
-            <a href="#attachsModal" id="show-attachs" data-toggle="modal">
+            <a href="#attachsModal_<%= conversation._id %>" class="show-attachs" data-toggle="modal">
               Tệp đính kèm
               <i class="fa fa-paperclip"></i>
             </a>
@@ -179,7 +176,7 @@
             <a href="javascript:void(0)">&nbsp;</a>
           </span>
           <span class="chat-menu-right">
-            <a href="#imagesModal" id="show-images" data-toggle="modal">
+            <a href="#imagesModal_<%= conversation._id %>" class="show-images" data-toggle="modal">
               Hình ảnh
               <i class="fa fa-photo"></i>
             </a>
