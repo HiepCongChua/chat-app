@@ -8,12 +8,12 @@ const MessageSchema = new Schema({
     messageType:String,
     sender:{
      id:String,
-     username:String,
+     name:String,
      avatar:String
     },
     receiver:{
       id:String,
-      username:String,
+      name:String,
       avatar:String
     },
     text:String,
@@ -29,12 +29,17 @@ const MessageSchema = new Schema({
     }
 });
 MessageSchema.statics = {
-    getMessages(senderId,receiverId,limit){
+    getMessagesInPersonal(senderId,receiverId,limit){
         return this.find({
          $or:[
           {$and:[{senderId},{receiverId}]},
           {$and:[{senderId:receiverId},{receiverId:senderId}]}
          ]
+        }).sort({createdAt:1}).limit(limit).exec();
+    },
+    getMessagesChatGroup(receiverId,limit){
+        return this.find({
+            receiverId
         }).sort({createdAt:1}).limit(limit).exec();
     }
 };
@@ -52,3 +57,4 @@ module.exports =  {
     MESSAGE_CONVERSATION_TYPES,
     MESSAGE_TYPES
 }
+//Mô hình lưu trữ tin nhắn

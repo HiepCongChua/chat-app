@@ -4,7 +4,8 @@
         const skipNumber = $('#contacts').find('li').length;
         $("#link-read-more-contacts").css('display','none');
         $(".read-more-contacts-loader").css('display','inline-block');
-        $.get(`/contact/read-more-contacts?skipNumber=${skipNumber}`,function(contacts){
+        setTimeout(()=>{
+           $.get(`/contact/read-more-contacts?skipNumber=${skipNumber}`,function(contacts){
             if(contacts.length===0)
             {
               alertify.notify("Bạn không còn thông báo nào ^^.","error",5);  
@@ -54,5 +55,6 @@
               $("#link-read-more-contacts").css('display','inline-block');
             $(".read-more-contacts-loader").css('display','none');
         });
+        },1000)
     });
   });  

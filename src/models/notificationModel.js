@@ -31,7 +31,7 @@ NotificationSchema.statics = {
     }).sort({ "createdAt": -1 }).limit(LIMIT_NUMBER_TAKEN).exec();
   },
   notifcationsUnread(id) {//Đếm số lượng thông báo chưa đọc
-    return this.count({
+    return this.countDocuments({
       $and: [
         { receiverId: id },
         { isRead: false }
@@ -44,9 +44,7 @@ NotificationSchema.statics = {
     }).sort({ "createdAt": -1 }).skip(skip).limit(LIMIT_NUMBER_TAKEN).exec();
   },
   markAllAsRead(userId, targetUserId) {//tham số đầu vào là userId (user hiện tại) targetUserID là mảng những sender
-    console.log(targetUserId);
     targetUserId = targetUserId.map(s => mongoose.Types.ObjectId(s));
-    console.log(targetUserId.toString());
     return this.updateMany(
       {
         $and: [

@@ -30,26 +30,11 @@
           <div class="chat" data-chat="<%= conversation._id %>">
             <% conversation.messages.forEach((message)=>{ %> <%
             if(message.messageType==="text"){ %>
-            <div
-              class="
-            bubble 
-            <% if(message.senderId == user._id){ %>
-              me
-            <%}else{%>
-              you
-            <%}%>
-            "
-              data-mess-id="<%= message._id %>"
-            >
-            <img 
-            src="
-            <% if(message.sender.avatar===null){ %>
-              https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
-            <%}else{%>
-              /images/users/<%= message.sender.avatar %>
-            <%}%>
-            " 
-            class="avatar-small">
+            <div class=" bubble <% if(message.senderId == user._id){ %> me <%}else{%> you <%}%>" data-mess-id="<%= message._id %>">
+            <img src="<% if(message.sender.avatar===null){ %>https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
+            <%}else{%> /images/users/<%= message.sender.avatar %>
+            <%}%>" 
+            class="avatar-small" title="<%= message.sender.name %>" >
               <%= message.text %>
             </div>
             <%}%> <% if(message.messageType==="image"){ %>
@@ -74,10 +59,10 @@
               /images/users/<%= message.sender.avatar %>
             <%}%>
             " 
-            class="avatar-small">
+            class="avatar-small" title="<%= message.sender.name %>">
               <img
                 src="data:<%=message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>"
-                class="show-image-chat"
+                class="show-image-chat" title="<%= message.sender.name %>"
               />
 
             </div>
@@ -113,10 +98,11 @@
             <%}%> <%})%>
           </div>
         </div>
-        <div class="write" data-chat="">
+        <div class="write" data-chat="<%= conversation._id %>">
           <input
             type="text"
-            class="write-chat"
+            class="write-chat chat-in-group"
+            id="write-chat-<%= conversation._id %>"
             data-chat="<%= conversation._id %>"
           />
           <div class="icons">
@@ -240,9 +226,10 @@
             <%}%> <%})%>
           </div>
         </div>
-        <div class="write" data-chat="">
+        <div class="write"  data-chat="<%= conversation._id %>">
           <input
             type="text"
+            id="write-chat-<%= conversation._id %>"
             class="write-chat"
             data-chat="<%= conversation._id %>"
           />
