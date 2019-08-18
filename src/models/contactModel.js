@@ -83,7 +83,7 @@ ContactSchema.statics = {//Tạo một contact mới
         }).sort({ "createdAt": -1 }).skip(skip).limit(limit).exec();
     },
     removeRequestContactSent(userId, contactId) {
-        this.remove({
+        this.remov({
             $and: [
                 { userId },
                 { contactId },
@@ -92,7 +92,7 @@ ContactSchema.statics = {//Tạo một contact mới
         }).exec();
     },
     countAllContacts(id) {//Lấy số lượng trong danh bạ của mình 
-        return this.count({
+        return this.countDocuments({
             $and: [
                 {
                     $or: [{ userId: id }, { contactId: id }]
@@ -102,7 +102,7 @@ ContactSchema.statics = {//Tạo một contact mới
         }).sort({ "createdAt": -1 }).exec();
     },
     countAllContactsReceive(id) {//Lấy số lượng danh sách những người đã gửi lời mời kết bạn cho mình
-        return this.count({
+        return this.countDocuments({
             $and: [
                 { contactId: id },
                 { status: false }
@@ -110,7 +110,7 @@ ContactSchema.statics = {//Tạo một contact mới
         }).exec();
     },
     countAllContactsSent(id) {//Lấy số lượng những người mình đã gửi lời mời kết bạn
-        return this.count({
+        return this.countDocuments({
             $and: [
                 { userId: id },
                 { status: false }

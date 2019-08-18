@@ -1,7 +1,6 @@
 function removeRequestContactReceived() {
     $('.user-remove-request-contact-received').unbind('click').on('click', function () {
         let targetId = $(this).data('uid');
-        console.log(targetId);
         $.ajax({
             url: '/contact/remove-request-contact-received',
             type: 'DELETE',

@@ -153,7 +153,6 @@ function callUpdateAvatar() {
     processData: false,
     data: userAvatar,
     success: function(res) {
-      console.log(res);
       $(".user-modal-alert-success")
         .find("span")
         .text(res.message); //Sau khi nhận được lỗi thì tìm thẻ span trong div user-modal-alert-error và

@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#seting-profile">Cài đặt chung</a></li>
-                    <% if(!(user.google.uid||user.facebook.uid)){ %>
+                    <% if(!(user.google.uid||user.facebook.uid||user.github.uid)){ %>
                     <li><a data-toggle="tab" id="link-to-password-profile" href="#password-profile">Quản lý mật khẩu</a>
                     </li>
                     <%}%>
@@ -85,7 +85,7 @@
             <div class="col-lg-8">
                 <label class="radio-inline col-lg-2">Nam
                     <input type="radio" id="input-change-gender-male" name="gender" value="male"
-                        <% if(user.gender==='male'){%> checked <%}%>
+                        <% if(user.gender ==='male'){%> checked <%}%>
                                                 required>
                                                 <span class="checkmark"></span>
                                             </label>

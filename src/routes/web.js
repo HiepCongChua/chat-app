@@ -19,9 +19,11 @@ import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
+import {initPassportGitHub} from './../controllers/passportController/github';
 initPassportLocal();
 initPassportFacebook();
 initPassportGoogle();
+initPassportGitHub();
 const router = express.Router();
 const initRouters = app => {
   router.get("/",checkLoggedIn, getHome);
@@ -42,6 +44,19 @@ const initRouters = app => {
     "/auth/facebook",
     checkLoggedOut,
     passport.authenticate("facebook", { scope: ["email"] })
+  );
+  router.get(
+    "/auth/github",
+    checkLoggedOut,
+    passport.authenticate("github",{ scope: ["email"] })
+  );
+  router.get(
+    "/auth/github/callback",
+    checkLoggedOut,
+    passport.authenticate("github", {
+      successRedirect: "/",
+      failureRedirect: "/login-register"
+    })
   );
   router.get(
     "/auth/facebook/callback",

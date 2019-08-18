@@ -19,6 +19,11 @@ const UserSchema = new Schema({
         token:String,
         email:{type:String,trim:true}
     },
+    github:{
+        uid:String,
+        token:String,
+        email:{type:String,trim:true}
+    },
     google:{
         uid:String,
         token:String,
@@ -86,13 +91,16 @@ UserSchema.statics = {
     },
     findUserById(id)
     {
-        return this.findById(id,{_id:1,username:1,avatar:1,address:1,"google.uid":1,"facebook.uid":1});
+        return this.findById(id,{_id:1,username:1,avatar:1,address:1,"google":1,"facebook":1,"github":1});
     },
     findUserByIdForChangePassword(id){
         return this.findById(id);
     },
     findUserByFacebookUid(id){
         return this.findOne({'facebook.uid':id}).exec();
+    },
+    findUserByGitHubUid(id){
+        return this.findOne({'github.uid':id}).exec();
     },
     findUserByGoogleUid(id){
         return this.findOne({'google.uid':id}).exec();
