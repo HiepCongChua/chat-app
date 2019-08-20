@@ -14,12 +14,14 @@ import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userC
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
 import {findUsersContact as findUsersContactValid} from './../validation/contactValidation';
+import {checkMessageValidation} from './../validation/messageValidation';
 import {readMore,markAllAsRead} from './../controllers/notificationController';
 import passport from "passport";
 import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
 import {initPassportGitHub} from './../controllers/passportController/github';
+import {addNewMessage} from './../controllers/messageController';
 initPassportLocal();
 initPassportFacebook();
 initPassportGoogle();
@@ -93,6 +95,7 @@ const initRouters = app => {
   router.get('/contact/read-more-contacts-received',checkLoggedIn,readMoreContactsReceived);
   router.put('/contact/accept-request-contact-received',checkLoggedIn,acceptRequestContactReceived);
   router.delete('/contact/user-remove-contact',checkLoggedIn,removeContact);
+  router.post('/message/add-new-text-emoji',checkLoggedIn,checkMessageValidation,addNewMessage);
   return app.use("/", router);
 };
 export default initRouters;

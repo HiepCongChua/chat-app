@@ -14,11 +14,11 @@ function textAndEmojiChat(divId) {
             if($(`#write-chat-${divId}`).hasClass('chat-in-group')){
                 dataTextEmojiForSend.isChatGroup = true;
             }
-            console.log(dataTextEmojiForSend);
-            $.post("/message/add-new-text-emoji",dataTextEmojiForSend,function(){
-              
+            $.post("/message/add-new-text-emoji",dataTextEmojiForSend,function(data){
+              console.log(data.message);
             }).fail(function(response){
-
+              console.log(response);
+            alertify.notify(response.responseText,"error",5);
             });
         }
 

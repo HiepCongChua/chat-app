@@ -22,7 +22,9 @@ export const transErrorsMessage = {
   ACCOUNT_UNDEFINED:"Tài khoản này không tồn tại !",
   PASSWORD_INCORRECT:"Mật khẩu tài khoản không chính xác !",
   CONFIRM_PASSWORD_INCORRECT:"Xác nhận mật khẩu không chính xác.",
-  KEYWORD_SEARCH:"Từ khóa không được phép chứa giá trị đặc biệt !"
+  KEYWORD_SEARCH:"Từ khóa không được phép chứa giá trị đặc biệt !",
+  MESSAGE_ERROR:"Tin nhắn gửi đi yêu cầu tối thiểu 1 ký tự và tối đa 400 ký tự",
+  MESSAGE_ERROR_GROUP:"Không tồn tại người dùng hoặc nhóm trò chuyện vui lòng thử lại !"
 };
 export const transSuccess = {
   userCreated: userEmail => {

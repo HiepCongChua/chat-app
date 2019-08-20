@@ -3,6 +3,7 @@ import UserModel from './../models/userModel';
 import ChatGroupModel from './../models/chatGroupModel';
 import { model as MessageModel, MESSAGE_CONVERSATION_TYPES, MESSAGE_TYPES } from './../models/messageModel';
 import _ from 'lodash';
+import {transErrorsMessage} from './../../lang/vi';
 const LIMIT_CONVERSATIONS_TAKEN = 15;
 const LIMIT_MESSAGES_TAKEN = 30;
 const getAllConversationItems = (currentUserId) => {
@@ -42,8 +43,68 @@ const getAllConversationItems = (currentUserId) => {
       reject(error);
     }
   })
-}
+};
+const addNewMessage = (sender,receiverId,messageVal,isChatGroup)=>{
+  return new Promise(async(resolve,reject)=>{
+     try {
+       if(isChatGroup){
+         const chatGroupReceiver = await ChatGroupModel.getChatGroupById(receiverId);
+         if(!chatGroupReceiver) 
+         {
+           reject(new Error(transErrorsMessage.MESSAGE_ERROR_GROUP));
+         }
+         const receiver = {
+           id:chatGroupReceiver._id,
+           name:chatGroupReceiver.name,
+           avatar:'https://static.tendant.com/static/new_ux/img/chat-group-big.png'
+         };
+         const message = {
+          senderId:sender.id,
+          receiverId:receiver.id,
+          conversationType:MESSAGE_CONVERSATION_TYPES.GROUP,
+          messageType:MESSAGE_TYPES.TEXT,
+          sender,
+          receiver,
+          text:messageVal,
+          createdAt: Date.now(),
+         }
+         const message_ = await MessageModel.createNew(message);
+         await ChatGroupModel.updateWhenHasNewMessage(chatGroupReceiver._id,chatGroupReceiver.messageAmount+1)
+         resolve(message_);
+       }
+       else {
+        const receiver_ = await UserModel.findUserById(receiverId);
+        if(!receiver_) {
+          reject(new Error(transErrorsMessage.MESSAGE_ERROR_GROUP));
+        }
+        const receiver = {
+          id:receiver_._id,
+          name:receiver_.name,
+          avatar:receiver_.avatar
+        };
+        const message = {
+         senderId:sender.id,
+         receiverId:receiver.id,
+         conversationType:MESSAGE_CONVERSATION_TYPES.PERSONAL,
+         messageType:MESSAGE_TYPES.TEXT,
+         sender,
+         receiver,
+         text:messageVal,
+         createdAt: Date.now()
+        }
+        const message_ = await MessageModel.createNew(message);
+        await ContactModel.updateWhenHasNewMessage(sender.id,receiver.id);
+        resolve(message_);
+       }
+     } catch (error) {
+       console.log(error)
+       reject(error);
+     }
+  });
+};
 export {
-  getAllConversationItems
+  getAllConversationItems,
+  addNewMessage
 }
 
+ 
