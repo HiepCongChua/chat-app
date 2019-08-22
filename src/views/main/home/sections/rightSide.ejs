@@ -25,12 +25,34 @@
               <i class="fa fa-photo"></i>
             </a>
           </span>
+          <span class="chat-menu-right">
+            <a href="javascript:void(0)">&nbsp;</a>
+          </span>
+          <span class="chat-menu-right">
+            <a href="javascript:void(0)" class="number-members" data-toggle="modal">
+              <span class="show-number-members">
+                  Message amount: <%= conversation.messageAmount %> 
+              </span>
+              <i class="fa fa-comment-o"></i>
+            </a>
+          </span>
+          <span class="chat-menu-right">
+              <a href="javascript:void(0)">&nbsp;</a>
+            </span>
+            <span class="chat-menu-right">
+              <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
+                <span class="show-number-messages">
+                    User amount: <%= conversation.userAmount %> 
+                </span>
+                <i class="fa fa-users"></i>
+              </a>
+            </span>
         </div>
         <div class="content-chat">
           <div class="chat" data-chat="<%= conversation._id %>">
             <% conversation.messages.forEach((message)=>{ %> <%
             if(message.messageType==="text"){ %>
-            <div class=" bubble <% if(message.senderId == user._id){ %> me <%}else{%> you <%}%>" data-mess-id="<%= message._id %>">
+            <div class="convert-emoji bubble <% if(message.senderId == user._id){ %> me <%}else{%> you <%}%>" data-mess-id="<%= message._id %>">
             <img src="<% if(message.sender.avatar===null){ %>https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
             <%}else{%> /images/users/<%= message.sender.avatar %>
             <%}%>" 
@@ -174,6 +196,7 @@
             if(message.messageType==="text"){ %>
             <div
               class="
+              convert-emoji
             bubble 
             <% if(message.senderId == user._id){ %>
               me

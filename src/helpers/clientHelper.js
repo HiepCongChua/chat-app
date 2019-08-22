@@ -19,8 +19,6 @@ export let lastItemOfArray = (array)=>{
    else if(array.length>0){
       return array[array.length-1];
     }
-   
-   
 }
 export let convertTimestampToHumanTime = (timestamp)=>{
   if(!timestamp){

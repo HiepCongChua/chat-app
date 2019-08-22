@@ -174,15 +174,24 @@ function changeTypeChat() {
 };
 function changeScreenChat() {
   $('.room-chat').unbind("click").on("click", function () {
+    let divId = $(this).find("li").data('chat');
     $('.person').removeClass('active');
+    $(`.person[data-chat=${divId}]`).removeClass('active');
     $(this).find("li").addClass("active");
     $(this).tab('show');
     //Cấu hình thanh cuộn bên rightSide
-    let divId = $(this).find("li").data('chat');
+    
     nineScrollRight(divId);
     enableEmojioneArea(divId);
   });
-}
+};
+function convertEmoji(){
+  $(".convert-emoji").each(function() {
+    var original = $(this).html();
+    var converted = emojione.toImage(original);
+    $(this).html(converted);
+});
+};
 $(document).ready(function () {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -215,4 +224,5 @@ $(document).ready(function () {
   changeTypeChat();
   changeScreenChat();
   $('ul.people').find("a")[0].click();
+  convertEmoji();
 });  

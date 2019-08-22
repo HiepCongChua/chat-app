@@ -24,6 +24,7 @@ const getHome = async (req, res, next) => {
     const countAllContactsSent = await countAllContactsSentService(req.user._id);//lấy những contact đã gửi
     const countAllContactsReceive = await countAllContactsReceiveService(req.user._id)//lấy những contact đã gửi lời mời kết bạn 
     const {allConversationWithMessage} = await getAllConversationItemsService(req.user._id);
+    console.log(allConversationWithMessage);
     return res.render(
         'main/home/home', 
         {

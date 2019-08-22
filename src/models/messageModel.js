@@ -32,18 +32,18 @@ MessageSchema.statics = {
     createNew(item){
         return this.create(item);
     },
-    getMessagesInPersonal(senderId,receiverId,limit){
+    getMessagesInPersonal(senderId,receiverId,limit){//Nếu sắp xếp createdAt =1 thì sẽ khoongp hù hợp do sắp xếp kiểu này lúc lấy limit nó sẽ lấy từ tin nhắn đầu tiên (cũ nhất) mà yêu cầu là lấy tin nhắn mới nhất trở về trước => Lấy tin nhắn theo thứ tự từ mới nhất đến cũ nhất dựa vào trường createAt 
         return this.find({
          $or:[
           {$and:[{senderId},{receiverId}]},
           {$and:[{senderId:receiverId},{receiverId:senderId}]}
          ]
-        }).sort({createdAt:1}).limit(limit).exec();
+        }).sort({createdAt:-1}).limit(limit).exec();
     },
-    getMessagesChatGroup(receiverId,limit){
+    getMessagesChatGroup(receiverId,limit){//Nếu sắp xếp createdAt =1 thì sẽ khoongp hù hợp do sắp xếp kiểu này lúc lấy limit nó sẽ lấy từ tin nhắn đầu tiên (cũ nhất) mà yêu cầu là lấy tin nhắn mới nhất trở về trước => Lấy tin nhắn theo thứ tự từ mới nhất đến cũ nhất dựa vào trường createAt 
         return this.find({
             receiverId
-        }).sort({createdAt:1}).limit(limit).exec();
+        }).sort({createdAt:-1}).limit(limit).exec();
     }
 };
 const MESSAGE_CONVERSATION_TYPES = {
