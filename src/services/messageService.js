@@ -3,6 +3,7 @@ import UserModel from './../models/userModel';
 import ChatGroupModel from './../models/chatGroupModel';
 import { model as MessageModel, MESSAGE_CONVERSATION_TYPES, MESSAGE_TYPES } from './../models/messageModel';
 import _ from 'lodash';
+import {transErrorsMessage} from './../../lang/vi';
 const LIMIT_CONVERSATIONS_TAKEN = 15;
 const LIMIT_MESSAGES_TAKEN = 30;
 const getAllConversationItems = (currentUserId) => {
@@ -22,18 +23,18 @@ const getAllConversationItems = (currentUserId) => {
       let allConversationWithMessage = await Promise.all(allConversations.map(async (conversation) => {//
         //Mỗi conversation đại diện cho một liên lạc của user hiện tại 
         //hoặc một group mà user hiện tại nằm bên trong
-        if (conversation.members) {
+        if (conversation.members) {//Nếu tồn tại field members trong converstation => nhóm
           let getMessages = await MessageModel.getMessagesChatGroup(conversation._id,LIMIT_MESSAGES_TAKEN);//Lấy tất cả tin nhắn trong cuộc trò chuyện
-          conversation.messages = getMessages;
+          conversation.messages = _.reverse(getMessages);//Khi fetch tin nhắn về thì sẽ lấy từ mới nhất => cũ nhất nhưng vấn đề phát sinh là khi nạp tin nhắn lên giao diện thì nó lại nạp từ mới nhất xuống cũ nhất từ trên xuống dưới => khi có kết quả nạp từ server lên thì sử dụng hàm reserve để đảo lại thứ tự (cũ nhất => mới nhất)
         } else {
           let getMessages = await MessageModel.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
-          conversation.messages = getMessages;
+          conversation.messages = _.reverse(getMessages);
         }
         return conversation;
       }));
       allConversationWithMessage = allConversationWithMessage.sort((itemPre, itemNext) => {
         return itemNext.updatedAt - itemPre.updatedAt;
-      });//Sắp xếp danh sách các cuộc trò chuyện từ trò chuyện gần nhất đến cũ nhất
+      });//Sắp xếp danh sách các cuộc trò chuyện  từ trò chuyện gần nhất đến cũ nhất dựa vào trường updateAt
       ;
       resolve({
         allConversationWithMessage
@@ -42,8 +43,68 @@ const getAllConversationItems = (currentUserId) => {
       reject(error);
     }
   })
-}
+};
+const addNewMessage = (sender,receiverId,messageVal,isChatGroup)=>{
+  return new Promise(async(resolve,reject)=>{
+     try {
+       if(isChatGroup){
+         const chatGroupReceiver = await ChatGroupModel.getChatGroupById(receiverId);
+         if(!chatGroupReceiver) //Nếu mục tiêu gửi là chat-group
+         {
+           reject(new Error(transErrorsMessage.MESSAGE_ERROR_GROUP));
+         }
+         const receiver = {//
+           id:chatGroupReceiver._id,
+           name:chatGroupReceiver.name,
+           avatar:'https://static.tendant.com/static/new_ux/img/chat-group-big.png'
+         };
+         const message = {
+          senderId:sender.id,
+          receiverId:receiver.id,
+          conversationType:MESSAGE_CONVERSATION_TYPES.GROUP,
+          messageType:MESSAGE_TYPES.TEXT,
+          sender,
+          receiver,
+          text:messageVal,
+          createdAt: Date.now(),
+         }
+         const message_ = await MessageModel.createNew(message);
+         await ChatGroupModel.updateWhenHasNewMessage(chatGroupReceiver._id,chatGroupReceiver.messageAmount+1)
+         resolve(message_);
+       }
+       else {
+        const receiver_ = await UserModel.findUserById(receiverId);
+        if(!receiver_) {
+          reject(new Error(transErrorsMessage.MESSAGE_ERROR_GROUP));
+        }
+        const receiver = {
+          id:receiver_._id,
+          name:receiver_.name,
+          avatar:receiver_.avatar
+        };
+        const message = {
+         senderId:sender.id,
+         receiverId:receiver.id,
+         conversationType:MESSAGE_CONVERSATION_TYPES.PERSONAL,
+         messageType:MESSAGE_TYPES.TEXT,
+         sender,
+         receiver,
+         text:messageVal,
+         createdAt: Date.now()
+        }
+        const message_ = await MessageModel.createNew(message);
+        await ContactModel.updateWhenHasNewMessage(sender.id,receiver.id);
+        resolve(message_);
+       }
+     } catch (error) {
+       console.log(error);
+       reject(error);
+     }
+  });
+};
 export {
-  getAllConversationItems
+  getAllConversationItems,
+  addNewMessage
 }
 
+ 

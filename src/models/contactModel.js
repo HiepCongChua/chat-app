@@ -54,6 +54,12 @@ ContactSchema.statics = {//Tạo một contact mới
             ]
         }).exec();
     },
+    getContactById(_id)
+    {
+        return this.find({
+            _id
+        }).exec();
+    },
     getContacts(id, skip, limit) {
         return this.find({
             $and: [
@@ -149,6 +155,27 @@ ContactSchema.statics = {//Tạo một contact mới
                 }
             ]
         }).exec();
+    },
+    updateWhenHasNewMessage(userId,contactId){
+       return this.updateOne({
+        $or: [
+            {
+                $and: [
+                    { "userId": userId },
+                    { "contactId": contactId }
+                ]
+            },
+            {
+                $and: [
+                    { "userId": contactId },
+                    { "contactId": userId }
+                ]
+            }
+        ]
+    },
+    {
+      updatedAt:Date.now(),  
+    }).exec();
     }
 };
 export default mongoose.model("contact", ContactSchema);
