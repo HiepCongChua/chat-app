@@ -1,6 +1,7 @@
 import passport from "passport";
 import PassportGoogle from "passport-google-oauth";
 import UserModel from "./../../models/userModel";
+import ChatGroupModel from './../../models/chatGroupModel';
 import { transErrorsMessage, transSuccess } from "../../../lang/vi";
 const GoogleStrategy = PassportGoogle.OAuth2Strategy; //Khai báo chiến lược xác thực
 const initPassportGoogle = () => {
@@ -58,8 +59,10 @@ const initPassportGoogle = () => {
     //Khi request chạy vào middleware passport.session() sẽ lấy thông tin người dùng (id trong session vừa config ở serializeUser) để truyền vào trong callback
     //hàm này sử dụng thông tin để tìm kiếm user => gán user cho req
     try {
-      const user = await UserModel.findUserById(id);
+      let user = await UserModel.findUserById(id);
       if (user) {
+        const chatGroupIds = await ChatGroupModel.getChatGroupIdsUser(user._id);
+        user.chatGroupIds = chatGroupIds;
         return done(null, user);
       }
     } catch (error) {

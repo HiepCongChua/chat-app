@@ -1,6 +1,7 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import UserModel from "./../../models/userModel";
+import ChatGroupModel from './../../models/chatGroupModel';
 import { transErrorsMessage, transSuccess } from "../../../lang/vi";
 const LocalStrategy = passportLocal.Strategy; //Khai báo chiến lược xác thực
 const initPassportLocal = () => {
@@ -60,8 +61,11 @@ const initPassportLocal = () => {
     //Khi request chạy vào middleware passport.session() sẽ lấy thông tin người dùng (id trong session vừa config ở serializeUser) để truyền vào trong callback
     //hàm này sử dụng thông tin để tìm kiếm user => gán user cho req
     try {
+      // const userSession = await UserModel.findUserByIdForSessionToUse(id);
       const user = await UserModel.findUserById(id);
       if (user) {
+        const chatGroupIds = await ChatGroupModel.getChatGroupIdsUser(user._id);
+        user.chatGroupIds = chatGroupIds;
         return done(null, user);
       }
     } catch (error) {

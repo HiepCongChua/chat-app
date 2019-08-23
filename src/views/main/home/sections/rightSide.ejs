@@ -17,33 +17,20 @@
             </a>
           </span>
           <span class="chat-menu-right">
-            <a href="javascript:void(0)">&nbsp;</a>
-          </span>
-          <span class="chat-menu-right">
             <a href="#imagesModal_<%= conversation._id %>" class="show-images" data-toggle="modal">
               Hình ảnh
               <i class="fa fa-photo"></i>
             </a>
           </span>
           <span class="chat-menu-right">
-            <a href="javascript:void(0)">&nbsp;</a>
-          </span>
-          <span class="chat-menu-right">
-            <a href="javascript:void(0)" class="number-members" data-toggle="modal">
-              <span class="show-number-members">
-                  Message amount: <%= conversation.messageAmount %> 
-              </span>
+            <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
+              Message amount:  <span class="show-number-messages"><%= conversation.messageAmount %></span>
               <i class="fa fa-comment-o"></i>
             </a>
           </span>
-          <span class="chat-menu-right">
-              <a href="javascript:void(0)">&nbsp;</a>
-            </span>
             <span class="chat-menu-right">
-              <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
-                <span class="show-number-messages">
-                    User amount: <%= conversation.userAmount %> 
-                </span>
+              <a href="javascript:void(0)" class="number-members" data-toggle="modal">
+              User amount: <span class="show-number-members"><%= conversation.userAmount %></span>
                 <i class="fa fa-users"></i>
               </a>
             </span>
@@ -70,7 +57,7 @@
               you
             <%}%>
             bubble-image-file
-            "
+            
               data-mess-id="<%= conversation._id %>"
             >
             <img 
@@ -98,7 +85,7 @@
                   you
                 <%}%>
                 bubble-image-file
-                "
+                
               data-mess-id="<%=message._id%>"
             >
              <img 
@@ -203,7 +190,7 @@
             <%}else{%>
               you
             <%}%>
-            "
+            
               data-mess-id="<%= message._id %>"
             >
               <%= message.text %>
@@ -218,7 +205,7 @@
               you
             <%}%>
             bubble-image-file
-            "
+            
               data-mess-id="<%= conversation._id %>"
             >
               <img
@@ -236,7 +223,7 @@
                   you
                 <%}%>
                 bubble-image-file
-                "
+                
               data-mess-id="<%=message._id%>"
             >
               <a

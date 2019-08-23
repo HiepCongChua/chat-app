@@ -1,6 +1,7 @@
 import passport from "passport";
 import PassportGitHub from "passport-github";
 import UserModel from "./../../models/userModel";
+import ChatGroupModel from './../../models/chatGroupModel';
 import { transErrorsMessage, transSuccess } from "../../../lang/vi";
 const GitHubStrategy = PassportGitHub.Strategy; //Khai báo chiến lược xác thực
 const initPassportGitHub = () => {
@@ -58,6 +59,8 @@ const initPassportGitHub = () => {
     try {
       const user = await UserModel.findUserById(id);
       if (user) {
+        const chatGroupIds = await ChatGroupModel.getChatGroupIdsUser(user._id);
+        user.chatGroupIds = chatGroupIds;
         return cb(null, user);
       }
     } catch (error) {

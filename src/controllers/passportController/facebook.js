@@ -1,6 +1,7 @@
 import passport from "passport";
 import PassportFacebook from "passport-facebook";
 import UserModel from "./../../models/userModel";
+import ChatGroupModel from './../../models/chatGroupModel';
 import { transErrorsMessage, transSuccess } from "../../../lang/vi";
 const FacebookStrategy = PassportFacebook.Strategy; //Khai báo chiến lược xác thực
 const initPassportFacebook = () => {
@@ -61,6 +62,9 @@ const initPassportFacebook = () => {
     try {
       const user = await UserModel.findUserById(id);
       if (user) {
+        const chatGroupIds = await ChatGroupModel.getChatGroupIdsUser(user._id);
+        user.chatGroupIds = chatGroupIds;
+        console.log("This is facebook");
         return done(null, user);
       }
     } catch (error) {
