@@ -46,6 +46,9 @@ function textAndEmojiChat(divId) {
                 });
                 $(`.person[data-chat=${divId}]`).trigger("typing.moveConverstationToTheTop");
                 socket.emit("chat-text-emoji", dataToEmit);//bắn sự kiện socket cho group hoặc cá nhân.
+                typingOff(divId);
+                const checkTyping =   $(`.chat[data-chat=${divId}]`).find("div.bubble-typing-gif");
+                if(checkTyping.length) checkTyping.remove(); 
             }).fail(function (response) {
                 console.log(response);
                 alertify.notify(response.statusText, "error", 5);
