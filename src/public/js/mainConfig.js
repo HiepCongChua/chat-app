@@ -187,6 +187,7 @@ function changeScreenChat() {
     
     nineScrollRight(divId);
     enableEmojioneArea(divId);
+    imageChat(divId);
   });
 };
 function convertEmoji(){

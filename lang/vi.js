@@ -18,13 +18,14 @@ export const transErrorsMessage = {
   LOGIN_FAILED: "Tài khoản không tồn tại !",
   SERVER_ERROR:'Rất tiếc đã có lỗi vui lòng thử lại sau hoặc liên hệ với bộ phận hỗ trợ ):',
   AVATAR_TYPE:'Định dạng file không hợp lệ chỉ chấp nhận jpg, png hoặc jpeg !',
-  AVATAR_LIMIT_SIZE_MESSAGE:'Kích thước file vượt quá 1MB, vui lòng thử lại !',
+  IMAGE_LIMIT_SIZE_MESSAGE:'Kích thước file vượt quá 1MB, vui lòng thử lại !',
   ACCOUNT_UNDEFINED:"Tài khoản này không tồn tại !",
   PASSWORD_INCORRECT:"Mật khẩu tài khoản không chính xác !",
   CONFIRM_PASSWORD_INCORRECT:"Xác nhận mật khẩu không chính xác.",
   KEYWORD_SEARCH:"Từ khóa không được phép chứa giá trị đặc biệt !",
   MESSAGE_ERROR:"Tin nhắn gửi đi yêu cầu tối thiểu 1 ký tự và tối đa 400 ký tự",
-  MESSAGE_ERROR_GROUP:"Không tồn tại người dùng hoặc nhóm trò chuyện vui lòng thử lại !"
+  MESSAGE_ERROR_GROUP:"Không tồn tại người dùng hoặc nhóm trò chuyện vui lòng thử lại !",
+  IMAGE_MESSAGE_TYPE:"Kiểu file không hợp lệ chỉ chấp nhận jpg, png hoặc jpeg"
 };
 export const transSuccess = {
   userCreated: userEmail => {
