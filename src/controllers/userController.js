@@ -29,7 +29,7 @@ const updateAvatar = (req, res) => {
       if (err.message == "File too large") {
         return res
           .status(500)
-          .send(transErrorsMessage.AVATAR_LIMIT_SIZE_MESSAGE);
+          .send(transErrorsMessage.IMAGE_LIMIT_SIZE_MESSAGE);
       }
       return res.status(500).send(err.message);
     }

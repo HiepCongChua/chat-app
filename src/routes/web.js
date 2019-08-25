@@ -21,7 +21,8 @@ import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
 import {initPassportGitHub} from './../controllers/passportController/github';
-import {addNewMessage} from './../controllers/messageController';
+import {addNewMessage,addNewMessageImage} from './../controllers/messageController';
+import {multer_upload} from '../helpers/configMulter';
 initPassportLocal();
 initPassportFacebook();
 initPassportGoogle();
@@ -96,6 +97,7 @@ const initRouters = app => {
   router.put('/contact/accept-request-contact-received',checkLoggedIn,acceptRequestContactReceived);
   router.delete('/contact/user-remove-contact',checkLoggedIn,removeContact);
   router.post('/message/add-new-text-emoji',checkLoggedIn,checkMessageValidation,addNewMessage);
+  router.post('/message/add-message-image',checkLoggedIn,multer_upload('my-image-chat'),addNewMessageImage);
   return app.use("/", router);
 };
 export default initRouters;

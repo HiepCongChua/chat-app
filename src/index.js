@@ -33,18 +33,27 @@ app.use(passport.session());//passport sẽ làm việc với session gọi dữ
 //init all routes
 // Cấu hình io để lấy dữ liệu trong session ra (kết hợp sử dụng passport-socket)
 initRouters(app);
+app.use(function (err, req, res, next) {
+  if (err.code === 'IMAGE_MESSAGE_TYPE') {
+    return res.status(500).send(err);
+  }
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(500).send(err);
+  }
+  return res.redirect('/');
+})
 io.use(passportSocketIo.authorize({
   cookieParser,
   key: process.env.SECRET_SESSION,
   secret: process.env.KEY_SESSION,
   store: storeSession,
   success: (data, accept) => {
-    if(!data.user.logged_in){
-      return accept("Invalid user .",false);
+    if (!data.user.logged_in) {
+      return accept("Invalid user .", false);
     }
-    return accept(null,true);
+    return accept(null, true);
   },
-  fail: (data, message, error, accept)=>{
+  fail: (data, message, error, accept) => {
     if (error)
       throw new Error(message);
     console.log('failed connection to socket.io:', message);

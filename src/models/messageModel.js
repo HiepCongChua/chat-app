@@ -18,6 +18,9 @@ const MessageSchema = new Schema({
     },
     text:String,
     file:{data:Buffer,contentType:String,fileName:String},
+    imageUrl:{
+        type:String,default:null
+    },
     createdAt:{
         type:Number,default:Date.now
     },

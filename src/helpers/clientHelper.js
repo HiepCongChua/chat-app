@@ -26,3 +26,8 @@ export let convertTimestampToHumanTime = (timestamp)=>{
   };
   return moment(timestamp).locale("vi").startOf('seconds').fromNow();
 };
+
+{/* <img
+src="data:<%=message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>"
+class="show-image-chat" title="<%= message.sender.name %>"
+/> */}
