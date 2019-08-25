@@ -1,5 +1,4 @@
 import multer from 'multer';
-import {transErrorsMessage} from '../../lang/vi'
 const limits = { fileSize: 1024 * 1024}
 function fileFilter(req, file, cb) {
     if ((file.mimetype!=="image/png")&&(file.mimetype!=="image/jpg")&&(file.mimetype!=="image/jpeg")) {
@@ -11,5 +10,5 @@ function fileFilter(req, file, cb) {
 }
 const upload_image = multer({fileFilter,limits});
 module.exports = {
-    multer_upload:(image)=> upload_image.single(image)
+    multer_upload_image:(image)=> upload_image.single(image)
 }

@@ -3,6 +3,7 @@ import UserModel from './../models/userModel';
 import ChatGroupModel from './../models/chatGroupModel';
 import { model as MessageModel, MESSAGE_CONVERSATION_TYPES, MESSAGE_TYPES } from './../models/messageModel';
 import _ from 'lodash';
+import fsExtra from 'fs-extra';
 import cloudinary_ from 'cloudinary';
 const cloudinary = cloudinary_.v2;
 cloudinary.config({
@@ -112,8 +113,8 @@ const addNewMessage = (sender, receiverId, messageVal, isChatGroup) => {
 const addNewMessageImage = (sender, receiverId, messageVal, isChatGroup) => {
   return new Promise(async (resolve, reject) => {
     try {
-        const imageInfo = await cloudinary.uploader.upload(messageVal);
-        const imageUrl = imageInfo.secure_url;
+      const imageInfo = await cloudinary.uploader.upload(messageVal);
+      const imageUrl = imageInfo.secure_url;
       if (isChatGroup) {
         const chatGroupReceiver = await ChatGroupModel.getChatGroupById(receiverId);
         if (!chatGroupReceiver) {
@@ -168,12 +169,70 @@ const addNewMessageImage = (sender, receiverId, messageVal, isChatGroup) => {
     }
   });
 }
-const dataUri = (req) => {//Hàm chuyển đổi buffer sang kiểu image
-  return dUri.format(path.extname(Date.now() + req.file.originalname).toString(), req.file.buffer);
-};
+const addNewMessageAttachment = (sender, receiverId, messageVal, isChatGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const attachmentBuffer = await fsExtra.readFile(messageVal.path);
+      const attachmentContentType = messageVal.mimetype;
+      const attachmentName = messageVal.originalname;
+      if (isChatGroup) {
+        const chatGroupReceiver = await ChatGroupModel.getChatGroupById(receiverId);
+        if (!chatGroupReceiver) {
+          reject(new Error(transErrorsMessage.MESSAGE_ERROR_GROUP));
+        }
+        const receiver = {
+          id: chatGroupReceiver._id,
+          name: chatGroupReceiver.name,
+          avatar: 'https://static.tendant.com/static/new_ux/img/chat-group-big.png'
+        };
+        const message = {
+          senderId: sender.id,
+          receiverId: receiver.id,
+          conversationType: MESSAGE_CONVERSATION_TYPES.GROUP,
+          messageType: MESSAGE_TYPES.FILE,
+          sender,
+          receiver,
+          file: { data: attachmentBuffer, contentType: attachmentContentType, fileName: attachmentName },
+          createdAt: Date.now(),
+        }
+        const message_ = await MessageModel.createNew(message);
+        await ChatGroupModel.updateWhenHasNewMessage(chatGroupReceiver._id, chatGroupReceiver.messageAmount + 1)
+        resolve(message_);
+      }
+      else {
+        const receiver_ = await UserModel.findUserById(receiverId);
+        if (!receiver_) {
+          reject(new Error(transErrorsMessage.MESSAGE_ERROR_GROUP));
+        }
+        const receiver = {
+          id: receiver_._id,
+          name: receiver_.name,
+          avatar: receiver_.avatar
+        };
+        const message = {
+          senderId: sender.id,
+          receiverId: receiver.id,
+          conversationType: MESSAGE_CONVERSATION_TYPES.PERSONAL,
+          messageType: MESSAGE_TYPES.FILE,
+          sender,
+          receiver,
+          file: { data: attachmentBuffer, contentType: attachmentContentType, fileName: attachmentName },
+          createdAt: Date.now()
+        }
+        const message_ = await MessageModel.createNew(message);
+        await ContactModel.updateWhenHasNewMessage(sender.id, receiver.id);
+        resolve(message_);
+      }
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+}
 export {
   getAllConversationItems,
   addNewMessage,
-  addNewMessageImage
+  addNewMessageImage,
+  addNewMessageAttachment
 }
 

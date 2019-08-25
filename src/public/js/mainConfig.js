@@ -135,7 +135,12 @@ function gridPhotos(layoutNumber) {
   //   }
   // });
 }
-
+function bufferToBase64 (buffer){
+  return btoa(
+       new Uint8Array(buffer)
+         .reduce((data, byte) => data + String.fromCharCode(byte), '')
+     );
+}
 function addFriendsToGroup() {
   $('ul#group-chat-friends').find('div.add-user').bind('click', function () {
     let uid = $(this).data('uid');
@@ -193,6 +198,7 @@ function changeScreenChat() {
     nineScrollRight(divId);
     enableEmojioneArea(divId);
     imageChat(divId);
+    attachmentChat(divId);
   });
 };
 function convertEmoji(){
