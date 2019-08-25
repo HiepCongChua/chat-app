@@ -18,7 +18,7 @@ function textAndEmojiChat(divId) {
                 const dataToEmit = {
                     message: data.message
                 };
-                const messageOfMe = $(`<div class="convert-emoji bubble me data-mess-id="${data.message._id}" ></div>`);
+                const messageOfMe = $(`<div class="convert-emoji bubble me" data-mess-id="${data.message._id}" ></div>`);
                 messageOfMe.text(data.message.text);
                 let converEmojiMessage = emojione.toImage(messageOfMe.html());//Khi đẩy tin nhắn vào list chat thì gọi hàm Image để nếu có dữ liệu thì conver sang emoji
                 if (dataTextEmojiForSend.isChatGroup) {
@@ -32,10 +32,13 @@ function textAndEmojiChat(divId) {
                     messageOfMe.html(converEmojiMessage);//Sau khi conver thì lại đẩy vào div
                     dataToEmit.contactId = targetId;
                 };
+
+
                 $(`.right .chat[data-chat=${divId}]`).append(messageOfMe);//đẩy tin nhắn mới vào cuối danh sách
                 nineScrollRight(divId);//tự động cuộn trang xuống dưới mỗi khi gửi tin nhắn
                 $(`#write-chat-${divId}`).val("");
                 currentEmojiArea.find(".emojionearea-editor").text("");
+                
                 $(`.person[data-chat=${divId}]`).find("span.time").removeClass("message-time-realtime").html(moment(data.message.createdAt).locale("vi").startOf('seconds').fromNow());
                 $(`.person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(data.message.text));
                 // 
@@ -62,7 +65,7 @@ $(document).ready(function () {
         //nhận được dữ liệu từ server bắn về
         //Xử lý dữ liệu
         let divId = "";
-        const messageOfYou = $(`<div class="convert-emoji bubble you data-mess-id="${response.message._id}" ></div>`);
+        const messageOfYou = $(`<div class="convert-emoji bubble you" data-mess-id="${response.message._id}" ></div>`);
         messageOfYou.text(response.message.text);
         let converEmojiMessage = emojione.toImage(messageOfYou.html());//Khi đẩy tin nhắn vào list chat thì gọi hàm Image để nếu có dữ liệu thì conver sang emoji
         if (response.currentGroupId) {
