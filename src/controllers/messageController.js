@@ -1,7 +1,12 @@
 import {validationResult} from 'express-validator/check';
-import {addNewMessage as addNewMessageService,addNewMessageImage as addNewMessageImageService} from './../services/messageService';
+import {
+    addNewMessage as addNewMessageService,
+    addNewMessageImage as addNewMessageImageService,
+    addNewMessageAttachment as addNewMessageAttachmentService
+} from './../services/messageService';
 import DataUri from 'datauri';
 import path from 'path';
+import fsExtra from 'fs-extra';
 const dUri = new DataUri();
 const addNewMessage = async (req,res)=>{
     const errorArr = [];
@@ -49,7 +54,27 @@ const addNewMessageImage = async (req,res)=>{
 const dataUri = (req)=>{//Hàm chuyển đổi buffer sang kiểu image
     return  dUri.format(path.extname(Date.now()+req.file.originalname).toString(),req.file.buffer);
   };
+const addNewMessageAttachment = async (req,res)=>{
+    try {
+        const sender = {
+           id:req.user._id,
+           name:req.user.username,
+           avatar:req.user.avatar
+        };
+        console.log(req.file.path);
+        const receiverId = req.body.uid;
+        const messageVal = req.file;
+        const isChatGroup = req.body.isChatGroup;
+        const message = await addNewMessageAttachmentService(sender,receiverId,messageVal,isChatGroup);
+        await fsExtra.remove(`src/public/images/chat/message/${message.file.fileName}`)
+        return res.status(200).send({message});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+}
 export {
     addNewMessage,
-    addNewMessageImage
+    addNewMessageImage,
+    addNewMessageAttachment
 }

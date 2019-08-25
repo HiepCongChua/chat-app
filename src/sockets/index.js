@@ -7,6 +7,7 @@ import {chatTextEmoji} from './chat/chatAndTextEmoji';
 import {typingOn} from './chat/typingOn';
 import {typingOff} from './chat/typingOff';
 import {chatImage} from './chat/chatImage';
+import {chatAttachment} from './chat/chatAttachment';
 const initSockets = (io)=>{
     addNewContact(io);//A gửi lời mời kết bạn cho B
     removeRequestContactSent(io);//Sự kiện A gửi cho B lời mời kết bạn rồi lại hủy
@@ -17,6 +18,7 @@ const initSockets = (io)=>{
     typingOn(io);
     typingOff(io);
     chatImage(io);
+    chatAttachment(io);
 }
 export  {
   initSockets

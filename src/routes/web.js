@@ -21,8 +21,9 @@ import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
 import {initPassportGitHub} from './../controllers/passportController/github';
-import {addNewMessage,addNewMessageImage} from './../controllers/messageController';
-import {multer_upload} from '../helpers/configMulter';
+import {addNewMessage,addNewMessageImage,addNewMessageAttachment} from './../controllers/messageController';
+import {multer_upload_image} from '../helpers/configMulterUploadImage';
+import {multer_upload_attachment} from '../helpers/configMulterUploadAttachment';
 initPassportLocal();
 initPassportFacebook();
 initPassportGoogle();
@@ -97,7 +98,10 @@ const initRouters = app => {
   router.put('/contact/accept-request-contact-received',checkLoggedIn,acceptRequestContactReceived);
   router.delete('/contact/user-remove-contact',checkLoggedIn,removeContact);
   router.post('/message/add-new-text-emoji',checkLoggedIn,checkMessageValidation,addNewMessage);
-  router.post('/message/add-message-image',checkLoggedIn,multer_upload('my-image-chat'),addNewMessageImage);
+  router.post('/message/add-message-image',checkLoggedIn,multer_upload_image('my-image-chat'),addNewMessageImage);
+  router.post('/message/add-message-attachment',checkLoggedIn,
+  multer_upload_attachment('my-attachment-chat'),
+  addNewMessageAttachment)
   return app.use("/", router);
 };
 export default initRouters;
