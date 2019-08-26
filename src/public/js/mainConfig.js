@@ -173,7 +173,6 @@ function flashMasterNotify() {
     alertify.notify(notify, "success", 7);
   }
 };
-
 function changeTypeChat() {
   $("#select-type-chat").bind("change", function () {
     const optionSelected = $("option:selected", this);
@@ -199,6 +198,7 @@ function changeScreenChat() {
     enableEmojioneArea(divId);
     imageChat(divId);
     attachmentChat(divId);
+    videoChat(divId);
   });
 };
 function convertEmoji(){
@@ -241,4 +241,8 @@ $(document).ready(function () {
   changeScreenChat();
   $('ul.people').find("a")[0].click();
   convertEmoji();
+  $("#video-chat-group").bind("click",function(){
+    alertify.notify("Tính năng không khả dụng với nhóm trò chuyện","error",7);
+  });
+
 });  

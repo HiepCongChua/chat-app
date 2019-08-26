@@ -144,4 +144,4 @@ $(document).ready(function(){
           $(`#attachmentsModal_${divId}`).find("ul.list-attachments").append(attachmentChatToAddModal);
           }
   });
-})
+});
