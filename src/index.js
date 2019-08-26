@@ -11,8 +11,10 @@ import { initSockets } from './sockets/index';
 import socketio from 'socket.io';
 import passportSocketIo from 'passport.socketio';
 import cookieParser from 'cookie-parser';
+import events from 'events';
 //Init app
 const app = express();
+events.EventEmitter.defaultMaxListeners = 30;
 //Init server with socket.io & express app
 const server = http.createServer(app);
 const io = socketio(server);

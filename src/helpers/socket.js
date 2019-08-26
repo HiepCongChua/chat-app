@@ -19,15 +19,15 @@ const emitNotifyToArray = (clients, userId, io, eventName, data) => {
     });
 }; 
 const removeSocketIdFromArray = (clients, userId, socket) => {
-    clients[userId] = clients[userId].filter((socketId) => {
+    clients[userId] = [...clients[userId].filter((socketId) => {
         return socketId !== socket.id;
-    });
+    })];
     if ((clients[userId].length === 0))
     //Khi user đóng tap mà mảng chứa các socketId (đại diện cho mỗi connect rỗng) thì xóa mảng này đi.
     //Nhưng phát sinh trường hợp là khi người dùng đăng xuất mà không đóng tab thì không bắt được (dẫn đến mảng rỗng vẫn tồn tại trên server).
     //Trong trường hợp mảng rỗng thì xóa thuộc tính userId đi
     {
-        _.omit(clients, [userId]);
+        delete clients[userId];
     }
     return clients;
 
