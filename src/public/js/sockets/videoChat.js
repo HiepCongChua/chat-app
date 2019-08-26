@@ -191,7 +191,6 @@ $(document).ready(function () {
       if(err.toString()==='NotAllowedError: Permission denied'){
         alertify.notify("Vui lòng cấp quyền truy cập camera và microphone trên thiết bị của bạn !","error",5);
       };
-      if(err.toString()==='Failed to get local stream DOMExceptionc')
     });
     Swal.close();
     clearInterval(timerInterval);
