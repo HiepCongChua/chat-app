@@ -18,6 +18,7 @@
 <body onload="spinLoaded()">
     <!--Icon loader-->
     <div class="main-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <input type="hidden" id="ice-server-list" value="<%= iceServerList %>">
     <%- include('alert/alert'); %>
     <%- include('navbar/navbar'); %>
     <!-- content -->
@@ -61,6 +62,7 @@
     <script src="js/sockets/imageChat.js"></script>
     <script src="js/sockets/attachmentChat.js"></script> 
     <script src="js/sockets/videoChat.js"></script>
+    <script src="js/sockets/checkStatusUser.js"></script>
     <%- include('contact/contactModal'); %> 
     <%- include('streaming/streamingModal'); %>
     <%- include('image/imageModal'); %>

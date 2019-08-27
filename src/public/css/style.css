@@ -605,8 +605,8 @@ label:focus,
 }
 
 .dot {
-  background-color: #bbbbbb;
-  border: 2px solid #fff;
+  background-color: #998d8d;
+  border: 2px solid #faf4f4;
   border-radius: 50%;
   height: 11px;
   left: 30px;
@@ -617,11 +617,11 @@ label:focus,
 }
 
 .online {
-  background-color: #42b72a !important;
+  background-color: #31f809 !important;
 }
 
 .avatar-online {
-  border-color: #42b72a !important;
+  border-color: #30f508 !important;
 }
 
 .left {

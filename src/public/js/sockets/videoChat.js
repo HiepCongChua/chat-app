@@ -20,6 +20,7 @@ function closeVideoStream(stream){
   return stream.getTracks().forEach(track=>track.stop());
 };
 $(document).ready(function () {
+  const iceServerList = $("#ice-server-list").val();
   socket.on("listener-offline", function () {
     alertify.notify("Người dùng hiện tại đang offl");
     return false;
@@ -31,7 +32,7 @@ $(document).ready(function () {
     host: "peerjs-server-trungquandev.herokuapp.com",
     secure: true,
     port: 443,
-    debug: 3
+    config:{"iceServers":JSON.parse(iceServerList)}
   });
   peer.on("open", function (peerId) {
     getPeerId = peerId;
@@ -45,7 +46,6 @@ $(document).ready(function () {
       listenerPeerId: getPeerId
     };
     socket.emit("listener-emit-peer-id-to-server", dataToEmit);//bắn sự kiện cho server đi kèm là perrId
-
   });
   //Config với vai trò user là caller
   socket.on('server-send-peer-id-of-listener-to-caller', (response) => {
