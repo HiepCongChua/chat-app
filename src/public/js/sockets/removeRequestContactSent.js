@@ -48,7 +48,7 @@ socket.on("response-remove-request-contact-sent", user => {//Mỗi khi A gửi y
         </div>
         <br/>
         <div class="user-address">
-            <span>&nbsp ${user.address||''}</span>
+            <span>&nbsp; ${user.address||''}</span>
         </div>
 
         <div class="user-add-new-contact" data-uid="${user.id}">

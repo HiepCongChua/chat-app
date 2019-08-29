@@ -8,12 +8,13 @@ import {
   readMoreContactsReceived,
   removeRequestContactReceived,
   acceptRequestContactReceived,
-  removeContact
+  removeContact,
+  findFriends
 } from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
-import {findUsersContact as findUsersContactValid} from './../validation/contactValidation';
+import {findUsersContact as findUsersContactValid, findFriends as findFriendsValid} from './../validation/contactValidation';
 import {checkMessageValidation} from './../validation/messageValidation';
 import {readMore,markAllAsRead} from './../controllers/notificationController';
 import passport from "passport";
@@ -101,7 +102,8 @@ const initRouters = app => {
   router.post('/message/add-message-image',checkLoggedIn,multer_upload_image('my-image-chat'),addNewMessageImage);
   router.post('/message/add-message-attachment',checkLoggedIn,
   multer_upload_attachment('my-attachment-chat'),
-  addNewMessageAttachment)
+  addNewMessageAttachment);
+  router.get('/contact/find-friends',checkLoggedIn,findFriendsValid,findFriends);
   return app.use("/", router);
 };
 export default initRouters;

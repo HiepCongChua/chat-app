@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { removeSocketIdFromArray, pushSocketIdToArray, emitNotifyToArray } from './../../helpers/socket';
 const chatAttachment = (io) => {//Trước hết giả sử người A (userId) gửi lời mời cho người B (contactId) 
   let clients = {};
-  io.on('connection', (socket) => {
+  io.on('connection', (socket) => {//Mỗi lần có một user kết nối đến server thì callback lại được invoked tạo ra một socketId để quản lý người dùng đó.
     if (socket.request.user.chatGroupIds) {
       const currentUserId = socket.request.user._id; //Lấy id của user hiện tại 
       clients = pushSocketIdToArray(clients, currentUserId, socket.id)//Lấy mảng các user

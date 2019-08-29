@@ -176,6 +176,15 @@ ContactSchema.statics = {//Tạo một contact mới
     {
       updatedAt:Date.now(),  
     }).exec();
+    },
+    findFriends(userId){
+     return this.find({
+       $and:
+    [
+        {$or:[{userId},{contactId:userId}]},
+        {status:true}
+    ]   
+     })
     }
 };
 export default mongoose.model("contact", ContactSchema);

@@ -35,7 +35,7 @@
                     </div>
                     <br />
                     <div class=" user-address">
-                <span>&nbsp ${contact.address||''}</span>
+                <span>&nbsp; ${contact.address||''}</span>
               </div>
               <div class="user-remove-request-contact-sent action-danger display-important" data-uid="${contact._id}">
                 Hủy yêu cầu
