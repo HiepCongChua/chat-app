@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     avatar:{type:String,default:null},
     role : {type:String,default:"user"},
     local:{
-        email : {type:String,trim:true},
+        email : {type:String,trim:true,index: true},
         password:String,
         isActive:{type:Boolean,default:false},
         verifyToken:String
@@ -17,17 +17,17 @@ const UserSchema = new Schema({
     facebook:{
         uid:String,
         token:String,
-        email:{type:String,trim:true}
+        email:{type:String,trim:true,index: true}
     },
     github:{
         uid:String,
         token:String,
-        email:{type:String,trim:true}
+        email:{type:String,trim:true,index: true}
     },
     google:{
         uid:String,
         token:String,
-        email:{type:String,trim:true}
+        email:{type:String,trim:true,index: true}
     },
     createdAt:{
         type:Number,default:Date.now
@@ -43,7 +43,7 @@ const UserSchema = new Schema({
         default:Date.now()+3600000
     }
 });
-UserSchema.index({username:'text'})
+UserSchema.index({username:'text'});
 UserSchema.statics = {
     createNew(item){
         return this.create(item);
@@ -127,6 +127,16 @@ UserSchema.statics = {
            ]
         },
         {_id:1,username:1,address:1,avatar:1}).exec();
+    },
+    findFriends(friendsId,keyword){
+        return this.find({
+           $and:[
+               {"_id":{$in:friendsId}},
+               {"local.isActive":true},//Trạng thái đã active
+               {$text:{$search:keyword,$caseSensitive:true}}
+           ]
+        },
+        {_id:1,username:1,address:1,avatar:1}).exec();
     }
 };
 UserSchema.methods = {
@@ -134,5 +144,4 @@ UserSchema.methods = {
         return bcrypt.compare(password,this.local.password);
     }
 }
-
 export default mongoose.model("user",UserSchema);

@@ -235,12 +235,18 @@ const removeContact = (currentUserId, contactId) => {
 const findFriends = (userId, keyword) => {
   return new Promise(async (resolve, reject) => {
     try {
-     const friendsId = [];
-     const friends = await ContactModel.findFriends(userId,keyword);
+     let friendsId = [];
+     const friendsContact = await ContactModel.findFriends(userId);
+     friendsContact.forEach((record)=>{
+       if(record.userId===userId.toString())  friendsId.push(record.contactId);
+       else if(record.contactId===userId.toString()) friendsId.push(record.userId);
+     });
+     friendsId = _.uniqBy(friendsId);//loại bỏ các id trùng lặp;
+     const friendsInfo = await UserModel.findFriends(friendsId,keyword);
+     resolve(friendsInfo);
     } catch (error) {
-       
+       reject(error);
     }
-
   });
 };
 export {

@@ -44,7 +44,7 @@ const findFriends = async (req, res, next) => {
     try {
         const userId = req.user._id;//Lấy id của user hiện tại 
         const keyword = req.params.keyword;
-        const friends = await findFriendsService(userId, keyword);//Tìm contact nhưng loại trì user đang hiện tại
+        const friends = await findFriendsService(userId, keyword);
         return res.render('main/groupChat/sections/_findFriends', { friends });
     } catch (error) {
         console.log(error);
