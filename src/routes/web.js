@@ -8,12 +8,13 @@ import {
   readMoreContactsReceived,
   removeRequestContactReceived,
   acceptRequestContactReceived,
-  removeContact
+  removeContact,
+  findFriends
 } from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
-import {findUsersContact as findUsersContactValid} from './../validation/contactValidation';
+import {findUsersContact as findUsersContactValid, findFriends as findFriendsValid} from './../validation/contactValidation';
 import {checkMessageValidation} from './../validation/messageValidation';
 import {readMore,markAllAsRead} from './../controllers/notificationController';
 import passport from "passport";
@@ -90,7 +91,7 @@ const initRouters = app => {
   router.post('/contact/add-new', checkLoggedIn,  addNew); //Router gửi một yêu cầu kết bạn
   router.delete('/contact/remove-request-contact-sent', checkLoggedIn, removeRequestContactSent);//Router hủy yêu cầu kết bạn (A=>B nhưng B chưa đồng ý thì A hủy lời mời);
   router.delete('/contact/remove-request-contact-received',checkLoggedIn,removeRequestContactReceived)
-  router.get('/notification/read-more', checkLoggedIn,readMore);
+  router.get('/notification/read-more',checkLoggedIn,readMore);
   router.put('/notification/mark-all-as-read',checkLoggedIn,markAllAsRead);
   router.get('/contact/read-more-contacts',checkLoggedIn,readMoreContacts);
   router.get('/contact/read-more-contacts-sent',checkLoggedIn,readMoreContactsSent);
@@ -99,9 +100,9 @@ const initRouters = app => {
   router.delete('/contact/user-remove-contact',checkLoggedIn,removeContact);
   router.post('/message/add-new-text-emoji',checkLoggedIn,checkMessageValidation,addNewMessage);
   router.post('/message/add-message-image',checkLoggedIn,multer_upload_image('my-image-chat'),addNewMessageImage);
-  router.post('/message/add-message-attachment',checkLoggedIn,
-  multer_upload_attachment('my-attachment-chat'),
-  addNewMessageAttachment)
+  router.post('/message/add-message-attachment',checkLoggedIn,multer_upload_attachment('my-attachment-chat'),
+  addNewMessageAttachment);
+  router.get('/contact/find-friends/:keyword',checkLoggedIn,findFriendsValid,findFriends);
   return app.use("/", router);
 };
 export default initRouters;

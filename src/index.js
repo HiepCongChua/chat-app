@@ -18,8 +18,6 @@ events.EventEmitter.defaultMaxListeners = 30;
 //Init server with socket.io & express app
 const server = http.createServer(app);
 const io = socketio(server);
-//Connect to MongoDB
-ConnectDB();
 //Config Session
 configSession(app);
 //Config view engine
@@ -31,6 +29,8 @@ app.use(connectFlash());
 app.use(cookieParser());
 //Config passport
 app.use(passport.initialize());
+//Connect to MongoDB
+ConnectDB();
 app.use(passport.session());//passport sẽ làm việc với session gọi dữ liệu trong session ra
 //init all routes
 // Cấu hình io để lấy dữ liệu trong session ra (kết hợp sử dụng passport-socket)

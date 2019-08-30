@@ -75,7 +75,7 @@ socket.on("response-accept-request-contact-received", user => {//Khi chúng ta �
                   </div>
                   <br />
                   <div class=" user-address">
-        <span>&nbsp ${user.address || ''} </span>
+        <span>&nbsp; ${user.address || ''} </span>
       </div>
       <div class="user-talk" data-uid="${user.id}">
         Trò chuyện

@@ -200,9 +200,8 @@ const removeRequestContactReceived = (currentUserId, contactId) => {
 const acceptRequestContactReceived = (contactId, userId) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const { nModified} = await ContactModel.acceptRequestContactReceived(contactId, userId);
-      if(nModified!==1)
-      {
+      const { nModified } = await ContactModel.acceptRequestContactReceived(contactId, userId);
+      if (nModified !== 1) {
         return reject(false);
       }
       //remove notification
@@ -219,19 +218,35 @@ const acceptRequestContactReceived = (contactId, userId) => {
     };
   });
 };
-const removeContact = (currentUserId,contactId) => {
+const removeContact = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     try {
-       const {n,ok,deletedCount} = await ContactModel.removeContact(currentUserId,contactId);
-       if(n===0)
-       {
+      const { n, ok, deletedCount } = await ContactModel.removeContact(currentUserId, contactId);
+      if (n === 0) {
         return reject(false);
-       }
-       resolve(true);
+      }
+      resolve(true);
     } catch (error) {
       console.log(error)
       return reject(false);
     };
+  });
+};
+const findFriends = (userId, keyword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+     let friendsId = [];
+     const friendsContact = await ContactModel.findFriends(userId);
+     friendsContact.forEach((record)=>{
+       if(record.userId===userId.toString())  friendsId.push(record.contactId);
+       else if(record.contactId===userId.toString()) friendsId.push(record.userId);
+     });
+     friendsId = _.uniqBy(friendsId);//loại bỏ các id trùng lặp;
+     const friendsInfo = await UserModel.findFriends(friendsId,keyword);
+     resolve(friendsInfo);
+    } catch (error) {
+       reject(error);
+    }
   });
 };
 export {
@@ -249,5 +264,6 @@ export {
   readMoreContactsReceived,
   removeRequestContactReceived,
   acceptRequestContactReceived,
-  removeContact
+  removeContact,
+  findFriends
 };

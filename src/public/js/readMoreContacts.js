@@ -38,7 +38,7 @@
                            </div>
                            <br />
                            <div class=" user-address">
-                 <span>&nbsp ${contact.address||''} </span>
+                 <span>&nbsp; ${contact.address||''} </span>
                </div>
                <div class="user-talk" data-uid="${contact._id}">
                  Trò chuyện

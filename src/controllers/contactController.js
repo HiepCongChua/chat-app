@@ -8,23 +8,44 @@ import {
     readMoreContactsReceived as readMoreContactsReceivedService,
     removeRequestContactReceived as removeRequestContactReceivedService,
     acceptRequestContactReceived as acceptRequestContactReceivedService,
-    removeContact as removeContactService
+    removeContact as removeContactService,
+    findFriends as findFriendsService
 } from "../services/contactService";
 const findUsersContact = async (req, res, next) => {
     const errorArr = [];
     const validationErrors = validationResult(req);
-    // if (!validationErrors.isEmpty()) {
-    //     const errors = Object.values(validationErrors.mapped());
-    //     errors.forEach(item => {
-    //         errorArr.push(item.msg);
-    //     });
-    //     return res.status(500).send(errorArr);
-    // };
+    if (!validationErrors.isEmpty()) {
+        const errors = Object.values(validationErrors.mapped());
+        errors.forEach(item => {
+            errorArr.push(item.msg);
+        });
+        return res.status(500).send(errorArr);
+    };
     try {
         const currentUserId = req.user._id;//Lấy id của user hiện tại 
         const keyword = req.params.keyword;
         const users = await findUsersContactService(currentUserId, keyword);//Tìm contact nhưng loại trì user đang hiện tại
         return res.render('main/contact/sections/_findUsersContact', { users });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+const findFriends = async (req, res, next) => {
+    const errorArr = [];
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+        const errors = Object.values(validationErrors.mapped());
+        errors.forEach(item => {
+            errorArr.push(item.msg);
+        });
+        return res.status(500).send(errorArr);
+    };
+    try {
+        const userId = req.user._id;//Lấy id của user hiện tại 
+        const keyword = req.params.keyword;
+        const friends = await findFriendsService(userId, keyword);
+        return res.render('main/groupChat/sections/_findFriends', { friends });
     } catch (error) {
         console.log(error);
         return res.status(500).send(error);
@@ -121,5 +142,6 @@ export  {
     readMoreContactsReceived,
     removeRequestContactReceived,
     acceptRequestContactReceived,
-    removeContact
+    removeContact,
+    findFriends
 }

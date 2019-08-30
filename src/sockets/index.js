@@ -9,6 +9,7 @@ import {typingOff} from './chat/typingOff';
 import {chatImage} from './chat/chatImage';
 import {chatAttachment} from './chat/chatAttachment';
 import {chatVideo} from './chat/chatVideo';
+import {checkStatusUser} from './status/checkStatusUser';
 const initSockets = (io)=>{
     addNewContact(io);//A gửi lời mời kết bạn cho B
     removeRequestContactSent(io);//Sự kiện A gửi cho B lời mời kết bạn rồi lại hủy
@@ -21,6 +22,7 @@ const initSockets = (io)=>{
     chatImage(io);
     chatAttachment(io);
     chatVideo(io);
+    checkStatusUser(io);
 }
 export  {
   initSockets

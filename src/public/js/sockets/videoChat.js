@@ -15,8 +15,12 @@ function playVideoStream(videoTagId, stream) {
   video.onloadeddata = function () {
     video.play();
   };
-}
+};
+function closeVideoStream(stream){
+  return stream.getTracks().forEach(track=>track.stop());
+};
 $(document).ready(function () {
+  const iceServerList = $("#ice-server-list").val();
   socket.on("listener-offline", function () {
     alertify.notify("Người dùng hiện tại đang offl");
     return false;
@@ -28,7 +32,7 @@ $(document).ready(function () {
     host: "peerjs-server-trungquandev.herokuapp.com",
     secure: true,
     port: 443,
-    debug: 3
+    config:{"iceServers":JSON.parse(iceServerList)}
   });
   peer.on("open", function (peerId) {
     getPeerId = peerId;
@@ -42,7 +46,6 @@ $(document).ready(function () {
       listenerPeerId: getPeerId
     };
     socket.emit("listener-emit-peer-id-to-server", dataToEmit);//bắn sự kiện cho server đi kèm là perrId
-
   });
   //Config với vai trò user là caller
   socket.on('server-send-peer-id-of-listener-to-caller', (response) => {
@@ -166,10 +169,28 @@ $(document).ready(function () {
       playVideoStream("local-stream", stream);//hàm dùng để bật ô video ở phía local
       const call = peer.call(response.listenerPeerId, stream);
       call.on('stream', function (remoteStream) {
-        playVideoStream("remote-stream", stream);
+        playVideoStream("remote-stream",remoteStream);
+      });
+      $("#streamModal").on("hidden.bs.modal",function(){
+        closeVideoStream(stream);
+        Swal.fire({
+          type: "info",
+          title: `Đã kết thúc cuộc gọi với &nbsp;${response.listenerName}</span>.`,
+          backdrop: "rgba(85,85,85,0.4)",
+          width: "60rem",
+          allowOutsideClick: false,
+          confirmButtonColor: '#2ECC71',
+          confirmButtonText: 'Xác nhận ',
+        });
       });
     }, function (err) {
-      console.log('Failed to get local stream', err);
+      console.log('Failed to get local stream', err.toString());
+      if(err.toString()==='NotFoundError: Requested device not found'){
+        alertify.notify("Không tìm thấy camera trên thiết bị của bạn !","error",5);
+      };
+      if(err.toString()==='NotAllowedError: Permission denied'){
+        alertify.notify("Vui lòng cấp quyền truy cập camera và microphone trên thiết bị của bạn !","error",5);
+      };
     });
     Swal.close();
     clearInterval(timerInterval);
@@ -185,10 +206,28 @@ $(document).ready(function () {
         $('#streamModal').modal('show');
         playVideoStream("local-stream", stream);
         call.on('stream', function (remoteStream) {
-          playVideoStream("remote-strem",stream);
+          playVideoStream("remote-strem",remoteStream);
+        });
+        $("#streamModal").on("hidden.bs.modal",function(){
+          closeVideoStream(stream);
+          Swal.fire({
+            type: "info",
+            title: `Đã kết thúc cuộc gọi với &nbsp;${response.callerName}</span>.`,
+            backdrop: "rgba(85,85,85,0.4)",
+            width: "60rem",
+            allowOutsideClick: false,
+            confirmButtonColor: '#2ECC71',
+            confirmButtonText: 'Xác nhận ',
+          });
         });
       }, function (err) {
-        console.log('Failed to get local stream', err);
+        console.log('Failed to get local stream', err.toString());
+        if(err.toString()==='NotFoundError: Requested device not found'){
+          alertify.notify("Không tìm thấy camera trên thiết bị của bạn !","error",5);
+        }
+        if(err.toString()==='NotAllowedError: Permission denied'){
+          alertify.notify("Vui lòng cấp quyền truy cập camera và microphone trên thiết bị của bạn !","error",5);
+        }
       });
     });
   });
