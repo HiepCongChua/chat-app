@@ -24,6 +24,7 @@ const initPassportFacebook = () => {
               req.flash("success", transSuccess.loginSuccess(user.username))
             );
           }
+          
           const newUser = await UserModel.create({
             username: profile.displayName,
             gender: profile.gender,

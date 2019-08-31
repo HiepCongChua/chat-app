@@ -10,7 +10,7 @@ const typingOff = (io) => {//Trước hết giả sử người A (userId) gửi
         clients = pushSocketIdToArray(clients, group._id, socket.id);
       });
       socket.on("user-not-typing", (data) => {//Server nhận được sự kiện từ client gửi lên
-        if (data.groupId) {
+        if (data.groupId&&clients[data.groupId]) {
           const response = {
             currentGroupId: data.groupId,
             currentUserId: socket.request.user._id,
