@@ -35,7 +35,7 @@ const chatTextEmoji = (io) => {//Trước hết giả sử người A (userId) g
         data.groupChat.members.forEach((member)=>{
             members.push(member.userId);
         });
-        // clients = pushSocketIdToArray(clients,data.groupChat._id, socket.id);
+        clients = pushSocketIdToArray(clients,data.groupChat._id, socket.id);
         for(let userId in clients)
         {
             if(members.includes(userId)){

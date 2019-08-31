@@ -37,7 +37,7 @@ const chatAttachment = (io) => {//Trước hết giả sử người A (userId) 
         data.groupChat.members.forEach((member)=>{
             members.push(member.userId);
         });
-        // clients = pushSocketIdToArray(clients,data.groupChat._id, socket.id);
+        clients = pushSocketIdToArray(clients,data.groupChat._id, socket.id);
         for(let userId in clients)
         {
             if(members.includes(userId)){
@@ -48,7 +48,6 @@ const chatAttachment = (io) => {//Trước hết giả sử người A (userId) 
                 });
             }
         }
-        console.log("chatAttachment",)
       }); 
       socket.on('disconnect', () => {//Trong trường hợp người dùng F5 hoặc đóng tab thì xóa socketId đại diện cho tab vừa đóng trong mảng đi
       clients = removeSocketIdFromArray(clients, currentUserId, socket);

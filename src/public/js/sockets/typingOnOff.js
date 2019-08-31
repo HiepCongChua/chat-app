@@ -1,7 +1,5 @@
 function typingOn(divId) {
-  console.log("This is divId",divId);
     const targetId = $(`#write-chat-${divId}`).data("chat");
-    console.log("This is tartgetId",targetId);
     if ($(`#write-chat-${divId}`).hasClass('chat-in-group')) {
         socket.emit("user-typing", { groupId: targetId });
     } else {
