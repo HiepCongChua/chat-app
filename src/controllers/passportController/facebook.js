@@ -64,7 +64,6 @@ const initPassportFacebook = () => {
       if (user) {
         const chatGroupIds = await ChatGroupModel.getChatGroupIdsUser(user._id);
         user.chatGroupIds = chatGroupIds;
-        console.log("This is facebook");
         return done(null, user);
       }
     } catch (error) {

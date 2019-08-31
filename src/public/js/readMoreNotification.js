@@ -6,8 +6,8 @@
        $.get(`/notification/read-more?skipNumber=${skipNumber}`,function(notifications){
            if(notifications.length===0)
            {
-             alertify.notify("Bạn không còn thông báo nào ^^.","error",5);  
-            $("#link-read-more-notif").css('display','inline-block');
+            //  alertify.notify("Bạn không còn thông báo nào ^^.","error",5);  
+            $("#link-read-more-notif").css('display','none');
             $(".read-more-loader").css('display','none');
              return false;
            };

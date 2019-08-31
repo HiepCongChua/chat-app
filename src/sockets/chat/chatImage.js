@@ -10,7 +10,6 @@ const chatImage = (io) => {//Trước hết giả sử người A (userId) gửi
         clients = pushSocketIdToArray(clients, group._id, socket.id);
       });
       socket.on("chat-message-image", (data) => {//Server nhận được sự kiện từ client gửi lên
-        console.log(data);
         if (data.groupId) {
           const response = {
             currentGroupId: data.groupId,

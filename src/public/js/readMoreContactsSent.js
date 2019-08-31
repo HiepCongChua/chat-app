@@ -7,8 +7,7 @@
         $.get(`/contact/read-more-contacts-sent?skipNumber=${skipNumber}`,function(contacts){
             if(contacts.length===0)
             {
-              alertify.notify("Bạn không còn lời mời nào ^^.","error",5);  
-             $("#link-read-more-contacts-sent").css('display','inline-block');
+             $("#link-read-more-contacts-sent").css('display','none');
              $(".read-more-contacts-loader").css('display','none');
               return false;
             };

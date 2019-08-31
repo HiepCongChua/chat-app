@@ -53,7 +53,6 @@ function textAndEmojiChat(divId) {
                 const checkTyping =   $(`.chat[data-chat=${divId}]`).find("div.bubble-typing-gif");
                 if(checkTyping.length) checkTyping.remove(); 
             }).fail(function (response) {
-                console.log(response);
                 alertify.notify(response.statusText, "error", 5);
             });
         }

@@ -12,6 +12,7 @@ import {
   findFriends
 } from './../controllers/contactController';
 import {updateAvatar,updateInfo,updatePasswordUser} from './../controllers/userController';
+import {checkGroupNameValidation} from './../validation/checkGroupNameValidation'
 import {registerValidation} from "./../validation/authValidation";
 import {udpateInfoValidation,updatePasswordValidation} from './../validation/userValidation';
 import {findUsersContact as findUsersContactValid, findFriends as findFriendsValid} from './../validation/contactValidation';
@@ -22,7 +23,7 @@ import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
 import {initPassportGitHub} from './../controllers/passportController/github';
-import {addNewMessage,addNewMessageImage,addNewMessageAttachment} from './../controllers/messageController';
+import {addNewMessage,addNewChatGroup,addNewMessageImage,addNewMessageAttachment} from './../controllers/messageController';
 import {multer_upload_image} from '../helpers/configMulterUploadImage';
 import {multer_upload_attachment} from '../helpers/configMulterUploadAttachment';
 initPassportLocal();
@@ -103,6 +104,7 @@ const initRouters = app => {
   router.post('/message/add-message-attachment',checkLoggedIn,multer_upload_attachment('my-attachment-chat'),
   addNewMessageAttachment);
   router.get('/contact/find-friends/:keyword',checkLoggedIn,findFriendsValid,findFriends);
+  router.post('/group-chat/add-new',checkLoggedIn,checkGroupNameValidation,addNewChatGroup);
   return app.use("/", router);
 };
 export default initRouters;

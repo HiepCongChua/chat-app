@@ -29,15 +29,9 @@
               <div class="left-avatar">
                 <img
                 src=
-                "
-                <%if(!conversation.avatar){%>
-                  https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                <%}else{%>
-                       images/users/<%= conversation.avatar %>
-                <%}%>
-                "
-                  alt=""
-                />
+                "https://www.flaticon.com/premium-icon/icons/svg/1428/1428190.svg"
+                title="<%= conversation.name %>"
+              />
               </div>
               <span class="name">
                 <span class="group-chat-name">
@@ -69,7 +63,7 @@
                 <img
                 src=
                 "
-                <%if(conversation.avatar===null){%>
+                <%if(!conversation.avatar){%>
                   https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
                 <%}else{%>
                        images/users/<%= conversation.avatar %>
@@ -122,14 +116,14 @@
               <div class="left-avatar">
                 <div class="dot"></div>
                 <img
-                  src=
-                  "
-                  <%if(conversation.avatar===null){%>
-                    https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                  <%}else{%>
-                         images/users/<%= conversation.avatar %>
-                  <%}%>
-                  "
+                src=
+                "
+                <%if(!conversation.avatar){%>
+                  https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+                <%}else{%>
+                       images/users/<%= conversation.avatar %>
+                <%}%>
+                "
                   alt=""
                 />
               </div>
@@ -177,15 +171,9 @@
                 <!-- <div class="dot"></div> -->
                 <img
                 src=
-                "
-                <%if(!(conversation.avatar)){%>
-                  https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                <%}else{%>
-                       images/users/<%= conversation.avatar %>
-                <%}%>
-                "
-                  alt=""
-                />
+                "https://www.flaticon.com/premium-icon/icons/svg/1428/1428190.svg"
+                title="<%= conversation.name %>"
+              />
               </div>
               <span class="name">
                 <span class="group-chat-name">

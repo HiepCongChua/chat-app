@@ -5,7 +5,7 @@ const chatTextEmoji = (io) => {//Trước hết giả sử người A (userId) g
   io.on('connection', (socket) => {
     if (socket.request.user.chatGroupIds) {
       const currentUserId = socket.request.user._id; //Lấy id của user hiện tại 
-      clients = pushSocketIdToArray(clients, currentUserId, socket.id)//Lấy mảng các user
+      clients = pushSocketIdToArray(clients, currentUserId, socket.id)//clients là một object với mỗi key của object là id của user và giá trị của key này là một mảng các socketId (trong trường hợp user này đăng nhập ở nhiều thiết bị);
       socket.request.user.chatGroupIds.forEach(group => {//chatGroupIds là một mảng các id của group mà user nằm trong.
         clients = pushSocketIdToArray(clients, group._id, socket.id);
       });

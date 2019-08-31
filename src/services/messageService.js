@@ -168,7 +168,7 @@ const addNewMessageImage = (sender, receiverId, messageVal, isChatGroup) => {
       reject(error);
     }
   });
-}
+};
 const addNewMessageAttachment = (sender, receiverId, messageVal, isChatGroup) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -228,11 +228,22 @@ const addNewMessageAttachment = (sender, receiverId, messageVal, isChatGroup) =>
       reject(error);
     }
   });
-}
+};
+const addNewChatGroup = (data)=>{
+  return new Promise(async(resolve,reject)=>{
+   try {
+     const groupChat = await ChatGroupModel.createNew(data);
+     resolve(groupChat);
+   } catch (error) {
+     reject(error);
+   }
+  });
+};
 export {
   getAllConversationItems,
   addNewMessage,
   addNewMessageImage,
-  addNewMessageAttachment
+  addNewMessageAttachment,
+  addNewChatGroup
 }
 

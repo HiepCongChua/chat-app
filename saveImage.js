@@ -109,8 +109,7 @@ exports.editGetProduct = async (req, res, next) => {
 };
 exports.editPostProduct = async (req, res, next) => {
   try {
-    console.log(process.env.CLOUDINARY_API_KEY);
-    console.log(process.env.CLOUDINARY_API_SECRET);
+    
     const { prodId, author, topic, title, des, price, releaseTime , imageId } = req.body;
     const image = req.file;
     if (!image) {//Trường hợp lỗi xảy ra khi chưa có ảnh được tải lên hoặc tải lên không đúng định dạng (PNG viết kiểu in sẽ bị lỗi vì regex phân biệt hoa thường)

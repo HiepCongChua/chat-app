@@ -20,11 +20,11 @@ const ChatGroupSchema = new Schema({
     }
 });
 ChatGroupSchema.statics = {
+    createNew(item){
+        return this.create(item);
+    },
     getChatGroups(userId, limit) {//Lấy tất cả các group chat mà userId nằm trong
         return this.find(
-            // {
-            //     members: { $elemMatch: { userId } }
-            // }
             {
                 "members.userId": {$in:[userId]}
             }

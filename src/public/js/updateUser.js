@@ -229,7 +229,6 @@ function callUpdateUserPassword(){
     type: "PUT",
     data: userUpdatePassword,
     success: function(res) {
-      console.log(res);
       $(".user-modal-password-alert-success")
         .find("span")
         .text(res.message); //Sau khi nhận được lỗi thì tìm thẻ span trong div user-modal-alert-error và

@@ -23,6 +23,7 @@ export const transErrorsMessage = {
   PASSWORD_INCORRECT:"Mật khẩu tài khoản không chính xác !",
   CONFIRM_PASSWORD_INCORRECT:"Xác nhận mật khẩu không chính xác.",
   KEYWORD_SEARCH:"Từ khóa không được phép chứa giá trị đặc biệt !",
+  GROUP_NAME : 'Tên cuộc trò chuyện yêu cầu tối thiểu 5 kí tự và có tối đa 30 kí tự !',
   MESSAGE_ERROR:"Tin nhắn gửi đi yêu cầu tối thiểu 1 ký tự và tối đa 400 ký tự",
   MESSAGE_ERROR_GROUP:"Không tồn tại người dùng hoặc nhóm trò chuyện vui lòng thử lại !",
   IMAGE_MESSAGE_TYPE:"Kiểu file không hợp lệ chỉ chấp nhận jpg, png hoặc jpeg"

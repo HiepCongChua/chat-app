@@ -10,12 +10,12 @@ const chatAttachment = (io) => {//Trước hết giả sử người A (userId) 
         clients = pushSocketIdToArray(clients, group._id, socket.id);
       });
       socket.on("chat-message-attachment", (data) => {//Server nhận được sự kiện từ client gửi lên
-        console.log(data);
         if (data.groupId) {
           const response = {
             currentGroupId: data.groupId,
             currentUserId: socket.request.user._id,
-            message: data.message
+            message: data.message,
+            name:socket.request.user.username
           };
           if (clients[data.groupId].length>0) {
             emitNotifyToArray(clients, data.groupId, io, 'response-chat-message-attachment', response);
@@ -24,7 +24,8 @@ const chatAttachment = (io) => {//Trước hết giả sử người A (userId) 
        else if (data.contactId) {
           const response = {
             currentUserId: socket.request.user._id,
-            message: data.message
+            message: data.message,
+            name:socket.request.user.username
           };
           if (clients[data.contactId]) {
             emitNotifyToArray(clients, data.contactId, io, 'response-chat-message-attachment', response);
