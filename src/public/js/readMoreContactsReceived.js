@@ -7,8 +7,8 @@
         $.get(`/contact/read-more-contacts-received?skipNumber=${skipNumber}`,function(contacts){
             if(contacts.length===0)
             {
-              alertify.notify("Bạn không còn lời mời nào ^^.","error",5);  
-             $("#link-read-more-contacts-received").css('display','inline-block');
+              // alertify.notify("Bạn không còn lời mời nào ^^.","error",5);  
+             $("#link-read-more-contacts-received").css('display','none');
              $(".read-more-contacts-loader").css('display','none');
               return false;
             };
@@ -55,7 +55,7 @@
             });
             removeRequestContactReceived();
             acceptRequestContactReceived();
-              $("#link-read-more-contacts-received").css('display','inline-block');
+            $("#link-read-more-contacts-received").css('display','inline-block');
             $(".read-more-contacts-loader").css('display','none');
         });
     });

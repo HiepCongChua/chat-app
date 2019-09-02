@@ -27,6 +27,23 @@ function removeContact() {//Khi chúng ta chấp nhận yêu cầu kết bạn
               decreaseNumberNotifiContact('count-contacts');
               //Sau này làm tiếp phần chat thì xóa khối userInfo ở phần chat
               socket.emit("user-remove-contact", { contactId: targetId });
+              const checkActive = $('#all-chat').find(`li[data-chat = ${targetId}]`).hasClass('active');
+              //Sau khi xóa liên hệ trong danh bạ thì xóa các message có liên quan ở bên leftSide
+              $('#all-chat').find(`ul a[href="#uid_${targetId}"]`).remove();
+              $("#user-chat").find(`ul a[href="#uid_${targetId}"]`)
+              .remove();
+
+              //Xóa bên rightSide
+              $("#screen-chat").find(`div#to_${targetId}`).remove();
+
+              //remove image modal
+              $('body').find(`div#imagesModal_${targetId}`).remove();
+
+              //remove attachment
+              $('body').find(`div#attachmentsModal_${targetId}`).remove();
+              if(checkActive){
+                $('ul.people').find('a')[0].click();
+              }
             };
           }
         });
@@ -36,6 +53,25 @@ function removeContact() {//Khi chúng ta chấp nhận yêu cầu kết bạn
 socket.on("response-user-remove-contact", user => {//Khi chúng ta được một người khác đồng ý yêu cầu kết bạn.
   $('#contacts').find(`ul li[data-uid=${user.id}]`).remove();
   decreaseNumberNotifiContact('count-contacts');
+
+   //Sau khi xóa liên hệ trong danh bạ thì xóa các message có liên quan ở bên leftSide
+   const checkActive = $('#all-chat').find(`li[data-chat = ${user.id}]`).hasClass('active');
+   $('#all-chat').find(`ul a[href="#uid_${user.id}"]`).remove();
+   $("#user-chat").find(`ul a[href="#uid_${user.id}"]`)
+   .remove();
+
+   //Xóa bên rightSide
+   $("#screen-chat").find(`div#to_${user.id}`).remove();
+
+   //remove image modal
+   $('body').find(`div#imagesModal_${user.id}`).remove();
+
+   //remove attachment
+   $('body').find(`div#attachmentsModal_${user.id}`).remove();
+
+   if(checkActive){
+     $('ul.people').find('a')[0].click();
+   }
 });
 $(document).ready(function () {
   removeContact();

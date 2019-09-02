@@ -140,7 +140,7 @@ function bufferToBase64 (buffer){
        new Uint8Array(buffer)
          .reduce((data, byte) => data + String.fromCharCode(byte), '')
      );
-}
+} 
 
 function flashMasterNotify() {
   const notify = $('.master-success-message').text();
@@ -183,6 +183,9 @@ function convertEmoji(){
     $(this).html(converted);
 });
 };
+function resizeNineScrollLeft(){
+  $(".left").getNiceScroll().resize();
+}
 $(document).ready(function () {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();

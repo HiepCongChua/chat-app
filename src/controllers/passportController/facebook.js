@@ -24,6 +24,7 @@ const initPassportFacebook = () => {
               req.flash("success", transSuccess.loginSuccess(user.username))
             );
           }
+          
           const newUser = await UserModel.create({
             username: profile.displayName,
             gender: profile.gender,
@@ -64,7 +65,6 @@ const initPassportFacebook = () => {
       if (user) {
         const chatGroupIds = await ChatGroupModel.getChatGroupIdsUser(user._id);
         user.chatGroupIds = chatGroupIds;
-        console.log("This is facebook");
         return done(null, user);
       }
     } catch (error) {

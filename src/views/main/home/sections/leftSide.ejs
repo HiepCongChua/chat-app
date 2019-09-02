@@ -29,15 +29,9 @@
               <div class="left-avatar">
                 <img
                 src=
-                "
-                <%if(!conversation.avatar){%>
-                  https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                <%}else{%>
-                       images/users/<%= conversation.avatar %>
-                <%}%>
-                "
-                  alt=""
-                />
+                "https://cdn.adventuretravelnews.com/wp-content/uploads/2014/05/TourRadar_iPhone_icon-300x300.png"
+                title="<%= conversation.name %>"
+              />
               </div>
               <span class="name">
                 <span class="group-chat-name">
@@ -69,7 +63,7 @@
                 <img
                 src=
                 "
-                <%if(conversation.avatar===null){%>
+                <%if(!conversation.avatar){%>
                   https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
                 <%}else{%>
                        images/users/<%= conversation.avatar %>
@@ -106,7 +100,7 @@
           <a href="javascript:void(0)" id="link-read-more-all-chat">
             <strong>Xem thêm....</strong>
           </a>
-          <div class="read-more-contacts-loader">
+          <div class="read-more-all-chat-loader">
             <div></div>
             <div></div>
           </div>
@@ -122,14 +116,14 @@
               <div class="left-avatar">
                 <div class="dot"></div>
                 <img
-                  src=
-                  "
-                  <%if(conversation.avatar===null){%>
-                    https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                  <%}else{%>
-                         images/users/<%= conversation.avatar %>
-                  <%}%>
-                  "
+                src=
+                "
+                <%if(!conversation.avatar){%>
+                  https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
+                <%}else{%>
+                       images/users/<%= conversation.avatar %>
+                <%}%>
+                "
                   alt=""
                 />
               </div>
@@ -177,15 +171,9 @@
                 <!-- <div class="dot"></div> -->
                 <img
                 src=
-                "
-                <%if(!(conversation.avatar)){%>
-                  https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png
-                <%}else{%>
-                       images/users/<%= conversation.avatar %>
-                <%}%>
-                "
-                  alt=""
-                />
+                "https://cdn.adventuretravelnews.com/wp-content/uploads/2014/05/TourRadar_iPhone_icon-300x300.png"
+                title="<%= conversation.name %>"
+              />
               </div>
               <span class="name">
                 <span class="group-chat-name">

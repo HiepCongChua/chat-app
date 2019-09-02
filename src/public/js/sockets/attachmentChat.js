@@ -2,6 +2,16 @@ function attachmentChat(divId) {
     $(`#attachment-chat-${divId}`).unbind("change").on("change", function () {
         const fileData = $(this).prop("files")[0];
         const limit = 1024 * 1024 * 10;
+        const file_extension = ["image/png", "image/jpg", "image/jpeg"];
+        if ($.inArray(fileData.type,file_extension) >= 0) {
+            alertify.notify(
+              "Định dạng của tệp đính kèm không hợp lệ, chấp nhận các tệp có đuôi .doc, .xls hoặc .zip !",
+              "error",
+              5
+            );
+            $(this).val(null);
+            return false;
+          }
         if (fileData.size > limit) {
             alertify.notify(
                 "Dung lượng file vượt quá 10MB, vui lòng thử lại !",
