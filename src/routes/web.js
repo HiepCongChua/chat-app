@@ -23,7 +23,7 @@ import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
 import {initPassportGitHub} from './../controllers/passportController/github';
-import {addNewMessage,addNewChatGroup,addNewMessageImage,addNewMessageAttachment} from './../controllers/messageController';
+import {addNewMessage,addNewChatGroup,addNewMessageImage,addNewMessageAttachment,readMoreAllChat} from './../controllers/messageController';
 import {multer_upload_image} from '../helpers/configMulterUploadImage';
 import {multer_upload_attachment} from '../helpers/configMulterUploadAttachment';
 initPassportLocal();
@@ -104,6 +104,7 @@ const initRouters = app => {
   router.post('/message/add-message-attachment',checkLoggedIn,multer_upload_attachment('my-attachment-chat'),
   addNewMessageAttachment);
   router.get('/contact/find-friends/:keyword',checkLoggedIn,findFriendsValid,findFriends);
+  router.get('/message/read-more-all-chat',checkLoggedIn,readMoreAllChat);
   router.post('/group-chat/add-new',checkLoggedIn,checkGroupNameValidation,addNewChatGroup);
   return app.use("/", router);
 };

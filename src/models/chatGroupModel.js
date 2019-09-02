@@ -23,12 +23,12 @@ ChatGroupSchema.statics = {
     createNew(item){
         return this.create(item);
     },
-    getChatGroups(userId, limit) {//Lấy tất cả các group chat mà userId nằm trong
+    getChatGroups(userId,skip,limit) {//Lấy tất cả các group chat mà userId nằm trong
         return this.find(
             {
                 "members.userId": {$in:[userId]}
             }
-        ).sort({ updatedAt: -1 }).limit(limit).exec();
+        ).sort({ updatedAt: -1 }).skip(skip).limit(limit).exec();
     },
     getChatGroupById(_id){
         return this.findOne(
