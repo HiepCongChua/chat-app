@@ -43,10 +43,10 @@ MessageSchema.statics = {
          ]
         }).sort({createdAt:-1}).limit(limit).exec();
     },
-    getMessagesChatGroup(receiverId,limit){//Nếu sắp xếp createdAt =1 thì sẽ khoongp hù hợp do sắp xếp kiểu này lúc lấy limit nó sẽ lấy từ tin nhắn đầu tiên (cũ nhất) mà yêu cầu là lấy tin nhắn mới nhất trở về trước => Lấy tin nhắn theo thứ tự từ mới nhất đến cũ nhất dựa vào trường createAt 
+    getMessagesChatGroup(receiverId,skip,limit){//Nếu sắp xếp createdAt =1 thì sẽ khoongp hù hợp do sắp xếp kiểu này lúc lấy limit nó sẽ lấy từ tin nhắn đầu tiên (cũ nhất) mà yêu cầu là lấy tin nhắn mới nhất trở về trước => Lấy tin nhắn theo thứ tự từ mới nhất đến cũ nhất dựa vào trường createAt 
         return this.find({
             receiverId
-        }).sort({createdAt:-1}).limit(limit).exec();
+        }).sort({createdAt:-1}).skip(skip).limit(limit).exec();
     }
 };
 const MESSAGE_CONVERSATION_TYPES = {

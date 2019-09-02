@@ -68,5 +68,5 @@ initSockets(io);
 const hostname = "127.0.0.1";
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, hostname, () => {
-  console.log("Sever is running....");
+  console.log(`Sever is running listen on port ${PORT} ....`);
 });

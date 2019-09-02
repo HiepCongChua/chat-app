@@ -1,0 +1,23 @@
+<% conversations.forEach((conversation,index)=>{ %>
+    <div class="modal fade" id="imagesModal_<%= conversation._id %>" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Hình ảnh trong cuộc trò chuyện</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="all-images" style="visibility: hidden;">
+                        <% conversation.messages.forEach((message)=>{ %>
+                            <% if(message.messageType==="image"){ %>
+                                  <img
+                                    src="<%= message.imageUrl %>"
+                                    class="" />
+                                <%}%>
+                        <%})%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%});%>

@@ -23,7 +23,7 @@ import { initPassportLocal } from "./../controllers/passportController/local";
 import { initPassportFacebook } from "./../controllers/passportController/facebook";
 import { initPassportGoogle } from "./../controllers/passportController/google";
 import {initPassportGitHub} from './../controllers/passportController/github';
-import {addNewMessage,addNewChatGroup,addNewMessageImage,addNewMessageAttachment} from './../controllers/messageController';
+import {addNewMessage,addNewChatGroup,addNewMessageImage,addNewMessageAttachment,readMoreAllChat} from './../controllers/messageController';
 import {multer_upload_image} from '../helpers/configMulterUploadImage';
 import {multer_upload_attachment} from '../helpers/configMulterUploadAttachment';
 initPassportLocal();
@@ -84,7 +84,7 @@ const initRouters = app => {
       successRedirect: "/",
       failureRedirect: "/login-register"
     })
-  );
+  );000
   router.put("/user/update-avatar", checkLoggedIn,updateAvatar);
   router.put("/user/update-info",udpateInfoValidation, checkLoggedIn,updateInfo);
   router.put("/user/update-password", checkLoggedIn,updatePasswordValidation,updatePasswordUser);
@@ -105,6 +105,7 @@ const initRouters = app => {
   addNewMessageAttachment);
   router.get('/contact/find-friends/:keyword',checkLoggedIn,findFriendsValid,findFriends);
   router.post('/group-chat/add-new',checkLoggedIn,checkGroupNameValidation,addNewChatGroup);
+  router.get('/message/read-more-all-chat',checkLoggedIn,readMoreAllChat);
   return app.use("/", router);
 };
 export default initRouters;

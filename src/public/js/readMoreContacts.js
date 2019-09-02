@@ -7,7 +7,7 @@ $(document).ready(function () {
     setTimeout(() => {
       $.get(`/contact/read-more-contacts?skipNumber=${skipNumber}`, function (contacts) {
         if (contacts.length === 0) {
-          // alertify.notify("Không còn bạn bè nào trong danh bạ.","error",5);  
+          alertify.notify("Không còn bạn bè nào trong danh bạ.","error",5);  
           $("#link-read-more-contacts").css('display', 'none');
           $(".read-more-contacts-loader").css('display', 'none');
           return false;

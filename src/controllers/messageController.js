@@ -1,13 +1,18 @@
 import { validationResult } from 'express-validator/check';
+import ejs from 'ejs';
 import {
     addNewMessage as addNewMessageService,
     addNewMessageImage as addNewMessageImageService,
     addNewMessageAttachment as addNewMessageAttachmentService,
-    addNewChatGroup as addNewChatGroupService
+    addNewChatGroup as addNewChatGroupService,
+    readMoreAllChat as readMoreAllChatService
 } from './../services/messageService';
 import DataUri from 'datauri';
 import path from 'path';
 import fsExtra from 'fs-extra';
+import {lastItemOfArray,convertTimestampToHumanTime,bufferToBase64} from '../helpers/clientHelper';
+import {promisify} from 'util';
+const renderFile = promisify(ejs.renderFile).bind(ejs);
 const dUri = new DataUri();
 const addNewMessage = async (req, res) => {
     const errorArr = [];
@@ -99,9 +104,37 @@ const addNewChatGroup = async (req, res) => {
     }
 
 };
+const readMoreAllChat = async (req,res)=>{
+    try {
+        const skipChatPersonal = +(req.query.skipChatPersonal);
+        const skipChatGroup = +(req.query.skipChatGroup);
+        const conversations = await readMoreAllChatService(req.user._id,skipChatPersonal,skipChatGroup);
+        const dataToRender = {
+            conversations,
+            lastItemOfArray,
+            convertTimestampToHumanTime,
+            bufferToBase64,
+            user:req.user
+        };
+        const leftSideData = await renderFile('src/views/main/readMoreConversations/_leftSide.ejs',dataToRender);
+        const rightSideData = await renderFile('src/views/main/readMoreConversations/_rightSide.ejs',dataToRender);
+        const imageModalData = await renderFile('src/views/main/readMoreConversations/_imageModal.ejs',dataToRender);
+        const attachmentModalData = await renderFile('src/views/main/readMoreConversations/_attachmentModal.ejs',dataToRender);
+         console.log(leftSideData);
+        return res.status(200).send({
+            leftSideData,
+            rightSideData,
+            imageModalData,
+            attachmentModalData
+        });
+    } catch (error) {
+        return res.status(500).send(error);
+    };
+};
 export {
     addNewMessage,
     addNewMessageImage,
     addNewMessageAttachment,
-    addNewChatGroup
+    addNewChatGroup,
+    readMoreAllChat
 }
