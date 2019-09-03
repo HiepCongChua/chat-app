@@ -8,7 +8,7 @@ const initPassportGoogle = () => {
   passport.use(
     new GoogleStrategy(
       {
-        clientId: process.env.CLIENT_ID_GOOGLE,
+        clientID: process.env.CLIENT_ID_GOOGLE,
         clientSecret: process.env.CLIENT_SECRET_GOOGLE,
         callbackURL: process.env.CALLBACK_URL_GOOGLE,
         passReqToCallback: true //Sau khi xác thực xong thì truyền kết quả vào trong callback bên dưới

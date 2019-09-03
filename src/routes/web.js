@@ -34,7 +34,7 @@ import {
 import {multer_upload_image} from '../helpers/configMulterUploadImage';
 import {multer_upload_attachment} from '../helpers/configMulterUploadAttachment';
 initPassportLocal();
-initPassportFacebook();
+// initPassportFacebook();
 initPassportGoogle();
 initPassportGitHub();
 const router = express.Router();
