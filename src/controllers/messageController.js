@@ -5,7 +5,8 @@ import {
     addNewMessageImage as addNewMessageImageService,
     addNewMessageAttachment as addNewMessageAttachmentService,
     addNewChatGroup as addNewChatGroupService,
-    readMoreAllChat as readMoreAllChatService
+    readMoreAllChat as readMoreAllChatService,
+    readMoreMessage as readMoreMessageService
 } from './../services/messageService';
 import DataUri from 'datauri';
 import path from 'path';
@@ -131,10 +132,35 @@ const readMoreAllChat = async (req,res)=>{
         return res.status(500).send(error);
     };
 };
+const readMoreMessage = async (req,res)=>{
+    try {
+        const skipMessage = +(req.query.skipMessage);
+        const chatInGroup = (req.query.chatInGroup === 'true');
+        const targetId = req.query.targetId;//id của cuộc trò chuyện
+        const messages = await readMoreMessageService(req.user._id,skipMessage,chatInGroup,targetId);
+        const dataToRender = {
+            messages,
+            bufferToBase64,
+            user:req.user
+        };
+        const rightSideData = await renderFile('src/views/main/readMoreMessages/_rightSide.ejs',dataToRender);
+        const imageModalData = await renderFile('src/views/main/readMoreMessages/_imageModal.ejs',dataToRender);
+        const attachmentModalData = await renderFile('src/views/main/readMoreMessages/_attachmentModal.ejs',dataToRender);
+       return res.status(200).send({
+            rightSideData,
+            imageModalData,
+            attachmentModalData
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error);
+    };
+};
 export {
     addNewMessage,
     addNewMessageImage,
     addNewMessageAttachment,
     addNewChatGroup,
-    readMoreAllChat
+    readMoreAllChat,
+    readMoreMessage
 }

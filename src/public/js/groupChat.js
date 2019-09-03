@@ -139,7 +139,7 @@ function createGroupChat() {
             </span>
         </div>
         <div class="content-chat">
-          <div class="chat" data-chat="${result.groupChat._id}"></div>
+          <div class="chat chat-in-group" data-chat="${result.groupChat._id}"></div>
         <div class="write" data-chat="${result.groupChat._id}">
           <input
             type="text"
@@ -296,7 +296,7 @@ $(document).ready(function () {
       </span>
   </div>
   <div class="content-chat">
-    <div class="chat" data-chat="${response.groupChat._id}"></div>
+    <div class="chat chat-in-group" data-chat="${response.groupChat._id}"></div>
   <div class="write" data-chat="${response.groupChat._id}">
     <input
       type="text"

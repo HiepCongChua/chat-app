@@ -13,7 +13,7 @@ cloudinary.config({
 });
 import { transErrorsMessage } from './../../lang/vi';
 const LIMIT_CONVERSATIONS_TAKEN = 1;
-const LIMIT_MESSAGES_TAKEN = 30;
+const LIMIT_MESSAGES_TAKEN = 5;
 const SKIP_DEFAULT = 0;
 const getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
@@ -32,10 +32,10 @@ const getAllConversationItems = (currentUserId) => {
         //Mỗi conversation đại diện cho một liên lạc của user hiện tại 
         //hoặc một group mà user hiện tại nằm bên trong
         if (conversation.members) {//Nếu tồn tại field members trong converstation => nhóm
-          let getMessages = await MessageModel.getMessagesChatGroup(conversation._id, LIMIT_MESSAGES_TAKEN);//Lấy tất cả tin nhắn trong cuộc trò chuyện
+          let getMessages = await MessageModel.getMessagesChatGroup(conversation._id,SKIP_DEFAULT,LIMIT_MESSAGES_TAKEN);//Lấy tất cả tin nhắn trong cuộc trò chuyện
           conversation.messages = _.reverse(getMessages);//Khi fetch tin nhắn về thì sẽ lấy từ mới nhất => cũ nhất nhưng vấn đề phát sinh là khi nạp tin nhắn lên giao diện thì nó lại nạp từ mới nhất xuống cũ nhất từ trên xuống dưới => khi có kết quả nạp từ server lên thì sử dụng hàm reserve để đảo lại thứ tự (cũ nhất => mới nhất)
         } else {
-          let getMessages = await MessageModel.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
+          let getMessages = await MessageModel.getMessagesInPersonal(currentUserId, conversation._id,SKIP_DEFAULT,LIMIT_MESSAGES_TAKEN);
           conversation.messages = _.reverse(getMessages);
         }
         return conversation;
@@ -256,10 +256,10 @@ const readMoreAllChat = (currentUserId,skipChatPersonal,skipChatGroup)=>{
         //Mỗi conversation đại diện cho một liên lạc của user hiện tại 
         //hoặc một group mà user hiện tại nằm bên trong
         if (conversation.members) {//Nếu tồn tại field members trong converstation => nhóm
-          let getMessages = await MessageModel.getMessagesChatGroup(conversation._id,LIMIT_MESSAGES_TAKEN);//Lấy tất cả tin nhắn trong cuộc trò chuyện
+          let getMessages = await MessageModel.getMessagesChatGroup(conversation._id,SKIP_DEFAULT,LIMIT_MESSAGES_TAKEN);//Lấy tất cả tin nhắn trong cuộc trò chuyện
           conversation.messages = _.reverse(getMessages);//Khi fetch tin nhắn về thì sẽ lấy từ mới nhất => cũ nhất nhưng vấn đề phát sinh là khi nạp tin nhắn lên giao diện thì nó lại nạp từ mới nhất xuống cũ nhất từ trên xuống dưới => khi có kết quả nạp từ server lên thì sử dụng hàm reserve để đảo lại thứ tự (cũ nhất => mới nhất)
         } else {
-          let getMessages = await MessageModel.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
+          let getMessages = await MessageModel.getMessagesInPersonal(currentUserId,conversation._id,SKIP_DEFAULT,LIMIT_MESSAGES_TAKEN);
           conversation.messages = _.reverse(getMessages);
         }
         return conversation;
@@ -274,12 +274,30 @@ const readMoreAllChat = (currentUserId,skipChatPersonal,skipChatGroup)=>{
     }
   });
 };
+const readMoreMessage = (currentUserId,skipMessage,chatInGroup,targetId)=>{
+  return new Promise(async (resolve, reject) => {
+    try {
+      let messages = null;
+      if (chatInGroup) {
+        messages = await MessageModel.getMessagesChatGroup(targetId,skipMessage,LIMIT_MESSAGES_TAKEN);//Lấy tất cả tin nhắn trong cuộc trò chuyện
+        messages = _.reverse(messages);//Khi fetch tin nhắn về thì sẽ lấy từ mới nhất => cũ nhất nhưng vấn đề phát sinh là khi nạp tin nhắn lên giao diện thì nó lại nạp từ mới nhất xuống cũ nhất từ trên xuống dưới => khi có kết quả nạp từ server lên thì sử dụng hàm reserve để đảo lại thứ tự (cũ nhất => mới nhất)
+        return resolve(messages);
+      } 
+        messages = await MessageModel.getMessagesInPersonal(currentUserId,targetId,skipMessage,LIMIT_MESSAGES_TAKEN);
+        messages = _.reverse(messages);
+        return resolve(messages);
+      } catch (error) {
+      reject(error);
+    }
+  });
+};
 export {
   getAllConversationItems,
   addNewMessage,
   addNewMessageImage,
   addNewMessageAttachment,
   addNewChatGroup,
-  readMoreAllChat
+  readMoreAllChat,
+  readMoreMessage
 }
 

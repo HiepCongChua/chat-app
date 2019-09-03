@@ -1,0 +1,68 @@
+<% messages.forEach((message)=>{ %> <%
+  if(message.messageType==="text"){ %>
+  <div class="convert-emoji bubble <% if(message.senderId == user._id){ %> me <%}else{%> you <%}%>" data-mess-id="<%= message._id %>">
+  <img src="<% if(message.sender.avatar===null){ %>https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
+  <%}else{%> /images/users/<%= message.sender.avatar %>
+  <%}%>" 
+  class="avatar-small" title="<%= message.sender.name %>" >
+    <%= message.text %>
+  </div>
+  <%}%> <% if(message.messageType==="image"){ %>
+
+  <div
+    class="
+  bubble 
+  <% if(message.senderId == user._id){ %>
+    me
+  <%}else{%>
+    you
+  <%}%>
+  bubble-image-file"
+  
+    data-mess-id="<%= conversation._id %>"
+  >
+  <img 
+  src="
+  <% if(message.sender.avatar===null){ %>
+    https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
+  <%}else{%>
+    /images/users/<%= message.sender.avatar %>
+  <%}%>
+  " 
+  class="avatar-small" title="<%= message.sender.name %>">
+    <img
+      src="<%= message.imageUrl %>"
+      class="show-image-chat" title="<%= message.sender.name %>"
+    />
+
+  </div>
+  <%}%> <% if(message.messageType==="file"){ %>
+  <div
+    class="
+      bubble 
+      <% if(message.senderId == user._id){ %>
+        me
+      <%}else{%>
+        you
+      <%}%>
+      bubble-attachment-file"
+      
+    data-mess-id="<%=message._id%>"
+  >
+   <img 
+  src="
+  <% if(message.sender.avatar===null){ %>
+    https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png 
+  <%}else{%>
+    /images/users/<%= message.sender.avatar %>
+  <%}%>
+  " 
+  class="avatar-small">
+    <a
+      href="data:<%=message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>"
+      download="<%= message.file.fileName %>"
+    >
+      <%= message.file.fileName %>
+    </a>
+  </div>
+  <%}%> <%})%>

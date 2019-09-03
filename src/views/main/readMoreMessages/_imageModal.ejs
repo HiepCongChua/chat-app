@@ -1,0 +1,7 @@
+<% messages.forEach((message)=>{ %>
+    <% if(message.messageType==="image"){ %>
+          <img
+            src="<%= message.imageUrl %>"
+            class="" />
+        <%}%>
+<%})%>
