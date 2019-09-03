@@ -43,7 +43,8 @@ app.use(function (err, req, res, next) {
     return res.status(500).send(err);
   }
   return res.redirect('/');
-})
+});
+console.log("This is facealsfgvasldjkfs",process.env.CLIENT_ID_FB)
 io.use(passportSocketIo.authorize({
   cookieParser,
   key: process.env.SECRET_SESSION,
