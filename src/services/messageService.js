@@ -13,7 +13,7 @@ cloudinary.config({
 });
 import { transErrorsMessage } from './../../lang/vi';
 const LIMIT_CONVERSATIONS_TAKEN = 1;
-const LIMIT_MESSAGES_TAKEN = 5;
+const LIMIT_MESSAGES_TAKEN = 15;
 const SKIP_DEFAULT = 0;
 const getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {

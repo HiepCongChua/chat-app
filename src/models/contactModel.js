@@ -89,7 +89,7 @@ ContactSchema.statics = {//Tạo một contact mới
         }).sort({ "createdAt": -1 }).skip(skip).limit(limit).exec();
     },
     removeRequestContactSent(userId, contactId) {
-        this.remov({
+        this.remove({
             $and: [
                 { userId },
                 { contactId },

@@ -1,5 +1,5 @@
 function readMoreMessage(){
- $(".right .chat").scroll(function(){
+ $(".right .chat").unbind('scroll').on('scroll',function(){
    if($(this).scrollTop()===0){
        const firstMessage = $(this).find('.bubble:first');
        const currentOffset = firstMessage.offset().top - $(this).scrollTop();
@@ -17,7 +17,6 @@ function readMoreMessage(){
         };
         $(`.right .chat[data-chat=${targetId}]`).prepend(data.rightSideData);
         $(`.right .chat[data-chat=${targetId}]`).scrollTop(firstMessage.offset().top - currentOffset);
-
         convertEmoji();
         $(`#imagesModal_${targetId}`).find("div.all-images").append(data.imageModalData);
         gridPhotos(5);
