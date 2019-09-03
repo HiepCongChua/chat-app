@@ -15,32 +15,31 @@ import { getAllConversationItems as getAllConversationItemsService } from '../se
 import request from 'request';
 const getICETurnServer = () => {
     return new Promise((resolve, reject) => {
-        // // Node Get ICE STUN and TURN list
-        // let o = {
-        //     format: "urls"
-        // };
-        // let bodyString = JSON.stringify(o);
-        // let https = require("https");
-        // let options = {
-        //     url:"https://global.xirsys.net/_turn/chat-app",
-        //     // host: "global.xirsys.net",
-        //     // path: "/_turn/chat-app",
-        //     method: "PUT",
-        //     headers: {
-        //         "Authorization": "Basic " + Buffer.from("leminhhiep:e34c349a-c8d4-11e9-9a64-0242ac110003").toString("base64"),
-        //         "Content-Type": "application/json",
-        //         "Content-Length": bodyString.length
-        //     }
-        // };
-        // request(options,(error,response,body)=>{
-        //   if(error){
-        //       console.log("Error when get ICE list :"+error);
-        //       return reject(error);
-        //   }
-        //   const bodyJson = JSON.parse(body);
-        //   resolve(bodyJson.v.iceServers);
-        // });
-        resolve([]);
+        // Node Get ICE STUN and TURN list
+        let o = {
+            format: "urls"
+        };
+        let bodyString = JSON.stringify(o);
+        let https = require("https");
+        let options = {
+            url:"https://global.xirsys.net/_turn/chat-app",
+            // host: "global.xirsys.net",
+            // path: "/_turn/chat-app",
+            method: "PUT",
+            headers: {
+                "Authorization": "Basic " + Buffer.from("leminhhiep:e34c349a-c8d4-11e9-9a64-0242ac110003").toString("base64"),
+                "Content-Type": "application/json",
+                "Content-Length": bodyString.length
+            }
+        };
+        request(options,(error,response,body)=>{
+          if(error){
+              console.log("Error when get ICE list :"+error);
+              return reject(error);
+          }
+          const bodyJson = JSON.parse(body);
+          resolve(bodyJson.v.iceServers);
+        });
     })
 };
 const getHome = async (req, res, next) => {

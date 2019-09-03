@@ -1,7 +1,0 @@
-
-const register = ()=>{
-    
-};
-export {
-    register
-}

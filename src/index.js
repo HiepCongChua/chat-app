@@ -65,8 +65,11 @@ io.use(passportSocketIo.authorize({
 }));
 //Init all sockets
 initSockets(io);
-const hostname = "127.0.0.1";
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, hostname, () => {
-  console.log("Sever is running....");
+// const hostname = "127.0.0.1";
+// const PORT = process.env.PORT || 3000;
+// server.listen(PORT, hostname, () => {
+//   console.log("Sever is running....");
+// });
+server.listen(process.env.PORT,() => {
+  console.log(`Sever is listening on ${process.env.PORT}....`);
 });
