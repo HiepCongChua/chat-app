@@ -8,7 +8,7 @@ const initPassportFacebook = () => {
   passport.use(
     new FacebookStrategy(
       {
-        clientID: process.env.CLIENT_ID_FB,
+        clientId: process.env.CLIENT_ID_FB,
         clientSecret: process.env.CLIENT_SECRET_FB,
         callbackURL: process.env.CALLBACK_URL_FB,
         profileFields: ["email", "gender", "displayName"],

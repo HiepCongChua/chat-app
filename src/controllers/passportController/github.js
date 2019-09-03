@@ -8,7 +8,7 @@ const initPassportGitHub = () => {
   passport.use(
     new GitHubStrategy(
       {
-        clientID: process.env.GITHUB_API_CLIENT_ID,
+        clientId: process.env.GITHUB_API_CLIENT_ID,
         clientSecret: process.env.GITHUB_API_CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL_GITHUB,
         passReqToCallback: true
