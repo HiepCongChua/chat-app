@@ -127,19 +127,19 @@ function createGroupChat() {
           </span>
           <span class="chat-menu-right">
             <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
-              Message amount:  <span class="show-number-messages">${result.groupChat.messageAmount}</span>
+            Số lượng tin nhắn:  <span class="show-number-messages">${result.groupChat.messageAmount}</span>
               <i class="fa fa-comment-o"></i>
             </a>
           </span>
             <span class="chat-menu-right">
               <a href="javascript:void(0)" class="number-members" data-toggle="modal">
-              User amount: <span class="show-number-members">${result.groupChat.userAmount}</span>
+              Số lượng thành viên: <span class="show-number-members">${result.groupChat.userAmount}</span>
                 <i class="fa fa-users"></i>
               </a>
             </span>
         </div>
         <div class="content-chat">
-          <div class="chat" data-chat="${result.groupChat._id}"></div>
+          <div class="chat chat-in-group" data-chat="${result.groupChat._id}"></div>
         <div class="write" data-chat="${result.groupChat._id}">
           <input
             type="text"
@@ -284,19 +284,19 @@ $(document).ready(function () {
     </span>
     <span class="chat-menu-right">
       <a href="javascript:void(0)" class="number-messages" data-toggle="modal">
-        Message amount:  <span class="show-number-messages">${response.groupChat.messageAmount}</span>
+      Số lượng tin nhắn:  <span class="show-number-messages">${response.groupChat.messageAmount}</span>
         <i class="fa fa-comment-o"></i>
       </a>
     </span>
       <span class="chat-menu-right">
         <a href="javascript:void(0)" class="number-members" data-toggle="modal">
-        User amount: <span class="show-number-members">${response.groupChat.userAmount}</span>
+        Số lượng thành viên: <span class="show-number-members">${response.groupChat.userAmount}</span>
           <i class="fa fa-users"></i>
         </a>
       </span>
   </div>
   <div class="content-chat">
-    <div class="chat" data-chat="${response.groupChat._id}"></div>
+    <div class="chat chat-in-group" data-chat="${response.groupChat._id}"></div>
   <div class="write" data-chat="${response.groupChat._id}">
     <input
       type="text"

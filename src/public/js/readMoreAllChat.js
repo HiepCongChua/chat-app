@@ -22,6 +22,7 @@ $(document).ready(function () {
             $('body').append(data.attachmentModalData);
             $("#link-read-more-all-chat").css('display', 'inline-block');
             $(".read-more-all-chat-loader").css('display', 'none');
+            readMoreMessage();
         });
     });
 });  

@@ -18,7 +18,7 @@ function nineScrollRight(divId) {
     scrollspeed: 50
   });
   $(`.right .chat[data-chat=${divId}]`).scrollTop($(`.right .chat[data-chat=${divId}]`)[0].scrollHeight);
-}
+};
 
 function enableEmojioneArea(divId) {
   $(`#write-chat-${divId}`).emojioneArea({
@@ -49,25 +49,46 @@ function enableEmojioneArea(divId) {
     $('.emojionearea-button').click();
     $('.emojionearea-editor').focus();
   });
-}
+};
 
 function spinLoaded() {
   $('.main-loader').css('display', 'none');
-}
+};
 
 function spinLoading() {
   $('.main-loader').css('display', 'block');
-}
-
-function ajaxLoading() {
-  $(document)
-    .ajaxStart(function () {
-      spinLoading();
-    })
-    .ajaxStop(function () {
-      spinLoaded();
+};
+function showModalWhenNotYetConversations(){
+  if(!$("ul.people").find("a").length){
+    Swal.fire({//Biến swal sử dụng trong thư viện sweetalert2
+      title: `Chúng tôi nhận thấy bạn liên hệ nào trong danh bạ ? Hãy tìm kiếm bạn bè để trò chuyện với mọi người.`,
+      type: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#2ECC71',
+      cancelButtonColor: '#ff7675',
+      confirmButtonText: 'Tìm kiếm ngay !',
+      cancelButtonText: 'Bỏ qua'
+    }).then((result) => {
+              $('#contactsModal').modal('show');
     });
+  }
+};
+function userTalk(){
+  $('div.user-talk').unbind('click').on('click',function(){
+    const dataChat = $(this).data('uid');
+    $('ul.people').find(`a[href="#uid_${dataChat}"]`).click();
+    $(this).closest('div.modal').modal('hide');
+  });
 }
+// function ajaxLoading() {
+//   $(document)
+//     .ajaxStart(function () {
+//       spinLoading();
+//     })
+//     .ajaxStop(function () {
+//       spinLoaded();
+//     });
+// }
 
 function showModalContacts() {
   $('#show-modal-contacts').click(function () {
@@ -200,7 +221,7 @@ $(document).ready(function () {
   // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
 
   // Icon loading khi chạy ajax
-  ajaxLoading();
+  // ajaxLoading();
 
   // Hiển thị hình ảnh grid slide trong modal tất cả ảnh, tham số truyền vào là số ảnh được hiển thị trên 1 hàng.
   // Tham số chỉ được phép trong khoảng từ 1 đến 5
@@ -210,10 +231,13 @@ $(document).ready(function () {
 
   changeTypeChat();
   changeScreenChat();
-  $('ul.people').find("a")[0].click();
+  if( $('ul.people').find("a").length){
+   $('ul.people').find("a")[0].click();
+  }
   convertEmoji();
   $("#video-chat-group").bind("click",function(){
     alertify.notify("Tính năng không khả dụng với nhóm trò chuyện","error",7);
   });
-
+  showModalWhenNotYetConversations();
+  userTalk();
 });  
