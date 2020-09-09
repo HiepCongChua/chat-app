@@ -14,15 +14,11 @@ Trong Template giao diện này có sử dụng những thư viện phía client
 
 # Run command  bower install +  npm install 
 # Tạo thư mục config_env có chứa file dev.env để cài đặt biến các biến môi trường sau
-DB_CONNECTION
-DB_HOST
-DB_PORT
-DB_NAME
-API_KEY_SENDGRID
-CLIENT_ID_FB
-CLIENT_SECRET_FB
-CALLBACK_URL_FB
-#Khi muốn lưu session trên Cloud thì update mongoose lên phiên bản cao nhất
-#Sử dụng thư viện passport.socket.io để lấy dữ liệu trong session để truyền cho socket
-#Sử dụng cookie-parser để gán dữl liệu cookie vào một biến (req.cookie)
-#Muốn đẩy dữ liệu lên cloud thì phải sử dụng mongoose phiên bản 5.6.9,để sử dụng ổn định nhất sử dụng 4.13.9,
+- DB_CONNECTION
+- DB_HOST
+- DB_PORT
+- DB_NAME
+- API_KEY_SENDGRID
+- CLIENT_ID_FB
+- CLIENT_SECRET_FB
+- CALLBACK_URL_FB
